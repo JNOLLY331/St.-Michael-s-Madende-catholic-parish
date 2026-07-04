@@ -1,0 +1,17 @@
+Django>=5.2
+djangorestframework>=3.16
+django-filter>=25.1
+djangorestframework-simplejwt>=5.5
+django-cors-headers>=4.7
+psycopg2-binary>=2.9
+python-decouple>=3.8
+Pillow>=11.0
+whitenoise>=6.9
+gunicorn>=23.0
+requests>=2.32
+drf-spectacular>=0.28
+ipython>=9.0
+pytest>=8.4
+pytest-django>=4.11
+django-axes>=8.0
+dj-database-url>=3.0

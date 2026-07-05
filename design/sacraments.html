@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sacraments | St. Michael Madende Catholic Parish</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#ffb3b5",
+                    "surface": "#fff8f5",
+                    "outline-variant": "#e0bfbf",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f5ece7",
+                    "secondary-container": "#fed65b",
+                    "on-primary-container": "#ff828a",
+                    "inverse-surface": "#34302c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#2b271e",
+                    "surface-container-low": "#fbf2ed",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "surface-bright": "#fff8f5",
+                    "primary-container": "#800020",
+                    "surface-variant": "#e9e1dc",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "inverse-primary": "#ffb3b5",
+                    "tertiary-fixed": "#e9e2d3",
+                    "on-primary-fixed": "#40000b",
+                    "on-tertiary-container": "#aea89a",
+                    "secondary": "#735c00",
+                    "on-tertiary-fixed": "#1e1b13",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-background": "#1e1b18",
+                    "on-surface": "#1e1b18",
+                    "surface-dim": "#e1d8d4",
+                    "tertiary-container": "#413d33",
+                    "surface-container-high": "#efe6e2",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#e9c349",
+                    "background": "#fff8f5",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffe088",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#584141",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#241a00",
+                    "outline": "#8c7071",
+                    "surface-tint": "#af2b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e9e1dc",
+                    "primary-fixed": "#ffdada",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#745c00",
+                    "primary": "#570013"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "stack-md": "16px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["\"Source Sans 3\""],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["\"Source Sans 3\""],
+                    "headline-lg": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["\"Source Sans 3\""],
+                    "caption": ["\"Source Sans 3\""]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sacrament-card:hover .card-overlay { opacity: 1; }
+        .divider-cross {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .divider-cross::before, .divider-cross::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e0bfbf;
+        }
+        .divider-cross span {
+            padding: 0 16px;
+            color: #735c00;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-fixed-dim selection:text-on-secondary-fixed">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-tertiary-container text-primary dark:text-primary-fixed-dim w-full top-0 sticky border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none z-50">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max-width mx-auto">
+<div class="flex items-center gap-unit cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-headline-md">church</span>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">St. Michael Madende</h1>
+</div>
+<nav class="hidden md:flex gap-stack-lg items-center">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors duration-200 cursor-pointer font-label-md text-label-md" href="#">Home</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary hover:text-primary transition-colors duration-200 cursor-pointer font-label-md text-label-md" href="#">Sacraments</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors duration-200 cursor-pointer font-label-md text-label-md" href="#">Mass Schedule</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors duration-200 cursor-pointer font-label-md text-label-md" href="#">Ministries</a>
+</nav>
+<button class="bg-primary-container text-on-primary text-label-md px-6 py-2 rounded-full hover:opacity-90 transition-all font-bold">Donate</button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center brightness-50" data-alt="A serene and majestic interior of a classic Catholic cathedral during a quiet morning. Soft, warm sunlight streams through stained glass windows, casting colorful patterns onto the polished stone floor and dark wooden pews. The atmosphere is deeply reverent and tranquil, captured in a painterly style with high-key lighting and a soft-focus background that emphasizes the sacredness of the space." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBR5pf7TReMMBZXHGe0GKHnogXAJd-R5U5okO05Y0m47zDfIQXAo2J_dA0HoxEz9t4xLCu1EucxwWwdvW9aSaRVYDwKDsMh304ZkTNwz7QP9L4A5vhikxjGu6o1DHdqL_Znda1Azr0ai9kbmae3t2L1IkvvC6-VQgJwX8bzESls5DsbevIscrMiL9iok8MNJzuzF4anEnPSafEwcVNZbjHpTOojWDAqH4Xgu1PvKU-URaIwge_JxXa84ixsVQmnkn_qeSOXnCRg0B85')"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile">
+<h2 class="font-display-lg text-display-lg text-white mb-4">The Holy Sacraments</h2>
+<p class="font-body-lg text-body-lg text-white/90 max-w-2xl mx-auto italic">"Visible signs of invisible grace, instituted by Christ for our sanctification."</p>
+</div>
+</section>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<!-- Intro & Decorative Divider -->
+<div class="text-center mb-stack-lg max-w-3xl mx-auto">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-stack-md">Sacred Channels of Grace</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant">The Catholic Church celebrates seven sacraments, which were instituted by Christ to share His divine life with us. Through these sacred rites, we are nourished, healed, and strengthened in our journey of faith.</p>
+</div>
+<div class="divider-cross mb-section-gap">
+<span class="material-symbols-outlined">chess</span>
+</div>
+<!-- Sacraments Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Baptism (Large Focus) -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low transition-all hover:shadow-xl">
+<div class="grid md:grid-cols-2 h-full">
+<div class="h-64 md:h-full relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="A close-up, respectful shot of a traditional stone baptismal font filled with clear, shimmering water. A simple white cloth and a small gold vessel rest nearby on a dark wood surface. The lighting is focused and warm, creating a sense of purity and new beginnings. The overall aesthetic is classical and serene, with a soft blur on the background stone textures of the church." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwhO09i81tMyCYNiZXqEHEs9ka7ihgQ4vYetISlLF2JjKhNDszS6QWlBiBKCOwDZgqJkCDlVEObljJVJrOR7gq81-9E80pADUK_zfJlIwTr1uVf3-j6O4CsQZG6L4inO-0-v-Zl60Mj8jqUf0yWTulFH-YWWa9qO0XRcHkQqTmJr-VMWv3eLIGQsDtgLO_Hwk7oFmwl3y2lFt4ol_k_KoSnt8TEST1ZX2S3IddKSHBDzH1Vs3MbmY3-K8_ZKz7KZKwO14-8nzTXZPI')"></div>
+</div>
+<div class="p-stack-lg flex flex-col justify-center">
+<span class="text-secondary font-label-md text-label-md tracking-widest mb-2">SACRAMENT OF INITIATION</span>
+<h4 class="font-headline-lg text-headline-lg text-primary mb-stack-sm">Baptism</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">The first of the seven sacraments, and the "door" which gives access to the other sacraments. Through water and the Word, we are freed from sin and reborn as children of God.</p>
+<div class="flex gap-stack-md">
+<button class="bg-primary-container text-white px-6 py-2 rounded-full font-label-md text-label-md hover:brightness-110 transition-all">Request Baptism</button>
+<button class="border border-secondary text-secondary px-6 py-2 rounded-full font-label-md text-label-md hover:bg-secondary/10 transition-all">Learn More</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Confirmation -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low p-stack-lg flex flex-col hover:shadow-xl transition-all">
+<div class="mb-stack-md">
+<span class="material-symbols-outlined text-secondary text-[48px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-stack-sm">Confirmation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">The completion of baptismal grace, confirming the gift of the Holy Spirit to strengthen us for the Christian life.</p>
+<button class="mt-stack-lg text-secondary font-bold flex items-center gap-2 hover:gap-4 transition-all">
+<span>Preparation Schedule</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Eucharist -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low p-stack-lg flex flex-col hover:shadow-xl transition-all">
+<div class="mb-stack-md">
+<span class="material-symbols-outlined text-secondary text-[48px]">wine_bar</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-stack-sm">The Eucharist</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">The "source and summit" of the Christian life. We believe in the real presence of Jesus Christ in the Bread and Wine.</p>
+<button class="mt-stack-lg text-secondary font-bold flex items-center gap-2 hover:gap-4 transition-all">
+<span>First Communion Info</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Marriage (Medium Focus) -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low transition-all hover:shadow-xl">
+<div class="grid md:grid-cols-2 h-full">
+<div class="p-stack-lg flex flex-col justify-center order-2 md:order-1">
+<span class="text-secondary font-label-md text-label-md tracking-widest mb-2">SACRAMENT OF SERVICE</span>
+<h4 class="font-headline-lg text-headline-lg text-primary mb-stack-sm">Matrimony</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">A covenant by which a man and a woman establish between themselves a partnership of the whole of life.</p>
+<div class="flex gap-stack-md">
+<button class="bg-primary-container text-white px-6 py-2 rounded-full font-label-md text-label-md hover:brightness-110 transition-all">Inquire Wedding</button>
+</div>
+</div>
+<div class="h-64 md:h-full relative overflow-hidden order-1 md:order-2">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Two gold wedding rings resting on an old, open Catholic prayer book. A few petals of a white lily are scattered nearby. The background shows the soft, blurred details of a church altar. The lighting is warm and golden, evoking a sacred and joyful mood. The overall visual style is elegant, traditional, and emphasizes the sacred bond of marriage." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAR9GTYHL0XoBpCnByjLrtcWQDK7X-gUyS9FVvy9jYLiOoD4ymdT7GSzRwdcMhLh4-HA0OFJH1G9ayeIjLHT9oXYAt_5hicIs7PVBlhtwwLnrs46sgBpjN8Z6b2HUNvILywdIQhRXpcWY_nh5ae39DISdsvbfdqwVGtcAzLtOJpG_ulyB7p1ftNFvhHHOgOILP8sX90HVz3oHIQp2TUs_EDH89rmq7hWJnubrqQy7loU9xCrqv-3nWfrrKJ58EPaE3kcM-XNjxUbAy')"></div>
+</div>
+</div>
+</div>
+<!-- Reconciliation -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low p-stack-lg flex flex-col hover:shadow-xl transition-all">
+<div class="mb-stack-md">
+<span class="material-symbols-outlined text-secondary text-[48px]">settings_accessibility</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-stack-sm">Reconciliation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">God's unconditional forgiveness through the ministry of the priest. Return to spiritual health and peace.</p>
+<div class="bg-surface-container-high p-4 rounded-lg mt-stack-md">
+<p class="text-caption font-label-md uppercase text-primary mb-1">Confession Times</p>
+<p class="text-body-md">Sat: 3:30 PM - 4:30 PM</p>
+</div>
+</div>
+<!-- Holy Orders -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low p-stack-lg flex flex-col hover:shadow-xl transition-all">
+<div class="mb-stack-md">
+<span class="material-symbols-outlined text-secondary text-[48px]">back_hand</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-stack-sm">Holy Orders</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">The sacrament through which the mission entrusted by Christ to his apostles continues to be exercised in the Church.</p>
+<button class="mt-stack-lg text-secondary font-bold flex items-center gap-2 hover:gap-4 transition-all">
+<span>Vocation Resources</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Anointing of the Sick -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-low p-stack-lg flex flex-col hover:shadow-xl transition-all">
+<div class="mb-stack-md">
+<span class="material-symbols-outlined text-secondary text-[48px]">opacity</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-stack-sm">Anointing of the Sick</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">Providing comfort, peace, and spiritual healing for those facing serious illness or the frailty of old age.</p>
+<button class="mt-stack-lg bg-error/10 text-error px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-error/20 transition-all">
+<span class="material-symbols-outlined text-sm">emergency_home</span>
+<span>Emergency Contact</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Call to Action Section -->
+<section class="bg-tertiary-container text-on-tertiary py-section-gap">
+<div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop text-center">
+<h3 class="font-headline-lg text-headline-lg mb-stack-md">Deepen Your Journey</h3>
+<p class="font-body-lg text-body-lg text-on-tertiary-container max-w-2xl mx-auto mb-stack-lg">Whether you are seeking baptism for your child, preparing for marriage, or returning to the faith, our parish community is here to support you.</p>
+<div class="flex flex-col md:flex-row justify-center gap-stack-md">
+<a class="bg-secondary-container text-on-secondary-container px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform" href="#">Contact Parish Office</a>
+<a class="border border-outline text-on-tertiary px-8 py-3 rounded-full font-bold hover:bg-white/5 transition-all" href="#">Download Prep Guides</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-tertiary dark:bg-tertiary-container w-full mt-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-margin-mobile md:px-margin-desktop py-stack-lg max-w-container-max-width mx-auto">
+<div class="flex flex-col gap-unit">
+<h2 class="font-headline-md text-headline-md text-secondary-fixed">St. Michael Madende</h2>
+<p class="text-tertiary-fixed-dim opacity-80 font-body-md text-body-md">A welcoming Catholic community dedicated to the service of God and neighbor through the sacraments and charity.</p>
+</div>
+<div class="flex flex-col gap-unit">
+<h4 class="text-on-tertiary font-bold mb-2">Sacraments</h4>
+<div class="flex flex-col gap-2">
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Mass Times</a>
+<a class="text-secondary-fixed font-bold font-body-md" href="#">Sacraments</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Ministries</a>
+</div>
+</div>
+<div class="flex flex-col gap-unit">
+<h4 class="text-on-tertiary font-bold mb-2">Legal</h4>
+<div class="flex flex-col gap-2">
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Privacy Policy</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop border-t border-outline/20 py-8 text-center md:text-left">
+<p class="text-tertiary-fixed-dim opacity-60 font-body-md text-body-md">© 2024 St. Michael Madende Catholic Parish. All Rights Reserved.</p>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-full border-t border-outline-variant bg-surface/90 backdrop-blur-md shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex justify-around items-center h-16 px-margin-mobile">
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">church</span>
+<span class="font-label-md text-label-md">Sacraments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-label-md text-label-md">Events</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-md text-label-md">More</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

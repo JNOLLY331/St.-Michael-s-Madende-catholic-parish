@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mass Schedule - St. Michael Madende</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Config verbatim -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#ffb3b5",
+                    "surface": "#fff8f5",
+                    "outline-variant": "#e0bfbf",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f5ece7",
+                    "secondary-container": "#fed65b",
+                    "on-primary-container": "#ff828a",
+                    "inverse-surface": "#34302c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#2b271e",
+                    "surface-container-low": "#fbf2ed",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "surface-bright": "#fff8f5",
+                    "primary-container": "#800020",
+                    "surface-variant": "#e9e1dc",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "inverse-primary": "#ffb3b5",
+                    "tertiary-fixed": "#e9e2d3",
+                    "on-primary-fixed": "#40000b",
+                    "on-tertiary-container": "#aea89a",
+                    "secondary": "#735c00",
+                    "on-tertiary-fixed": "#1e1b13",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-background": "#1e1b18",
+                    "on-surface": "#1e1b18",
+                    "surface-dim": "#e1d8d4",
+                    "tertiary-container": "#413d33",
+                    "surface-container-high": "#efe6e2",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#e9c349",
+                    "background": "#fff8f5",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffe088",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#584141",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#241a00",
+                    "outline": "#8c7071",
+                    "surface-tint": "#af2b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e9e1dc",
+                    "primary-fixed": "#ffdada",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#745c00",
+                    "primary": "#570013"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "stack-md": "16px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["\"Source Sans 3\""],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["\"Source Sans 3\""],
+                    "headline-lg": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["\"Source Sans 3\""],
+                    "caption": ["\"Source Sans 3\""]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff8f5;
+        }
+        .decorative-line::after {
+            content: '♦';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff8f5;
+            padding: 0 10px;
+            color: #735c00;
+            font-size: 14px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface w-full top-0 sticky z-50 shadow-sm border-b border-outline-variant">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max-width mx-auto">
+<div class="flex items-center gap-stack-sm cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-primary text-headline-md" data-icon="church">church</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">St. Michael Madende</h1>
+</div>
+<nav class="hidden md:flex items-center gap-stack-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Home</a>
+<a class="text-primary font-bold border-b-2 border-primary font-label-md text-label-md" href="#">Mass Schedule</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Ministries</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Events</a>
+<button class="bg-primary text-on-primary px-stack-lg py-2 rounded-full font-label-md text-label-md hover:opacity-90 transition-opacity">Donate</button>
+</nav>
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Hero Section -->
+<section class="py-stack-lg md:py-section-gap text-center">
+<h2 class="font-display-lg text-display-lg text-primary mb-stack-md">Sacred Times</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Join our community in prayer and worship. Whether you are a regular parishioner or visiting for the first time, you are welcome at the Lord's table.</p>
+</section>
+<!-- Bento Layout for Schedules -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start">
+<!-- Sunday Mass Card (Main Focus) -->
+<div class="md:col-span-8 bg-surface-container-low border border-outline-variant p-stack-lg rounded-xl shadow-sm">
+<div class="flex items-center gap-stack-sm mb-stack-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="auto_stories">auto_stories</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Sunday Liturgy</h3>
+</div>
+<div class="space-y-gutter">
+<div class="flex justify-between items-center border-b border-outline-variant pb-stack-md">
+<div>
+<p class="font-headline-md text-headline-md text-on-surface">Morning Mass</p>
+<p class="font-body-md text-body-md text-on-surface-variant">English Language Service</p>
+</div>
+<p class="font-headline-md text-headline-md text-secondary">08:00 AM</p>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant pb-stack-md">
+<div>
+<p class="font-headline-md text-headline-md text-on-surface">High Mass</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Solemn Liturgy with Choir</p>
+</div>
+<p class="font-headline-md text-headline-md text-secondary">10:30 AM</p>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-headline-md text-headline-md text-on-surface">Youth &amp; Family Mass</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Contemporary Music</p>
+</div>
+<p class="font-headline-md text-headline-md text-secondary">05:00 PM</p>
+</div>
+</div>
+<div class="mt-stack-lg p-stack-md bg-secondary-container/20 rounded-lg flex items-start gap-stack-sm border border-secondary/10">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<p class="font-body-md text-body-md text-on-secondary-container">Children's Liturgy is available during the 10:30 AM High Mass in the Parish Hall.</p>
+</div>
+</div>
+<!-- Weekend & Daily Quick Info -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Saturday Vigil -->
+<div class="bg-surface border border-outline-variant p-stack-lg rounded-xl">
+<div class="flex items-center gap-stack-sm mb-stack-md">
+<span class="material-symbols-outlined text-secondary" data-icon="event">event</span>
+<h4 class="font-headline-md text-headline-md text-on-surface">Saturday Vigil</h4>
+</div>
+<div class="flex justify-between items-center">
+<p class="font-body-lg text-body-lg">Evening Mass</p>
+<p class="font-headline-md text-headline-md text-secondary">06:00 PM</p>
+</div>
+</div>
+<!-- Weekday Mass -->
+<div class="bg-surface border border-outline-variant p-stack-lg rounded-xl">
+<div class="flex items-center gap-stack-sm mb-stack-md">
+<span class="material-symbols-outlined text-secondary" data-icon="schedule">schedule</span>
+<h4 class="font-headline-md text-headline-md text-on-surface">Weekday Mass</h4>
+</div>
+<ul class="space-y-stack-sm">
+<li class="flex justify-between items-center">
+<span class="font-body-md text-body-md">Mon - Fri</span>
+<span class="font-headline-md text-headline-md text-secondary text-sm">06:30 AM</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="font-body-md text-body-md">Wednesday (Solemn)</span>
+<span class="font-headline-md text-headline-md text-secondary text-sm">12:15 PM</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Decorative Divider -->
+<div class="relative w-full h-[1px] bg-outline-variant my-section-gap flex items-center decorative-line"></div>
+<!-- Confession and Adoration Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-section-gap">
+<!-- Confession -->
+<div class="flex gap-stack-lg items-start p-stack-lg bg-surface border-l-4 border-primary shadow-sm">
+<div class="bg-primary-fixed p-4 rounded-full">
+<span class="material-symbols-outlined text-primary" data-icon="volunteer_activism">volunteer_activism</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-stack-sm">Reconciliation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">"The Lord never tires of forgiving. It is we who tire of asking for forgiveness." — Pope Francis</p>
+<div class="space-y-stack-sm">
+<div class="flex items-center gap-stack-md">
+<span class="font-label-md text-label-md bg-secondary-container px-2 py-0.5 rounded">Saturdays</span>
+<span class="font-body-lg text-body-lg">04:30 PM — 05:30 PM</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="font-label-md text-label-md bg-secondary-container px-2 py-0.5 rounded">Weekdays</span>
+<span class="font-body-lg text-body-lg">15 mins before Morning Mass</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Adoration -->
+<div class="flex gap-stack-lg items-start p-stack-lg bg-surface border-l-4 border-secondary shadow-sm">
+<div class="bg-secondary-fixed p-4 rounded-full">
+<span class="material-symbols-outlined text-secondary" data-icon="church">church</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-stack-sm">Eucharistic Adoration</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">A quiet time for personal prayer and meditation in the presence of the Blessed Sacrament.</p>
+<div class="space-y-stack-sm">
+<div class="flex items-center gap-stack-md">
+<span class="font-label-md text-label-md bg-surface-container px-2 py-0.5 rounded">Thursdays</span>
+<span class="font-body-lg text-body-lg">08:00 AM — 08:00 PM</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="font-label-md text-label-md bg-surface-container px-2 py-0.5 rounded">1st Fridays</span>
+<span class="font-body-lg text-body-lg">Overnight Vigil (Starts 07 PM)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Location Section -->
+<section class="mb-section-gap grid grid-cols-1 lg:grid-cols-2 gap-stack-lg overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-low">
+<div class="p-stack-lg flex flex-col justify-center">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-stack-md">Find Your Sanctuary</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">St. Michael Madende is located in the heart of our community. Ample parking is available in the north lot.</p>
+<div class="space-y-stack-md mb-stack-lg">
+<div class="flex items-center gap-stack-sm text-on-surface">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<span class="font-body-md text-body-md">123 Parish Road, Madende District, 56789</span>
+</div>
+<div class="flex items-center gap-stack-sm text-on-surface">
+<span class="material-symbols-outlined text-primary" data-icon="phone">phone</span>
+<span class="font-body-md text-body-md">+1 (234) 567-8901</span>
+</div>
+</div>
+<a class="inline-flex items-center justify-center gap-stack-sm bg-primary text-on-primary px-stack-lg py-4 rounded-full font-label-md text-label-md hover:shadow-lg transition-all w-fit" href="#">
+<span class="material-symbols-outlined" data-icon="directions">directions</span>
+                    Get Directions
+                </a>
+</div>
+<div class="h-80 lg:h-auto min-h-[400px] relative">
+<div class="absolute inset-0 bg-surface-variant" data-alt="A stylized, architectural map illustration of a serene neighborhood featuring a prominent stone Catholic church with a bell tower. The artistic style is clean and modern with soft beige, gold, and burgundy tones to match the parish branding. Soft sunlight casts gentle shadows across the manicured green lawns and quiet streets." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7cxZKDrRbPgouyinwftnZyfvn74qplFJBAgVzrueekgxMQOiAHnniVKHx4C4t3HRjqkAkUmP7qj5jxPDsk_6tRBrMUzzJQ6Ojb5I3XqSAwY3lPK8jHpLzSN9AJfIkJ3f6XVOQwVZ_qxDUmE0TRBUXqtjjBHFOoaiu7Qj-HvMGlaX6i1TgSQKSEZ04c09I1Horuz_AmFGT_bqWO8ZFTE3qIHq8ErlgTS-Ltt7FaQV9qOVnjY8whzNYGnJCeLZpMthLdN7rBAF2Zclc')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low via-transparent to-transparent hidden lg:block"></div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-tertiary w-full mt-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-margin-desktop py-stack-lg max-w-container-max-width mx-auto">
+<div>
+<h4 class="font-headline-md text-headline-md text-secondary-fixed mb-stack-md">St. Michael Madende</h4>
+<p class="text-tertiary-fixed-dim opacity-80 font-body-md text-body-md">A sanctuary for the spirit, a home for the heart. Join us in faith and service.</p>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<h4 class="font-label-md text-label-md text-on-tertiary uppercase tracking-widest mb-stack-sm">Quick Links</h4>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md text-body-md" href="#">Mass Times</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md text-body-md" href="#">Sacraments</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md text-body-md" href="#">Ministries</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md text-body-md" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<h4 class="font-label-md text-label-md text-on-tertiary uppercase tracking-widest mb-stack-sm">Connect</h4>
+<div class="flex gap-stack-md mb-stack-md">
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer" data-icon="mail">mail</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer" data-icon="phone">phone</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer" data-icon="public">public</span>
+</div>
+<p class="text-tertiary-fixed-dim opacity-80 font-body-md text-body-md">© 2024 St. Michael Madende Catholic Parish. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-full border-t border-outline-variant bg-surface/90 backdrop-blur-md shadow-[0_-4px_12px_rgba(0,0,0,0.05)] h-16 flex justify-around items-center px-margin-mobile">
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="church">church</span>
+<span class="font-label-md text-label-md">Mass</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="font-label-md text-label-md">Events</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-label-md text-label-md">Donate</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="font-label-md text-label-md">More</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for hover states on Mass cards
+        document.querySelectorAll('.bg-surface-container-low, .bg-surface').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('translate-y-[-4px]');
+                card.style.transition = 'all 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('translate-y-[-4px]');
+            });
+        });
+    </script>
+</body></html>

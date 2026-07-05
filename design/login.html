@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | St. Michael Madende Parishioner Portal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&amp;family=Source+Sans+3:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#ffb3b5",
+                    "surface": "#fff8f5",
+                    "outline-variant": "#e0bfbf",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f5ece7",
+                    "secondary-container": "#fed65b",
+                    "on-primary-container": "#ff828a",
+                    "inverse-surface": "#34302c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#2b271e",
+                    "surface-container-low": "#fbf2ed",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "surface-bright": "#fff8f5",
+                    "primary-container": "#800020",
+                    "surface-variant": "#e9e1dc",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "inverse-primary": "#ffb3b5",
+                    "tertiary-fixed": "#e9e2d3",
+                    "on-primary-fixed": "#40000b",
+                    "on-tertiary-container": "#aea89a",
+                    "secondary": "#735c00",
+                    "on-tertiary-fixed": "#1e1b13",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-background": "#1e1b18",
+                    "on-surface": "#1e1b18",
+                    "surface-dim": "#e1d8d4",
+                    "tertiary-container": "#413d33",
+                    "surface-container-high": "#efe6e2",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#e9c349",
+                    "background": "#fff8f5",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffe088",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#584141",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#241a00",
+                    "outline": "#8c7071",
+                    "surface-tint": "#af2b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e9e1dc",
+                    "primary-fixed": "#ffdada",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#745c00",
+                    "primary": "#570013"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "stack-md": "16px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["\"Source Sans 3\""],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["\"Source Sans 3\""],
+                    "headline-lg": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["\"Source Sans 3\""],
+                    "caption": ["\"Source Sans 3\""]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sacred-breath {
+            letter-spacing: 0.1em;
+        }
+        .church-fade-in {
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- Top Navigation (Shell Supression active: Simple Branding Only) -->
+<header class="w-full top-0 sticky bg-surface z-50 border-b border-outline-variant shadow-sm px-margin-desktop py-4 flex justify-center items-center">
+<div class="flex items-center gap-stack-sm cursor-pointer" onclick="window.location.href='/'">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="church">church</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">St. Michael Madende</h1>
+</div>
+</header>
+<!-- Main Content: Login Canvas -->
+<main class="flex-grow flex items-center justify-center py-section-gap px-margin-mobile">
+<div class="church-fade-in w-full max-w-md bg-surface-container-lowest p-stack-lg rounded-xl shadow-xl border border-outline-variant relative overflow-hidden">
+<!-- Subtle Decorative Element -->
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="text-center mb-stack-lg">
+<h2 class="font-display-lg text-headline-lg text-primary mb-2">Welcome Back</h2>
+<p class="font-body-md text-on-surface-variant italic">"I was glad when they said unto me, Let us go into the house of the Lord."</p>
+<!-- Decorative Cross Divider -->
+<div class="flex items-center justify-center gap-4 my-6">
+<div class="h-[1px] w-12 bg-outline-variant"></div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="square" style="font-variation-settings: 'FILL' 1;">square</span>
+<div class="h-[1px] w-12 bg-outline-variant"></div>
+</div>
+</div>
+<form class="space-y-stack-md" onsubmit="event.preventDefault();">
+<!-- Username/Email Field -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1" for="login-id">Email or Username</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant opacity-60" data-icon="mail">mail</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md text-on-surface" id="login-id" placeholder="your@email.com" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="password">Password</label>
+<a class="text-caption font-label-md text-primary hover:underline transition-all" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant opacity-60" data-icon="lock">lock</span>
+<input class="w-full pl-10 pr-10 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md text-on-surface" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center gap-2 py-2">
+<input class="w-4 h-4 text-primary bg-surface-container-low border-outline-variant rounded focus:ring-primary" id="remember" type="checkbox"/>
+<label class="font-body-md text-caption text-on-surface-variant cursor-pointer" for="remember">Remember me for 30 days</label>
+</div>
+<!-- Submit Action -->
+<button class="w-full py-4 bg-primary-container text-on-primary font-label-md text-label-md rounded-full shadow-lg hover:bg-primary transition-all transform active:scale-[0.98] flex justify-center items-center gap-2 mt-stack-md" type="submit">
+<span>Login to Portal</span>
+<span class="material-symbols-outlined text-lg" data-icon="login">login</span>
+</button>
+</form>
+<!-- Registration Link -->
+<div class="mt-stack-lg pt-stack-lg border-t border-outline-variant text-center">
+<p class="font-body-md text-on-surface-variant mb-2">New to our parish community?</p>
+<a class="inline-flex items-center gap-2 text-secondary font-label-md text-label-md hover:text-primary transition-colors group" href="#">
+                    Register as a Parishioner
+                    <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</main>
+<!-- Footer: Simple Minimalist -->
+<footer class="w-full py-stack-lg bg-tertiary text-on-tertiary">
+<div class="max-w-container-max-width mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed text-xl" data-icon="church">church</span>
+<span class="font-body-md text-caption opacity-80">© 2024 St. Michael Madende Catholic Parish</span>
+</div>
+<div class="flex gap-stack-lg">
+<a class="text-caption text-tertiary-fixed-dim hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="text-caption text-tertiary-fixed-dim hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="text-caption text-tertiary-fixed-dim hover:text-secondary-fixed transition-colors" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = passwordInput.nextElementSibling;
+            const icon = toggleBtn.querySelector('span');
+
+            toggleBtn.addEventListener('click', () => {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                icon.textContent = isPassword ? 'visibility_off' : 'visibility';
+            });
+
+            // Focus animation for the whole form card
+            const inputs = document.querySelectorAll('input');
+            const card = document.querySelector('.church-fade-in');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    card.style.boxShadow = '0 20px 40px -15px rgba(87, 0, 19, 0.15)';
+                });
+                input.addEventListener('blur', () => {
+                    card.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body></html>

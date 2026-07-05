@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Parishioner Dashboard | St. Michael Madende</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#ffb3b5",
+                    "surface": "#fff8f5",
+                    "outline-variant": "#e0bfbf",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f5ece7",
+                    "secondary-container": "#fed65b",
+                    "on-primary-container": "#ff828a",
+                    "inverse-surface": "#34302c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#2b271e",
+                    "surface-container-low": "#fbf2ed",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "surface-bright": "#fff8f5",
+                    "primary-container": "#800020",
+                    "surface-variant": "#e9e1dc",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "inverse-primary": "#ffb3b5",
+                    "tertiary-fixed": "#e9e2d3",
+                    "on-primary-fixed": "#40000b",
+                    "on-tertiary-container": "#aea89a",
+                    "secondary": "#735c00",
+                    "on-tertiary-fixed": "#1e1b13",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-background": "#1e1b18",
+                    "on-surface": "#1e1b18",
+                    "surface-dim": "#e1d8d4",
+                    "tertiary-container": "#413d33",
+                    "surface-container-high": "#efe6e2",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#e9c349",
+                    "background": "#fff8f5",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffe088",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#584141",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#241a00",
+                    "outline": "#8c7071",
+                    "surface-tint": "#af2b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e9e1dc",
+                    "primary-fixed": "#ffdada",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#745c00",
+                    "primary": "#570013"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "stack-md": "16px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["\"Source Sans 3\""],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["\"Source Sans 3\""],
+                    "headline-lg": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["\"Source Sans 3\""],
+                    "caption": ["\"Source Sans 3\""]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sacred-gradient {
+            background: linear-gradient(135deg, #fff8f5 0%, #f5ece7 100%);
+        }
+        .decorative-divider::before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e0bfbf;
+        }
+        .decorative-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e0bfbf;
+        }
+        .card-hover-effect {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(87, 0, 19, 0.15);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- Top Navigation Bar -->
+<header class="bg-surface w-full top-0 sticky z-50 border-b border-outline-variant shadow-sm">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max-width mx-auto">
+<div class="flex items-center gap-4 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-primary text-[32px]">church</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">St. Michael Madende</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Mass Schedule</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Ministries</a>
+<a class="text-primary font-bold border-b-2 border-primary font-label-md text-label-md" href="#">Dashboard</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:block bg-primary-container text-white px-6 py-2 rounded-full font-label-md text-label-md hover:bg-primary transition-all active:scale-95">
+                    Donate
+                </button>
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A dignified close-up portrait of a middle-aged parishioner with a warm, welcoming expression. The lighting is soft and natural, coming from a nearby stained glass window, casting subtle colorful glows. The style is professional and clean, fitting a modern Catholic community platform with soft burgundy and cream tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-ywJCwaGTkf5GSIjPBM6QkiZYDu6I033ryZO0IPLrb8nN-uW5ayULMoG96y0UICxcpDkI_7vmNCtjGFB5ZdH6TzAmdGC2tzbK_hB1rdV-U5fkh4UH8Iu8j9vut3bVOBxPp5psUNQhdgHSirntSsiDm1pYcFZ9WUi-5gloFtLST473-z-XYDrflk3jrBrfPTh6nDG_uhEgifvUxUXkNEiq4A9z2n-Pl4YEK5HVjlRtP3tSfOEeK9e6FBW7INDwXxGmWTmiym9KywIk"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg min-h-screen">
+<!-- Dashboard Header / Welcome Section -->
+<section class="mb-section-gap">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md border-b border-outline-variant pb-stack-lg">
+<div>
+<p class="text-primary font-label-md text-label-md tracking-widest uppercase mb-unit">Welcome back</p>
+<h2 class="font-display-lg text-display-lg text-on-surface leading-tight">Peace be with you, <span class="text-primary">Christopher</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-unit">"The Lord is my shepherd; I shall not want." — Psalm 23:1</p>
+</div>
+<div class="flex gap-stack-sm">
+<div class="bg-surface-container-high px-4 py-2 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">calendar_today</span>
+<span class="font-label-md text-label-md">Next Mass: Sunday, 8:30 AM</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout for Dashboard Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Personal Donation History (Bento Large) -->
+<div class="lg:col-span-8 bg-surface border border-outline-variant rounded-xl p-stack-lg card-hover-effect">
+<div class="flex items-center justify-between mb-stack-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary bg-primary-fixed/30 p-2 rounded-lg">volunteer_activism</span>
+<h3 class="font-headline-md text-headline-md">Stewardship &amp; Giving</h3>
+</div>
+<button class="text-primary font-label-md text-label-md hover:underline">View All Records</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-md mb-stack-lg">
+<div class="bg-surface-container-low p-stack-md rounded-lg border border-outline-variant/30">
+<p class="text-on-surface-variant font-label-md text-label-md">Total 2024</p>
+<p class="text-headline-md font-headline-md text-primary mt-unit">$1,450.00</p>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-lg border border-outline-variant/30">
+<p class="text-on-surface-variant font-label-md text-label-md">Last Gift</p>
+<p class="text-headline-md font-headline-md text-on-surface mt-unit">$50.00</p>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-lg border border-outline-variant/30">
+<p class="text-on-surface-variant font-label-md text-label-md">Active Pledges</p>
+<p class="text-headline-md font-headline-md text-secondary mt-unit">Roof Repair</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between py-stack-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">payments</span>
+<div>
+<p class="font-body-md text-body-md font-semibold">Sunday Offering</p>
+<p class="text-caption text-on-surface-variant">Processed: Oct 20, 2024</p>
+</div>
+</div>
+<span class="font-body-md text-body-md font-bold text-on-surface">$50.00</span>
+</div>
+<div class="flex items-center justify-between py-stack-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">home_health</span>
+<div>
+<p class="font-body-md text-body-md font-semibold">Parish Roof Fund</p>
+<p class="text-caption text-on-surface-variant">Processed: Oct 12, 2024</p>
+</div>
+</div>
+<span class="font-body-md text-body-md font-bold text-on-surface">$200.00</span>
+</div>
+</div>
+</div>
+<!-- Quick Action Links (Bento Medium - Side) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="bg-tertiary-container text-white p-stack-lg rounded-xl flex flex-col justify-between h-full min-h-[200px] relative overflow-hidden card-hover-effect">
+<div class="z-10">
+<h3 class="font-headline-md text-headline-md mb-unit">Upcoming Ministry</h3>
+<p class="text-tertiary-fixed-dim font-body-md text-body-md">You are scheduled as a Lector next Sunday.</p>
+</div>
+<div class="mt-stack-lg flex items-center gap-2 z-10">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Oct 27, 8:30 AM Mass</span>
+</div>
+<!-- Subtle pattern -->
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+</div>
+<div class="bg-secondary-container text-on-secondary-container p-stack-lg rounded-xl card-hover-effect">
+<h3 class="font-headline-md text-headline-md mb-unit">Quick Access</h3>
+<div class="grid grid-cols-2 gap-unit">
+<a class="bg-white/40 p-stack-sm rounded flex flex-col items-center text-center hover:bg-white/60 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">book_2</span>
+<span class="font-label-md text-[12px]">Bulletins</span>
+</a>
+<a class="bg-white/40 p-stack-sm rounded flex flex-col items-center text-center hover:bg-white/60 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-label-md text-[12px]">Directory</span>
+</a>
+<a class="bg-white/40 p-stack-sm rounded flex flex-col items-center text-center hover:bg-white/60 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">history_edu</span>
+<span class="font-label-md text-[12px]">Tax Form</span>
+</a>
+<a class="bg-white/40 p-stack-sm rounded flex flex-col items-center text-center hover:bg-white/60 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-label-md text-[12px]">Settings</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Parishioner News Feed (Bento Wide) -->
+<div class="lg:col-span-12 bg-surface border border-outline-variant rounded-xl p-stack-lg overflow-hidden">
+<div class="flex items-center gap-3 mb-stack-lg">
+<span class="material-symbols-outlined text-primary">campaign</span>
+<h3 class="font-headline-md text-headline-md">Parish Announcements</h3>
+<span class="bg-error text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Members Only</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- News Item 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-video w-full rounded-lg overflow-hidden mb-stack-sm border border-outline-variant/30 shadow-sm relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene high-angle shot of a communal parish dinner hall. Round tables are covered in white linens with small floral centerpieces, illuminated by warm hanging lights and soft evening shadows. The atmosphere is festive and elegant, with a focus on community and shared faith, captured in a clean, editorial photographic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGVd0iV-RZgVmzOZwnIj3L9glmDuGttj5GA3qtM57aflDYs3I0-uHWzv_XkFeYrETG2_oLwQcQY68GeCX_oIhZf-5xQck-ptG5u-iYjR6u-AJ8dzWuu6jRbvrAKj1EqjHD310fIwSuN8uBYsBwihS_eQkbvnP31vNMozzcyuz-P-q2hevcrRjpmjTMjUoGC_Szf9HwIW_auhMWMzE3mnV6gRnhftEw6ocaSszrNmwZ4IDsso7bVzefxTmZQuJZUIz2gjpQ-v4FFoK_"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-primary font-bold text-[10px] tracking-widest uppercase">Community</div>
+</div>
+<h4 class="font-headline-md text-headline-md group-hover:text-primary transition-colors">Advent Parish Retreat Registration</h4>
+<p class="text-on-surface-variant font-body-md text-body-md mt-unit line-clamp-2">Join us for a weekend of prayer and reflection as we prepare our hearts for the birth of our Lord...</p>
+<div class="flex items-center gap-2 mt-stack-sm text-on-surface-variant/60 font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Posted 2 days ago</span>
+</div>
+</div>
+<!-- News Item 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-video w-full rounded-lg overflow-hidden mb-stack-sm border border-outline-variant/30 shadow-sm relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up architectural detail of a newly restored church roof with traditional dark red tiles and a golden cross finial against a crisp blue sky. The lighting is golden hour, accentuating the texture of the materials and the craftsmanship. The composition is artistic and clean, symbolizing growth and preservation of the parish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOiPH4zHurD11hrbCwH8vTEyxtbLsj208LVaWH2c1H6I_hOKwhq6Bw7rqhjlsiJ2xGOjzI2eO1s_DzEDscBSM4do3Wlaawd5jPfNpN5CALzekLXBgqYcLJdm-ZW90F5kBWGNaSVYiRYIgFdeEX7ZdGn_xbNdgrx7PgNbfBPHkQoBuCkJdtWZ6JCo_cads_-S1kOnR9v_H2p8VUmYjIAfBKXungT0OrX2_-bQk07X7jV80rPGOyyF8wIz3i-GVbkWS4LSKTUYvYjZuX"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-primary font-bold text-[10px] tracking-widest uppercase">Maintenance</div>
+</div>
+<h4 class="font-headline-md text-headline-md group-hover:text-primary transition-colors">Phase 1: Roof Restoration Complete</h4>
+<p class="text-on-surface-variant font-body-md text-body-md mt-unit line-clamp-2">Thanks to your generous contributions, the first phase of our building preservation has finished...</p>
+<div class="flex items-center gap-2 mt-stack-sm text-on-surface-variant/60 font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Posted 1 week ago</span>
+</div>
+</div>
+<!-- News Item 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-video w-full rounded-lg overflow-hidden mb-stack-sm border border-outline-variant/30 shadow-sm relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A warm and cinematic photograph of a parish youth group gathering in a circle outdoors during sunset. The lighting is soft and golden, creating silhouettes and warm highlights. There is a sense of joy, energy, and belonging. The style is modern lifestyle photography with a rich, ecclesiastical color palette of warm creams and deep reds." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3GQ2UBaFy7nHJQ5sy6DQu-auBkfG6SPo2uAu8IxMb1tRP2njm1eW-eBQl7rdjdTNGiy-CU745NwVN177n-3scQhvBFf-c1hvC8upw22sMzwNYdmzBL0jLbuhUVCUx6RnQB9Kam8IklWKft94Pz685fy2JvIKJPWuCiCR4QsvkUSKpEK3VVEzB5ek6Fnbo5j7l2mY3AfZbm3FKpMI0j-CkE2xmjVBdccvhhE4eemxLwpIVtT2--UFT3wUZBi6WAFD_ql4MQMTNseQk"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-primary font-bold text-[10px] tracking-widest uppercase">Youth</div>
+</div>
+<h4 class="font-headline-md text-headline-md group-hover:text-primary transition-colors">Youth Ministry Pizza &amp; Prayer Night</h4>
+<p class="text-on-surface-variant font-body-md text-body-md mt-unit line-clamp-2">Calling all high schoolers! Friday night we're gathering for food, fellowship, and a brief adoration...</p>
+<div class="flex items-center gap-2 mt-stack-sm text-on-surface-variant/60 font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Posted Oct 15</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Volunteer Schedule (Bento Column) -->
+<div class="lg:col-span-12 md:col-span-1 bg-surface-container border border-outline-variant rounded-xl p-stack-lg">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-stack-md mb-stack-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<h3 class="font-headline-md text-headline-md">Your Volunteer Schedule</h3>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm">Sign Up for New Slot</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-outline-variant">
+<tr>
+<th class="py-4 font-label-md text-label-md text-on-surface-variant">Date</th>
+<th class="py-4 font-label-md text-label-md text-on-surface-variant">Ministry Role</th>
+<th class="py-4 font-label-md text-label-md text-on-surface-variant">Mass Time</th>
+<th class="py-4 font-label-md text-label-md text-on-surface-variant">Status</th>
+<th class="py-4 font-label-md text-label-md text-on-surface-variant"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr>
+<td class="py-4 font-body-md">Oct 27, 2024</td>
+<td class="py-4"><span class="bg-secondary-container/40 text-on-secondary-container px-3 py-1 rounded-full text-caption font-bold">Lector</span></td>
+<td class="py-4 font-body-md">8:30 AM (Main Sanctuary)</td>
+<td class="py-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-600"></span>
+<span class="font-label-md text-label-md">Confirmed</span>
+</td>
+<td class="py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr>
+<td class="py-4 font-body-md">Nov 10, 2024</td>
+<td class="py-4"><span class="bg-secondary-container/40 text-on-secondary-container px-3 py-1 rounded-full text-caption font-bold">Usher</span></td>
+<td class="py-4 font-body-md">10:30 AM (High Mass)</td>
+<td class="py-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md">Pending</span>
+</td>
+<td class="py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Decorative Divider -->
+<div class="flex items-center gap-stack-lg my-section-gap opacity-30 decorative-divider">
+<span class="material-symbols-outlined text-primary text-[24px]" style="font-variation-settings: 'FILL' 1;">star_rate</span>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-tertiary text-on-tertiary w-full mt-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-margin-desktop py-stack-lg max-w-container-max-width mx-auto">
+<div class="space-y-4">
+<h4 class="font-headline-md text-headline-md text-secondary-fixed">St. Michael Madende</h4>
+<p class="font-body-md text-body-md opacity-80 max-w-xs">Serving the faithful since 1924. A sanctuary for prayer, community, and spiritual growth in the heart of our neighborhood.</p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-secondary-fixed uppercase tracking-widest mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Mass Times</a></li>
+<li><a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Sacraments</a></li>
+<li><a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Ministries</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-secondary-fixed uppercase tracking-widest mb-4">Parish Office</h4>
+<p class="font-body-md text-body-md opacity-80">123 Sacred Heart Lane<br/>Madende, ST 54321<br/>info@stmichaelmadende.org</p>
+<div class="mt-4 flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed">face_nod</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed">mail</span>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 px-margin-desktop py-4 max-w-container-max-width mx-auto flex flex-col md:flex-row justify-between items-center text-caption opacity-60">
+<p>© 2024 St. Michael Madende Catholic Parish. All Rights Reserved.</p>
+<div class="flex gap-4 mt-4 md:mt-0">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-full border-t border-outline-variant bg-surface/90 backdrop-blur-md shadow-[0_-4px_12px_rgba(0,0,0,0.05)] h-16 flex justify-around items-center px-margin-mobile">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">church</span>
+<span class="font-label-md text-[10px]">Mass</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-white rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-[10px]">Dash</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-[10px]">Donate</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-md text-[10px]">More</span>
+</a>
+</nav>
+<script>
+        // Simple dashboard interaction
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card-hover-effect');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Placeholder for potential sound or heavier effect
+                });
+            });
+        });
+    </script>
+</body></html>

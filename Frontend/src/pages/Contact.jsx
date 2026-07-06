@@ -143,10 +143,9 @@ export default function Contact() {
             {/* Map */}
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="bg-[#e9e1dc] rounded-2xl overflow-hidden shadow-inner h-96 relative border border-[#e0bfbf]">
-                    <div
-                        className="absolute inset-0 opacity-40 bg-cover bg-center"
-                        style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuCoT-IyLk3uPtJxacf1VdkveSHaUAcgPf6fcAA-mpHbwmQoaSgpFbwiSsp0LX1YM4G9gYfiNpmERBa44KZxJOvuUQ7Oj2WaDevYXtJy2_aVeulgXvM3yMXLfwh2tYt8HzHnLgTFafyZZSh5GOYt8eiuEsi9xYs1KZqki630SF6WmZ-zaZEg8KmZIn5hnw7ASpsEX0QAu512FPRb_jphiO9LPRkhCtGRHbI6Mru9u7cen9xAFuGtO5h82O6laxvF7O826fHcOwOE0E3r')` }}
-                    />
+                    <div className="absolute inset-0 opacity-40 bg-cover bg-center">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12413.613858528197!2d34.34668999538447!3d0.4787334552250803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177f830035fa558b%3A0xc93490a4bde2271c!2sSt%20Michael%20madende%20catholic%20church!5e0!3m2!1sen!2ske!4v1783343948700!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="bg-white p-4 rounded-xl shadow-xl flex items-center gap-3 border border-[#e0bfbf] animate-bounce">
                             <span className="material-symbols-outlined text-[#570013] text-3xl">location_on</span>

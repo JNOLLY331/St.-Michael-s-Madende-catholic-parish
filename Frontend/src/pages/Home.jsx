@@ -21,6 +21,129 @@ function useCountUp(target, duration = 2500, startCounting = false) {
   return count;
 }
 
+/* ─── Daily Gospel Hook ───
+   Pulls today's Gospel citation from the General Roman Calendar lectionary
+   cycle (the same Scripture passages Catholics hear worldwide each day,
+   regardless of local translation), then fetches the public-domain verse
+   text for that exact passage. Falls back to a fixed passage if either
+   service is unreachable, so the hero section never breaks. */
+function useDailyGospel() {
+  const formatDate = (d) => d.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+  });
+
+  const [reading, setReading] = useState({
+    loading: true,
+    error: false,
+    date: formatDate(new Date()),
+    book: 'Gospel of Matthew',
+    citation: 'Matthew 9:32–38',
+    text: 'The harvest is plentiful, but the laborers are few; pray therefore the Lord of the harvest to send out laborers.',
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadTodaysGospel() {
+      try {
+        const now = new Date();
+        const year = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+
+        // Universal Roman lectionary citation for today (same cycle used in every diocese)
+        const calRes = await fetch(`https://cpbjr.github.io/catholic-readings-api/readings/${year}/${mm}-${dd}.json`);
+        if (!calRes.ok) throw new Error('lectionary lookup failed');
+        const calData = await calRes.json();
+        const citation = calData?.readings?.gospel;
+        if (!citation) throw new Error('no gospel citation for today');
+
+        const bookName = citation.split(' ')[0];
+
+        // Public-domain scripture text for that exact passage
+        const verseRef = citation.replace(/\s+/g, '+');
+        const textRes = await fetch(`https://bible-api.com/${verseRef}?translation=web`);
+        if (!textRes.ok) throw new Error('verse lookup failed');
+        const textData = await textRes.json();
+        const passageText = textData?.text?.trim().replace(/\s+/g, ' ');
+
+        if (!cancelled) {
+          setReading({
+            loading: false,
+            error: false,
+            date: formatDate(now),
+            book: `Gospel of ${bookName}`,
+            citation,
+            text: passageText || reading.text,
+          });
+        }
+      } catch {
+        if (!cancelled) {
+          setReading((prev) => ({ ...prev, loading: false, error: true }));
+        }
+      }
+    }
+
+    loadTodaysGospel();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return reading;
+}
+
+/* ─── Gospel Reading Modal ───
+   A self-contained, scrollable dialog that reveals the full text of the
+   day's reading. Isolated in its own component + its own <style> block so
+   it never touches any other styling on the page. */
+function GospelReadingModal({ gospel, onClose }) {
+  // Close on Escape, lock body scroll while open
+  useEffect(() => {
+    const onKeyDown = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="gospel-modal-backdrop"
+      role="presentation"
+      onClick={onClose}
+    >
+      <div
+        className="gospel-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gospel-modal-title"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="gospel-modal-close"
+          onClick={onClose}
+          aria-label="Close reading"
+        >
+          <span className="material-symbols-outlined">close</span>
+        </button>
+
+        <p className="gospel-modal-eyebrow">✦ Daily Reading ✦</p>
+        <p className="gospel-modal-date">{gospel.date}</p>
+        <p id="gospel-modal-title" className="gospel-modal-book">{gospel.book}</p>
+        <p className="gospel-modal-citation">{gospel.citation}</p>
+
+        <div className="gospel-modal-body">
+          <p className="gospel-modal-text">{gospel.text}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Stat Counter Card ─── */
 function StatCard({ value, label, suffix = '', icon, delay = 0 }) {
   const [visible, setVisible] = useState(false);
@@ -146,7 +269,12 @@ function SaintsMarquee() {
       const enriched = await Promise.all(
         SAINTS_SEED.map(async (s) => {
           try {
-            const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(s.wikiSlug)}`;
+            // Some seed slugs (e.g. "Teresa_of_%C3%81vila") are already percent-encoded.
+            // Decoding first (safe no-op for plain slugs) before re-encoding prevents
+            // double-encoding "%C3%81" into "%25C3%2581", which Wikipedia 403s on.
+            let normalizedSlug = s.wikiSlug;
+            try { normalizedSlug = decodeURIComponent(s.wikiSlug); } catch { /* not encoded, use as-is */ }
+            const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(normalizedSlug)}`;
             const res = await fetch(wikiUrl, { signal: AbortSignal.timeout(7000) });
             if (!res.ok) throw new Error('no wiki');
             const data = await res.json();
@@ -310,6 +438,12 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Today's Gospel reading, pulled from the universal Roman lectionary cycle
+  const gospel = useDailyGospel();
+
+  // Controls the "Read More" reading dialog — isolated to this one card
+  const [isGospelModalOpen, setIsGospelModalOpen] = useState(false);
+
   const stats = [
     { value: 3200, label: 'Believers', suffix: '+', icon: 'groups' },
     { value: 12, label: 'Clergy Members', suffix: '', icon: 'church' },
@@ -345,6 +479,174 @@ export default function Home() {
 
   return (
     <>
+      {/* Styles for the Daily Reading "read more" preview + modal.
+          Scoped to gospel-* class names only — nothing else on the page is touched. */}
+      <style>{`
+        .gospel-preview-wrap {
+          position: relative;
+          max-height: 8.75rem;
+          overflow: hidden;
+        }
+        @media (min-width: 768px) {
+          .gospel-preview-wrap { max-height: 9.75rem; }
+        }
+        .gospel-fade-overlay {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 4.5rem;
+          background: linear-gradient(to bottom, rgba(64,0,11,0) 0%, rgba(64,0,11,0.75) 65%, rgba(64,0,11,0.95) 100%);
+          pointer-events: none;
+        }
+        .gospel-readmore-btn {
+          margin: 1.5rem auto 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.1rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #ffe088;
+          font-family: 'Oswald', sans-serif;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          font-size: 0.7rem;
+          font-weight: 600;
+          transition: opacity 0.2s ease;
+        }
+        .gospel-readmore-btn:hover {
+          opacity: 0.8;
+        }
+        .gospel-readmore-chevron {
+          font-size: 1.15rem;
+          animation: gospel-chevron-bounce 1.6s ease-in-out infinite;
+        }
+        @keyframes gospel-chevron-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(6px); }
+        }
+        .gospel-modal-backdrop {
+          --gospel-navbar-h: 96px; /* adjust to match your actual navbar height */
+          position: fixed;
+          top: var(--gospel-navbar-h);
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(20, 8, 6, 0.75);
+          backdrop-filter: blur(4px);
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          padding: 1.5rem;
+          overflow-y: auto;
+          z-index: 9999;
+          animation: gospel-fade-in 0.2s ease;
+        }
+        @keyframes gospel-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .gospel-modal {
+          position: relative;
+          background: linear-gradient(160deg, #570013, #40000b);
+          color: #fff;
+          width: 100%;
+          max-width: 640px;
+          max-height: calc(100vh - var(--gospel-navbar-h, 96px) - 3rem);
+          margin-top: 0.5rem;
+          overflow-y: auto;
+          border-radius: 1.5rem;
+          padding: 2.75rem 2rem 2.5rem;
+          border: 1px solid rgba(255, 224, 136, 0.25);
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+        .gospel-modal-close {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          width: 2.25rem;
+          height: 2.25rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 9999px;
+          color: #ffe088;
+          cursor: pointer;
+        }
+        .gospel-modal-close:hover {
+          background: rgba(255, 255, 255, 0.16);
+        }
+        .gospel-modal-eyebrow {
+          text-align: center;
+          font-family: 'Oswald', sans-serif;
+          letter-spacing: 0.35em;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          color: #ffe088;
+          margin: 0 0 0.75rem;
+        }
+        .gospel-modal-date {
+          text-align: center;
+          font-size: 0.85rem;
+          color: #fff;
+          opacity: 0.75;
+          margin: 0 0 1.5rem;
+        }
+        .gospel-modal-book {
+          text-align: center;
+          font-family: 'Oswald', sans-serif;
+          font-weight: 700;
+          font-size: 1.4rem;
+          margin: 0 0 0.25rem;
+        }
+        .gospel-modal-citation {
+          text-align: center;
+          font-size: 0.8rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #ffe088;
+          margin: 0 0 1.75rem;
+        }
+        .gospel-modal-body {
+          border-top: 1px solid rgba(255, 224, 136, 0.2);
+          padding-top: 1.5rem;
+        }
+        .gospel-modal-text {
+          font-family: serif;
+          font-weight: 700;
+          font-size: 1.15rem;
+          line-height: 1.75;
+          margin: 0;
+        }
+        @media (max-width: 767px) {
+          .gospel-modal-backdrop {
+            --gospel-navbar-h: 64px; /* mobile navbars are typically shorter than desktop */
+            padding: 1rem;
+            align-items: stretch;
+          }
+          .gospel-modal {
+            max-width: none;
+            margin-top: 0;
+            border-radius: 1.25rem;
+            padding: 2.25rem 1.25rem 2rem;
+          }
+          .gospel-modal-book {
+            font-size: 1.2rem;
+          }
+          .gospel-modal-text {
+            font-size: 1.05rem;
+            line-height: 1.65;
+          }
+          .gospel-readmore-btn {
+            font-size: 0.65rem;
+          }
+        }
+      `}</style>
+
       {/* ── Hero ── */}
       <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -356,7 +658,8 @@ export default function Home() {
           />
           <div className="hero-overlay absolute inset-0" />
         </div>
-        <div className="relative z-10 w-full px-5 md:px-16 max-w-[1400px] mx-auto">
+
+        <div className="relative z-10 w-full px-5 md:px-16 max-w-[1400px] mx-auto flex items-center justify-between gap-10">
           <div className="max-w-3xl text-white">
             <p className="font-oswald tracking-[0.3em] text-[#ffe088] mb-4 uppercase text-sm animate-fade-in-up">
               ✦ Welcome to Our Parish ✦
@@ -370,9 +673,18 @@ export default function Home() {
               Join us as we journey together in the heart of our sanctuary.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              {/* Mobile & tablet: the Daily Reading card is hidden below lg, so give a direct way in */}
+              <button
+                onClick={() => setIsGospelModalOpen(true)}
+                className="btn-primary bg-[#ffe088] text-[#40000b] px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide flex items-center justify-center gap-2 shadow-xl lg:hidden"
+              >
+                <span className="material-symbols-outlined">menu_book</span>
+                Today's Readings
+              </button>
+              {/* Desktop & up: Daily Reading card is already visible, so this stays a schedule link */}
               <button
                 onClick={() => handleNav('/mass-schedule')}
-                className="btn-primary bg-[#ffe088] text-[#40000b] px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide flex items-center justify-center gap-2 shadow-xl"
+                className="btn-primary bg-[#ffe088] text-[#40000b] px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide hidden lg:flex items-center justify-center gap-2 shadow-xl"
               >
                 <span className="material-symbols-outlined">schedule</span>
                 Mass Schedule
@@ -385,6 +697,55 @@ export default function Home() {
               </button>
             </div>
           </div>
+
+          {/* Daily Reading — sits on the same hero background, no separate bg color */}
+          <div className="hidden lg:block w-full max-w-xl shrink-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="relative border border-white/25 rounded-3xl px-12 py-14 text-center text-white">
+              <span className="absolute top-6 left-1/2 -translate-x-1/2 w-10 h-[1px] bg-[#ffe088]/50" />
+              <p className="font-oswald tracking-[0.35em] text-[#ffe088] uppercase text-xs mb-4 mt-4">✦ Daily Reading ✦</p>
+              <p className="text-white text-sm mb-10 tracking-wide">{gospel.date}</p>
+
+              <p className="font-oswald font-bold text-white text-2xl mb-1 tracking-wide">{gospel.book}</p>
+              <p className="text-[#ffe088] text-sm mb-10 tracking-widest uppercase">{gospel.citation}</p>
+
+              <div className="relative px-2">
+                <svg viewBox="0 0 50 40" className="w-14 h-auto absolute -top-11 left-0 fill-[#ffe088] drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]" aria-hidden="true">
+                  <path d="M0 24C0 12 8 3 19 0l2 6C13 8 9 13 9 19h10v14H0v-9zM27 24c0-12 8-21 19-24l2 6c-8 2-12 7-12 13h10v14H27v-9z" />
+                </svg>
+
+                <div className="gospel-preview-wrap">
+                  <p className="font-serif font-bold not-italic text-white text-[1.75rem] md:text-[2rem] leading-[1.45] tracking-[0.01em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+                    {gospel.loading ? 'Loading today\u2019s Gospel reading\u2026' : gospel.text}
+                  </p>
+                  {!gospel.loading && <div className="gospel-fade-overlay" aria-hidden="true" />}
+                </div>
+
+                <svg viewBox="0 0 50 40" className="w-14 h-auto absolute -bottom-11 right-0 fill-[#ffe088] rotate-180 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]" aria-hidden="true">
+                  <path d="M0 24C0 12 8 3 19 0l2 6C13 8 9 13 9 19h10v14H0v-9zM27 24c0-12 8-21 19-24l2 6c-8 2-12 7-12 13h10v14H27v-9z" />
+                </svg>
+              </div>
+
+              {!gospel.loading && (
+                <button
+                  type="button"
+                  className="gospel-readmore-btn"
+                  onClick={() => setIsGospelModalOpen(true)}
+                  aria-haspopup="dialog"
+                >
+                  <span>Read More</span>
+                  <span className="material-symbols-outlined gospel-readmore-chevron" aria-hidden="true">
+                    keyboard_arrow_down
+                  </span>
+                </button>
+              )}
+
+              <div className="flex items-center justify-center gap-3 mt-16">
+                <span className="w-8 h-[1px] bg-[#ffe088]/40" />
+                <span className="material-symbols-outlined text-[#ffe088] text-base">church</span>
+                <span className="w-8 h-[1px] bg-[#ffe088]/40" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Scroll hint */}
@@ -392,6 +753,10 @@ export default function Home() {
           <span className="material-symbols-outlined text-3xl">keyboard_arrow_down</span>
         </div>
       </section>
+
+      {isGospelModalOpen && (
+        <GospelReadingModal gospel={gospel} onClose={() => setIsGospelModalOpen(false)} />
+      )}
 
       {/* ── Mass Schedule Quick Access ── */}
       <section className="py-20" style={{ background: 'var(--bg-card)' }}>

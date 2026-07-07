@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParishData } from '../hooks/useParishData';
+import { FaCheckCircle, FaSync, FaPaperPlane, FaMapMarkerAlt, FaAddressCard, FaClock, FaFacebookF, FaYoutube, FaRss } from 'react-icons/fa';
 
 export default function Contact() {
     const [sent, setSent] = useState(false);
@@ -72,11 +73,11 @@ export default function Contact() {
                                 }`}
                         >
                             {sent ? (
-                                <><span className="material-symbols-outlined">check_circle</span> Sent Successfully</>
+                                <><FaCheckCircle size={20} /> Sent Successfully</>
                             ) : sending ? (
-                                <><span className="material-symbols-outlined animate-spin">sync</span> Sending...</>
+                                <><FaSync size={20} className="animate-spin" /> Sending...</>
                             ) : (
-                                <><span>Send Message</span><span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">send</span></>
+                                <><span>Send Message</span><FaPaperPlane size={18} className="group-hover:translate-x-1 transition-transform" /></>
                             )}
                         </button>
                     </form>
@@ -86,17 +87,17 @@ export default function Contact() {
                 <div className="lg:col-span-5 space-y-6">
                     {[
                         {
-                            icon: 'location_on',
+                            icon: <FaMapMarkerAlt size={24} />,
                             title: 'Our Location',
                             content: parish.address,
                         },
                         {
-                            icon: 'contact_emergency',
+                            icon: <FaAddressCard size={24} />,
                             title: 'Direct Contact',
                             content: `Phone: ${parish.phone}\nEmail: ${parish.email}`,
                         },
                         {
-                            icon: 'schedule',
+                            icon: <FaClock size={24} />,
                             title: 'Office Hours',
                             content: null,
                             hours: [
@@ -107,8 +108,8 @@ export default function Contact() {
                         },
                     ].map(({ icon, title, content, hours }) => (
                         <div key={title} className="bg-white border border-[#e0bfbf] p-6 rounded-xl flex items-start gap-4 hover:shadow-md transition-shadow">
-                            <div className="bg-[#fed65b] text-[#745c00] p-3 rounded-full shrink-0">
-                                <span className="material-symbols-outlined">{icon}</span>
+                            <div className="bg-[#fed65b] text-[#745c00] p-3 rounded-full shrink-0 flex items-center justify-center">
+                                {icon}
                             </div>
                             <div className="w-full">
                                 <h4 className="font-serif text-2xl text-[#570013] mb-1">{title}</h4>
@@ -135,18 +136,18 @@ export default function Contact() {
                             {/* Facebook */}
                             {parish.facebook && (
                                 <a href={parish.facebook} title="Facebook" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
-                                    <span className="material-symbols-outlined">face_nod</span>
+                                    <FaFacebookF size={20} />
                                 </a>
                             )}
                             {/* YouTube */}
                             {parish.youtube && (
                                 <a href={parish.youtube} title="YouTube" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
-                                    <span className="material-symbols-outlined">play_circle</span>
+                                    <FaYoutube size={20} />
                                 </a>
                             )}
                             {/* General/Blog or fallback if no social links */}
                             <a href={(parish.website) ? parish.website : "#"} title="Website" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
-                                <span className="material-symbols-outlined">rss_feed</span>
+                                <FaRss size={20} />
                             </a>
                         </div>
                     </div>
@@ -170,7 +171,7 @@ export default function Contact() {
                     </div>
                     <div className="absolute inset- flex items-center justify-right p-35">
                         <div className="bg-white p-4 rounded-xl shadow-xl flex items-center gap-3 border border-[#e0bfbf]">
-                            <span className="material-symbols-outlined text-[#570013] text-3xl">location_on</span>
+                            <FaMapMarkerAlt size={28} className="text-[#570013]" />
                             <div>
                                 <p className="font-bold text-[#570013]">St. Michael Madende</p>
                                 <p className="text-caption text-[#584141]">View on Google Maps</p>

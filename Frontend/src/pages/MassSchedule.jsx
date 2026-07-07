@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MdAutoStories, MdChurch, MdDirections, MdEvent, MdInfo, MdSchedule, MdVolunteerActivism } from 'react-icons/md';
+import DynamicIcon from '../components/DynamicIcon';
+
+
 
 export default function MassSchedule() {
     return (
@@ -20,7 +24,7 @@ export default function MassSchedule() {
                 {/* Sunday Liturgy */}
                 <div data-reveal-left className="md:col-span-8 border p-8 rounded-2xl shadow-sm card-hover" style={{ background: 'var(--bg-card-alt)', borderColor: 'var(--border-color)' }}>
                     <div className="flex items-center gap-2 mb-8">
-                        <span className="material-symbols-outlined text-[#735c00]">auto_stories</span>
+                        <MdAutoStories className="text-[#735c00]" />
                         <h2 className="text-headline-lg text-[#1e1b18]">Sunday Liturgy</h2>
                     </div>
                     <div className="space-y-6">
@@ -39,7 +43,7 @@ export default function MassSchedule() {
                         ))}
                     </div>
                     <div className="mt-8 p-4 bg-[#fed65b]/20 rounded-lg flex items-start gap-2 border border-[#735c00]/10">
-                        <span className="material-symbols-outlined text-[#735c00]">info</span>
+                        <MdInfo className="text-[#735c00]" />
                         <p className="text-body-md text-[#745c00]">Children's Liturgy is available during the 10:30 AM High Mass in the Parish Hall.</p>
                     </div>
                 </div>
@@ -48,7 +52,7 @@ export default function MassSchedule() {
                 <div className="md:col-span-4 flex flex-col gap-6">
                     <div data-reveal-right className="border p-6 rounded-2xl card-hover" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="material-symbols-outlined text-[#735c00]">event</span>
+                            <MdEvent className="text-[#735c00]" />
                             <h3 className="text-headline-md">Saturday Vigil</h3>
                         </div>
                         <div className="flex justify-between items-center">
@@ -58,7 +62,7 @@ export default function MassSchedule() {
                     </div>
                     <div data-reveal-right data-delay="150" className="border p-6 rounded-2xl card-hover" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="material-symbols-outlined text-[#735c00]">schedule</span>
+                            <MdSchedule className="text-[#735c00]" />
                             <h3 className="text-headline-md">Weekday Mass</h3>
                         </div>
                         <ul className="space-y-2">
@@ -87,7 +91,7 @@ export default function MassSchedule() {
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
                 <div data-reveal-left className="flex gap-8 items-start p-8 border-l-4 border-[#570013] shadow-sm rounded-2xl card-hover" style={{ background: 'var(--bg-card)' }}>
                     <div className="bg-[#ffdada] p-4 rounded-full shrink-0">
-                        <span className="material-symbols-outlined text-[#570013]">volunteer_activism</span>
+                        <MdVolunteerActivism className="text-[#570013]" />
                     </div>
                     <div>
                         <h3 className="text-headline-lg mb-2">Reconciliation</h3>
@@ -109,7 +113,7 @@ export default function MassSchedule() {
 
                 <div data-reveal-right data-delay="150" className="flex gap-8 items-start p-8 border-l-4 border-[#735c00] shadow-sm rounded-2xl card-hover" style={{ background: 'var(--bg-card)' }}>
                     <div className="bg-[#ffe088] p-4 rounded-full shrink-0">
-                        <span className="material-symbols-outlined text-[#735c00]">church</span>
+                        <MdChurch className="text-[#735c00]" />
                     </div>
                     <div>
                         <h3 className="text-headline-lg mb-2">Eucharistic Adoration</h3>
@@ -144,7 +148,7 @@ export default function MassSchedule() {
                                 { icon: 'phone', text: '+1 (234) 567-8901' },
                             ].map(({ icon, text }) => (
                                 <div key={icon} className="flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-[#570013]">{icon}</span>
+                                    <DynamicIcon name={icon} className="text-[#570013]" />
                                     <span className="text-body-md">{text}</span>
                                 </div>
                             ))}
@@ -153,7 +157,7 @@ export default function MassSchedule() {
                             href="#"
                             className="inline-flex items-center justify-center gap-2 bg-[#570013] text-white px-8 py-4 rounded-full text-label-md hover:opacity-90 transition-all w-fit"
                         >
-                            <span className="material-symbols-outlined">directions</span>
+                            <MdDirections  />
                             Get Directions
                         </a>
                     </div>

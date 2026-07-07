@@ -1,3 +1,7 @@
+import { MdChurch } from 'react-icons/md';
+import DynamicIcon from '../DynamicIcon';
+
+
 const SUNDAY_MASSES = [
   { name: 'Morning Mass', time: '07:30 AM' },
   { name: 'Parish Mass', time: '09:30 AM' },
@@ -30,11 +34,11 @@ export default function MassScheduleSection() {
             <div className="mass-card__shimmer" />
             {/* Floating church icon */}
             <div className="mass-card__float-icon">
-              <span className="material-symbols-outlined" style={{ fontSize: '7rem', color: '#570013', opacity: 0.04 }}>church</span>
+              <MdChurch style={{ fontSize: '7rem', color: '#570013', opacity: 0.04 }} />
             </div>
             <div className="flex items-center gap-3 mb-6 relative z-10">
               <div className="w-12 h-12 bg-[#570013] rounded-xl flex items-center justify-center mass-card__icon-wrap">
-                <span className="material-symbols-outlined text-white text-2xl">church</span>
+                <MdChurch className="text-white text-2xl" />
               </div>
               <h3 className="font-oswald font-bold text-2xl text-[#570013]">Sunday Mass</h3>
             </div>
@@ -74,7 +78,7 @@ export default function MassScheduleSection() {
                     className="devotion-time-tile bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-default"
                     style={{ animationDelay: `${0.4 + idx * 0.1}s` }}
                   >
-                    <span className="material-symbols-outlined text-[#ffe088] mb-1" style={{ fontSize: '1.1rem' }}>{icon}</span>
+                    <DynamicIcon name={icon} className="text-[#ffe088] mb-1" style={{ fontSize: '1.1rem' }} />
                     <p className="text-label-md text-white/60 font-oswald">{label}</p>
                     <p className="font-oswald font-bold text-xl mt-0.5 text-white">{time}</p>
                   </div>
@@ -82,9 +86,7 @@ export default function MassScheduleSection() {
               </div>
             </div>
             {/* Decorative cross/church watermark */}
-            <span className="material-symbols-outlined absolute -bottom-10 -right-10 opacity-10 text-[200px] pointer-events-none group-hover:scale-110 transition-transform duration-700 text-white">
-              church
-            </span>
+            <MdChurch className="absolute -bottom-10 -right-10 opacity-10 text-[200px] pointer-events-none group-hover:scale-110 transition-transform duration-700 text-white" />
           </div>
         </div>
       </div>

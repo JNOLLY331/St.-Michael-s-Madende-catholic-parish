@@ -1,5 +1,5 @@
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import DynamicIcon from './DynamicIcon';
 
 const tabs = [
     { label: 'Home', to: '/', icon: 'home' },
@@ -31,7 +31,7 @@ export default function BottomNav() {
                             : 'text-white/50 hover:text-white'
                             }`}
                     >
-                        <span className={`material-symbols-outlined ${active ? 'text-2xl' : 'text-xl'}`}>{icon}</span>
+                        <DynamicIcon name={icon} className={active ? 'text-2xl' : 'text-xl'} />
                         <span className="font-oswald font-bold text-[10px] tracking-wide uppercase mt-0.5">{label}</span>
                         {active && <span className="w-1 h-1 rounded-full bg-[#ffe088] mt-0.5" />}
                     </button>

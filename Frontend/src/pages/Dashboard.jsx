@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { MdArrowBack, MdChurch, MdDelete, MdEdit, MdNotifications, MdPerson, MdPersonAdd, MdSearch, MdCheckCircle, MdCancel } from 'react-icons/md';
+import DynamicIcon from '../components/DynamicIcon';
+
+
 
 /* ─── CountUp Hook ─── */
 function useCountUp(target, start = false) {
@@ -41,16 +45,14 @@ function DashStatCard({ icon, label, value, change, color, bgColor, started }) {
         <div className={`${bgColor} rounded-2xl p-6 flex flex-col gap-3 shadow-lg card-hover border border-white/10 relative overflow-hidden group`}>
             <div className="absolute -right-6 -top-6 w-20 h-20 rounded-full bg-white/5 group-hover:scale-150 transition-transform duration-500" />
             <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center shadow-md`}>
-                <span className="material-symbols-outlined text-white text-2xl">{icon}</span>
+                <DynamicIcon name={icon} className="text-white text-2xl" />
             </div>
             <div>
                 <p className="text-white/60 text-xs font-oswald tracking-widest uppercase">{label}</p>
                 <p className="text-white font-oswald font-bold text-3xl mt-1">{count.toLocaleString()}</p>
             </div>
             <div className={`flex items-center gap-1 text-xs font-oswald ${change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                <span className="material-symbols-outlined text-sm">
-                    {change >= 0 ? 'trending_up' : 'trending_down'}
-                </span>
+                <DynamicIcon name={change >= 0 ? 'trending_up' : 'trending_down'} className="text-sm" />
                 {Math.abs(change)}% this month
             </div>
         </div>
@@ -113,7 +115,7 @@ export default function Dashboard() {
                 {/* Logo */}
                 <div className="p-4 border-b border-white/10 flex items-center gap-3 min-h-[72px]">
                     <div className="w-10 h-10 rounded-full bg-[#ffe088] flex items-center justify-center flex-shrink-0">
-                        <span className="material-symbols-outlined text-[#570013] text-xl">church</span>
+                        <MdChurch className="text-[#570013] text-xl" />
                     </div>
                     {sidebarOpen && (
                         <div className="overflow-hidden">
@@ -134,7 +136,7 @@ export default function Dashboard() {
                                 : 'text-white/50 hover:bg-white/5 hover:text-white'
                                 }`}
                         >
-                            <span className="material-symbols-outlined text-xl flex-shrink-0">{icon}</span>
+                            <DynamicIcon name={icon} className="text-xl flex-shrink-0" />
                             {sidebarOpen && <span className="font-oswald font-bold text-sm tracking-wide whitespace-nowrap">{label}</span>}
                         </button>
                     ))}
@@ -147,7 +149,7 @@ export default function Dashboard() {
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         className={`flex items-center gap-3 text-white/40 hover:text-white transition-colors`}
                     >
-                        <span className="material-symbols-outlined text-xl flex-shrink-0">arrow_back</span>
+                        <MdArrowBack className="text-xl flex-shrink-0" />
                         {sidebarOpen && <span className="font-oswald text-sm tracking-wide">Back to Site</span>}
                     </Link>
                 </div>
@@ -163,7 +165,7 @@ export default function Dashboard() {
                             onClick={() => setSidebarOpen(v => !v)}
                             className="text-white/50 hover:text-white transition-colors"
                         >
-                            <span className="material-symbols-outlined text-2xl">{sidebarOpen ? 'menu_open' : 'menu'}</span>
+                            <DynamicIcon name={sidebarOpen ? 'menu_open' : 'menu'} className="text-2xl" />
                         </button>
                         <div>
                             <p className="font-oswald font-bold text-white text-lg">{sidebarItems.find(s => s.id === activeTab)?.label || 'Dashboard'}</p>
@@ -176,7 +178,7 @@ export default function Dashboard() {
                     <div className="flex items-center gap-4">
                         {/* Search */}
                         <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2">
-                            <span className="material-symbols-outlined text-white/40 text-base">search</span>
+                            <MdSearch className="text-white/40 text-base" />
                             <input
                                 type="text"
                                 placeholder="Search..."
@@ -188,14 +190,14 @@ export default function Dashboard() {
 
                         {/* Notifications */}
                         <button className="relative text-white/50 hover:text-white transition-colors">
-                            <span className="material-symbols-outlined text-2xl">notifications</span>
+                            <MdNotifications className="text-2xl" />
                             <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#ffe088] rounded-full text-[#40000b] text-[9px] font-bold flex items-center justify-center">3</span>
                         </button>
 
                         {/* Avatar */}
                         <div className="flex items-center gap-2 cursor-pointer">
                             <div className="w-9 h-9 rounded-full bg-[#570013] border-2 border-[#ffe088] flex items-center justify-center">
-                                <span className="material-symbols-outlined text-white text-base">person</span>
+                                <MdPerson className="text-white text-base" />
                             </div>
                             <div className="hidden md:block">
                                 <p className="font-oswald font-bold text-sm text-white">Fr. Emmanuel</p>
@@ -214,7 +216,7 @@ export default function Dashboard() {
                             {/* Welcome */}
                             <div className="bg-gradient-to-r from-[#40000b] to-[#570013] rounded-2xl p-8 relative overflow-hidden">
                                 <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10">
-                                    <span className="material-symbols-outlined absolute right-8 top-1/2 -translate-y-1/2 text-[200px] text-white">church</span>
+                                    <MdChurch className="absolute right-8 top-1/2 -translate-y-1/2 text-[200px] text-white" />
                                 </div>
                                 <p className="font-oswald text-[#ffe088]/80 tracking-[0.3em] uppercase text-xs mb-2">Welcome Back</p>
                                 <h2 className="font-oswald font-bold text-3xl text-white mb-2">
@@ -259,7 +261,7 @@ export default function Dashboard() {
                                         {recentActivity.map(({ icon, color, text, time, user }, i) => (
                                             <div key={i} className="flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors group">
                                                 <div className={`w-9 h-9 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 ${color}`}>
-                                                    <span className="material-symbols-outlined text-base">{icon}</span>
+                                                    <DynamicIcon name={icon} className="text-base" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
                                                     <p className="text-white/80 text-sm">{text}</p>
@@ -288,7 +290,7 @@ export default function Dashboard() {
                                                 onClick={() => setActiveTab(tab)}
                                                 className={`${color} p-4 rounded-xl flex flex-col items-center gap-2 hover:scale-105 transition-transform text-center group`}
                                             >
-                                                <span className="material-symbols-outlined text-xl">{icon}</span>
+                                                <DynamicIcon name={icon} className="text-xl" />
                                                 <span className="font-oswald font-bold text-xs tracking-wide">{label}</span>
                                             </button>
                                         ))}
@@ -307,14 +309,14 @@ export default function Dashboard() {
                                     <p className="text-white/40 text-sm font-oswald">Manage parish members and their sacramental records</p>
                                 </div>
                                 <button className="btn-primary bg-[#ffe088] text-[#40000b] px-5 py-2 rounded-full font-oswald font-bold text-xs uppercase tracking-wide flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-base">person_add</span>
+                                    <MdPersonAdd className="text-base" />
                                     Add Parishioner
                                 </button>
                             </div>
 
                             {/* Search bar */}
                             <div className="flex items-center gap-3 bg-[#1a1208] border border-white/10 rounded-xl px-4 py-3">
-                                <span className="material-symbols-outlined text-white/40">search</span>
+                                <MdSearch className="text-white/40" />
                                 <input
                                     type="text"
                                     placeholder="Search parishioners..."
@@ -358,23 +360,19 @@ export default function Dashboard() {
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-5">
-                                                        <span className={`material-symbols-outlined text-base ${baptized ? 'text-green-400' : 'text-white/20'}`}>
-                                                            {baptized ? 'check_circle' : 'cancel'}
-                                                        </span>
+                                                        {baptized ? <MdCheckCircle className={`text-base text-green-400`} /> : <MdCancel className={`text-base text-white/20`} />}
                                                     </td>
                                                     <td className="py-4 px-5">
-                                                        <span className={`material-symbols-outlined text-base ${confirmed ? 'text-green-400' : 'text-white/20'}`}>
-                                                            {confirmed ? 'check_circle' : 'cancel'}
-                                                        </span>
+                                                        {confirmed ? <MdCheckCircle className={`text-base text-green-400`} /> : <MdCancel className={`text-base text-white/20`} />}
                                                     </td>
                                                     <td className="py-4 px-5 text-white/50 text-sm font-oswald">{joined}</td>
                                                     <td className="py-4 px-5">
                                                         <div className="flex gap-2">
                                                             <button className="text-blue-400 hover:text-blue-300 transition-colors">
-                                                                <span className="material-symbols-outlined text-base">edit</span>
+                                                                <MdEdit className="text-base" />
                                                             </button>
                                                             <button className="text-red-400 hover:text-red-300 transition-colors">
-                                                                <span className="material-symbols-outlined text-base">delete</span>
+                                                                <MdDelete className="text-base" />
                                                             </button>
                                                         </div>
                                                     </td>
@@ -391,9 +389,7 @@ export default function Dashboard() {
                     {!['dashboard', 'parishioners'].includes(activeTab) && (
                         <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
                             <div className="w-24 h-24 rounded-full bg-[#570013]/20 flex items-center justify-center mb-6">
-                                <span className="material-symbols-outlined text-[#ffe088] text-5xl">
-                                    {sidebarItems.find(s => s.id === activeTab)?.icon || 'construction'}
-                                </span>
+                                <DynamicIcon name={sidebarItems.find(s => s.id === activeTab)?.icon || 'construction'} className="text-[#ffe088] text-5xl" />
                             </div>
                             <h3 className="font-oswald font-bold text-2xl text-white mb-2">
                                 {sidebarItems.find(s => s.id === activeTab)?.label}

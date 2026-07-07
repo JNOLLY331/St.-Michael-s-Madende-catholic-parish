@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useSaintsData } from '../../hooks/useSaintsData';
 import SaintCard from './SaintCard';
+import { MdClose, MdSearch, MdSearchOff } from 'react-icons/md';
+
 
 /**
  * Scrolling marquee of saints from the Roman Catholic liturgical calendar.
@@ -37,7 +39,7 @@ export default function SaintsMarquee() {
               : 'Loading saints from the Roman Catholic Liturgical Calendar…'}
           </p>
           <div className="saints-search-wrap">
-            <span className="material-symbols-outlined saints-search-icon">search</span>
+            <MdSearch className="saints-search-icon" />
             <input
               id="saints-search"
               className="saints-search"
@@ -49,7 +51,7 @@ export default function SaintsMarquee() {
             />
             {query && (
               <button className="saints-search-clear" onClick={() => { setQuery(''); setIsFilterMode(false); }} aria-label="Clear search">
-                <span className="material-symbols-outlined">close</span>
+                <MdClose  />
               </button>
             )}
           </div>
@@ -82,7 +84,7 @@ export default function SaintsMarquee() {
         <div className="saints-grid-wrap">
           {filtered.length === 0 ? (
             <div className="saints-no-results">
-              <span className="material-symbols-outlined" style={{ fontSize: '3rem', color: '#570013' }}>search_off</span>
+              <MdSearchOff  style={{ fontSize: '3rem', color: '#570013' }} />
               <p>No saints match "<strong>{query}</strong>"</p>
             </div>
           ) : (

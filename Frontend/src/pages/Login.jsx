@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MdArrowForward, MdChurch, MdDiamond, MdLock, MdLogin, MdMail } from 'react-icons/md';
+import DynamicIcon from '../components/DynamicIcon';
+
+
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -10,7 +14,7 @@ export default function Login() {
             {/* Simple brand header */}
             <header className="w-full sticky top-0 bg-[#fff8f5] z-50 border-b border-[#e0bfbf] shadow-sm px-16 py-4 flex justify-center items-center">
                 <Link to="/" className="flex items-center gap-2 cursor-pointer">
-                    <span className="material-symbols-outlined text-[#570013] text-3xl">church</span>
+                    <MdChurch className="text-[#570013] text-3xl" />
                     <h1 className="font-serif text-2xl font-medium text-[#570013] tracking-tight">St. Michael Madende</h1>
                 </Link>
             </header>
@@ -31,7 +35,7 @@ export default function Login() {
                         </p>
                         {/* Decorative divider */}
                         <div className="decorative-divider justify-center gap-4 my-6 max-w-[200px] mx-auto">
-                            <span className="material-symbols-outlined text-[#735c00] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>diamond</span>
+                            <MdDiamond className="text-[#735c00] text-sm" style={{ fontVariationSettings: "'FILL' 1" }} />
                         </div>
                     </div>
 
@@ -40,7 +44,7 @@ export default function Login() {
                         <div>
                             <label className="block text-label-md text-[#584141] mb-1" htmlFor="login-id">Email or Username</label>
                             <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">mail</span>
+                                <MdMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="login-id"
                                     type="text"
@@ -59,7 +63,7 @@ export default function Login() {
                                 <a href="#" className="text-caption text-[#570013] hover:underline">Forgot Password?</a>
                             </div>
                             <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">lock</span>
+                                <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="password"
                                     type={showPassword ? 'text' : 'password'}
@@ -73,7 +77,7 @@ export default function Login() {
                                     onClick={() => setShowPassword(v => !v)}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[#584141] hover:text-[#570013] transition-colors"
                                 >
-                                    <span className="material-symbols-outlined text-xl">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                                    <DynamicIcon name={showPassword ? 'visibility_off' : 'visibility'} className="text-xl" />
                                 </button>
                             </div>
                         </div>
@@ -96,7 +100,7 @@ export default function Login() {
                             className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2"
                         >
                             <span>Login to Portal</span>
-                            <span className="material-symbols-outlined text-lg">login</span>
+                            <MdLogin className="text-lg" />
                         </Link>
                     </form>
 
@@ -108,7 +112,7 @@ export default function Login() {
                             className="inline-flex items-center gap-2 text-[#735c00] text-label-md hover:text-[#570013] transition-colors group"
                         >
                             Register as a Parishioner
-                            <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            <MdArrowForward className="text-lg group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
                 </div>
@@ -118,7 +122,7 @@ export default function Login() {
             <footer className="w-full py-6 bg-[#2b271e] text-white">
                 <div className="max-w-[1200px] mx-auto px-5 md:px-16 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[#ffe088] text-xl">church</span>
+                        <MdChurch className="text-[#ffe088] text-xl" />
                         <span className="text-caption opacity-80">© 2024 St. Michael Madende Catholic Parish</span>
                     </div>
                     <div className="flex gap-8">

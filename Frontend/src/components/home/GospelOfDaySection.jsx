@@ -1,10 +1,11 @@
+import { MdMenuBook } from 'react-icons/md';
 /** "Word of the Day" closing section with a scripture quote and CTAs. */
 export default function GospelOfDaySection({ onNavigate }) {
   return (
     <section className="bg-[#2b271e] text-white py-24">
       <div data-reveal-spin className="max-w-[1400px] mx-auto px-5 md:px-8 text-center">
         <div className="w-16 h-16 rounded-full bg-[#ffe088]/10 flex items-center justify-center mx-auto mb-8">
-          <span className="material-symbols-outlined text-[#ffe088] text-3xl">menu_book</span>
+          <MdMenuBook className="text-[#ffe088] text-3xl" />
         </div>
         <p className="font-oswald tracking-[0.3em] text-[#ffe088] uppercase text-sm mb-6">Word of the Day</p>
         <blockquote className="font-serif text-3xl md:text-4xl text-[#ffdada] italic max-w-3xl mx-auto leading-relaxed mb-6">

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MdArrowForward, MdChurch, MdDiamond, MdLock, MdMail, MdPerson, MdPersonAdd, MdPhone } from 'react-icons/md';
+import DynamicIcon from '../components/DynamicIcon';
+
+
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
@@ -10,7 +14,7 @@ export default function Register() {
             {/* Simple brand header */}
             <header className="w-full sticky top-0 bg-[#fff8f5] z-50 border-b border-[#e0bfbf] shadow-sm px-5 md:px-16 py-4 flex justify-between md:justify-center items-center">
                 <Link to="/" className="flex items-center gap-2 cursor-pointer">
-                    <span className="material-symbols-outlined text-[#570013] text-3xl">church</span>
+                    <MdChurch className="text-[#570013] text-3xl" />
                     <h1 className="font-serif text-2xl font-medium text-[#570013] tracking-tight">St. Michael Madende</h1>
                 </Link>
                 <Link to="/login" className="md:hidden text-caption text-[#570013] border border-[#570013] px-3 py-1 rounded-full">Login</Link>
@@ -33,7 +37,7 @@ export default function Register() {
                         {/* Decorative divider */}
                         <div className="flex items-center justify-center gap-4 my-6 max-w-[200px] mx-auto">
                             <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-[#e0bfbf]" />
-                            <span className="material-symbols-outlined text-[#735c00] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>diamond</span>
+                            <MdDiamond className="text-[#735c00] text-sm" style={{ fontVariationSettings: "'FILL' 1" }} />
                             <div className="h-[1px] flex-grow bg-gradient-to-l from-transparent to-[#e0bfbf]" />
                         </div>
                     </div>
@@ -44,7 +48,7 @@ export default function Register() {
                             <div>
                                 <label className="block text-label-md text-[#584141] mb-1" htmlFor="first-name">First Name</label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">person</span>
+                                    <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                     <input
                                         id="first-name"
                                         type="text"
@@ -60,7 +64,7 @@ export default function Register() {
                             <div>
                                 <label className="block text-label-md text-[#584141] mb-1" htmlFor="last-name">Last Name</label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">person</span>
+                                    <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                     <input
                                         id="last-name"
                                         type="text"
@@ -77,7 +81,7 @@ export default function Register() {
                         <div>
                             <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-email">Email Address</label>
                             <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">mail</span>
+                                <MdMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="reg-email"
                                     type="email"
@@ -93,7 +97,7 @@ export default function Register() {
                         <div>
                             <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-phone">Phone Number</label>
                             <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">phone</span>
+                                <MdPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="reg-phone"
                                     type="tel"
@@ -109,7 +113,7 @@ export default function Register() {
                         <div>
                             <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-password">Password</label>
                             <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#584141] opacity-60">lock</span>
+                                <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="reg-password"
                                     type={showPassword ? 'text' : 'password'}
@@ -123,7 +127,7 @@ export default function Register() {
                                     onClick={() => setShowPassword(v => !v)}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[#584141] hover:text-[#570013] transition-colors"
                                 >
-                                    <span className="material-symbols-outlined text-xl">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                                    <DynamicIcon name={showPassword ? 'visibility_off' : 'visibility'} className="text-xl" />
                                 </button>
                             </div>
                         </div>
@@ -146,7 +150,7 @@ export default function Register() {
                             className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2"
                         >
                             <span>Create Account</span>
-                            <span className="material-symbols-outlined text-lg">person_add</span>
+                            <MdPersonAdd className="text-lg" />
                         </Link>
                     </form>
 
@@ -158,7 +162,7 @@ export default function Register() {
                             className="inline-flex items-center gap-2 text-[#735c00] text-label-md hover:text-[#570013] transition-colors group"
                         >
                             Sign in to Portal
-                            <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            <MdArrowForward className="text-lg group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
                 </div>
@@ -168,7 +172,7 @@ export default function Register() {
             <footer className="w-full py-6 bg-[#2b271e] text-white mt-auto">
                 <div className="max-w-[1200px] mx-auto px-5 md:px-16 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[#ffe088] text-xl">church</span>
+                        <MdChurch className="text-[#ffe088] text-xl" />
                         <span className="text-caption opacity-80">© 2024 St. Michael Madende Catholic Parish</span>
                     </div>
                     <div className="flex gap-6 md:gap-8 flex-wrap justify-center">

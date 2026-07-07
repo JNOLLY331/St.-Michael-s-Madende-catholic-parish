@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { MdClose } from 'react-icons/md';
+
 import './GospelReadingModal.css';
 
 /**
@@ -38,7 +40,7 @@ export default function GospelReadingModal({ gospel, onClose }) {
           onClick={onClose}
           aria-label="Close reading"
         >
-          <span className="material-symbols-outlined">close</span>
+          <MdClose  />
         </button>
 
         <p className="gospel-modal-eyebrow">✦ Daily Reading ✦</p>

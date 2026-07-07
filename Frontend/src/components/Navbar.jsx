@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { MdChurch, MdExpandMore, MdPerson } from 'react-icons/md';
+import DynamicIcon from './DynamicIcon';
+
+
 
 const navLinks = [
     { label: 'Home', to: '/' },
@@ -95,12 +99,12 @@ export default function Navbar() {
                         className="flex items-center gap-3 cursor-pointer group shrink-0"
                     >
                         <div className="w-12 h-12 rounded-full bg-[#ffe088] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                            <span className="material-symbols-outlined text-[#570013] text-3xl">church</span>
+                            <MdChurch className="text-[#570013] text-3xl" />
                         </div>
                         <div className="text-left">
                             <span className="font-oswald font-bold text-white text-xl tracking-wide block leading-none drop-shadow-lg">
                                 ST. MICHAEL
-                                <br /><span>MADENDE</span> 
+                                <br /><span>MADENDE</span>
                             </span>
                             <span className="text-[#ffe088] text-[10px] font-oswald tracking-[0.2em] uppercase">
                                 Catholic Parish
@@ -132,9 +136,7 @@ export default function Navbar() {
                                             )}
                                             {label}
                                             {dropdown && (
-                                                <span className="material-symbols-outlined text-sm transition-transform duration-300 group-hover:rotate-180">
-                                                    expand_more
-                                                </span>
+                                                <MdExpandMore className="text-sm transition-transform duration-300 group-hover:rotate-180" />
                                             )}
                                         </button>
 
@@ -191,7 +193,7 @@ export default function Navbar() {
                             onClick={() => handleNavClick('/login')}
                             className="hidden md:flex items-center gap-1 border border-white/30 text-white px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase hover:bg-white/10 transition-colors"
                         >
-                            <span className="material-symbols-outlined text-base">person</span>
+                            <MdPerson className="text-base" />
                             <span>Portal</span>
                         </button>
 
@@ -201,10 +203,8 @@ export default function Navbar() {
                             className="lg:hidden p-2 text-white hover:text-[#ffe088] transition-colors"
                             aria-label="Toggle menu"
                         >
-                            <span className="material-symbols-outlined text-3xl transition-transform duration-300"
-                                style={{ transform: menuOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>
-                                {menuOpen ? 'close' : 'menu'}
-                            </span>
+                            <DynamicIcon name={menuOpen ? 'close' : 'menu'} className="text-3xl transition-transform duration-300"
+                                style={{ transform: menuOpen ? 'rotate(90deg)' : 'rotate(0deg)' }} />
                         </button>
                     </div>
                 </div>
@@ -228,9 +228,7 @@ export default function Navbar() {
                                     >
                                         {label}
                                         {dropdown && (
-                                            <span className={`material-symbols-outlined text-base transition-transform duration-300 ${mobileDropdown === to ? 'rotate-180' : ''}`}>
-                                                expand_more
-                                            </span>
+                                            <MdExpandMore className={`text-base transition-transform duration-300 ${mobileDropdown === to ? 'rotate-180' : ''}`} />
                                         )}
                                     </button>
                                     {dropdown && mobileDropdown === to && (
@@ -256,9 +254,7 @@ export default function Navbar() {
                                 onClick={toggleTheme}
                                 className="flex items-center justify-center gap-2 border border-white/30 text-white py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-white/10 transition-colors px-4"
                             >
-                                <span className="material-symbols-outlined text-base">
-                                    {theme === 'dark' ? 'light_mode' : 'dark_mode'}
-                                </span>
+                                <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-base" />
                                 {theme === 'dark' ? 'Light' : 'Dark'}
                             </button>
                             <button

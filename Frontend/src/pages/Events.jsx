@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MdArrowForward, MdLocationOn, MdSchedule } from 'react-icons/md';
+
 
 const events = [
     {
@@ -105,11 +107,11 @@ export default function Events() {
                                 </p>
                                 <div className="flex items-center gap-4 text-label-md" style={{ color: '#735c00' }}>
                                     <div className="flex items-center gap-1">
-                                        <span className="material-symbols-outlined text-lg">location_on</span>
+                                        <MdLocationOn className="text-lg" />
                                         {location}
                                     </div>
                                     <div className="flex items-center gap-1">
-                                        <span className="material-symbols-outlined text-lg">schedule</span>
+                                        <MdSchedule className="text-lg" />
                                         {time}
                                     </div>
                                 </div>
@@ -137,7 +139,7 @@ export default function Events() {
                         className="inline-flex items-center gap-2 bg-[#570013] text-white px-10 py-4 rounded-full text-label-md btn-primary hover:opacity-90 transition-all"
                     >
                         Contact the Office
-                        <span className="material-symbols-outlined">arrow_forward</span>
+                        <MdArrowForward  />
                     </Link>
                 </div>
             </section>

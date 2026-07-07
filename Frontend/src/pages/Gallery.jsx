@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { MdClose, MdZoomIn } from 'react-icons/md';
+
 
 const galleryPhotos = [
     { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDYm5Urp1fukVfl-u-D8canOcBRVcAlSeb7oraAW8r5BClZ5VPjdsA1VAJlJfbpDomXbbgz8N3kEFx6oPLnsBmncGG-VCwiUm2FTQQBYiHNPQoObCPsTSUBPDN6zeH_SEURa0AgremE_nlpV_5yaNKiVk5fCABQZyF1Q1VFjK2przqEC2B1LGZ4EWboXOBA0dARClO6eJAwXJNu5_rYOpvNubv11o8GrMqtCd5Vo0ouBcshQbiBcGjYeJBqKaxvNPTcPyRZ3mmWEE', reveal: 'data-reveal-left' },
@@ -49,7 +51,7 @@ export default function Gallery() {
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-400"
                                     style={{ background: 'rgba(87,0,19,0.45)', backdropFilter: 'blur(2px)' }}>
                                     <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-400">
-                                        <span className="material-symbols-outlined text-4xl">zoom_in</span>
+                                        <MdZoomIn className="text-4xl" />
                                         <p className="font-oswald text-sm tracking-widest uppercase mt-1">View</p>
                                     </div>
                                 </div>
@@ -72,7 +74,7 @@ export default function Gallery() {
                             className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white hover:bg-white/40 transition-colors flex items-center justify-center"
                             onClick={() => setLightbox(null)}
                         >
-                            <span className="material-symbols-outlined">close</span>
+                            <MdClose  />
                         </button>
                     </div>
                 </div>

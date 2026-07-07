@@ -1,3 +1,4 @@
+import { MdVolunteerActivism } from 'react-icons/md';
 /** "Support Our Mission" donation call-to-action section. */
 export default function DonationSection({ onNavigate }) {
   return (
@@ -29,7 +30,7 @@ export default function DonationSection({ onNavigate }) {
           </div>
           <div className="md:w-1/3 flex justify-center items-center relative z-10">
             <div className="w-36 h-36 rounded-full bg-[#ffe088]/10 border-2 border-[#ffe088]/30 flex items-center justify-center">
-              <span className="material-symbols-outlined text-[#ffe088] text-8xl">volunteer_activism</span>
+              <MdVolunteerActivism className="text-[#ffe088] text-8xl" />
             </div>
           </div>
         </div>

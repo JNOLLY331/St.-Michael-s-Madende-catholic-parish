@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCountUp } from '../../hooks/useCountUp';
+import DynamicIcon from '../DynamicIcon';
+
 
 /** A single animated stat tile used in the "Parish By the Numbers" section. */
 export default function StatCard({ value, label, suffix = '', icon, delay = 0 }) {
@@ -23,7 +25,7 @@ export default function StatCard({ value, label, suffix = '', icon, delay = 0 })
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="w-16 h-16 rounded-full bg-[#ffe088]/10 border border-[#ffe088]/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-        <span className="material-symbols-outlined text-[#ffe088] text-3xl">{icon}</span>
+        <DynamicIcon name={icon} className="text-[#ffe088] text-3xl" />
       </div>
       <div className="text-5xl font-oswald font-bold text-white mb-1 leading-none">
         {count.toLocaleString()}{suffix}

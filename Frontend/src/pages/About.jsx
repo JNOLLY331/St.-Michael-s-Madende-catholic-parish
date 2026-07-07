@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParishData } from '../hooks/useParishData';
 import { useClergyData } from '../hooks/useClergyData';
+import { MdArrowForward, MdAutoStories, MdMail, MdVolunteerActivism, MdWorkspacePremium } from 'react-icons/md';
+import DynamicIcon from '../components/DynamicIcon';
+
+
 
 export default function About() {
   const { parish } = useParishData();
@@ -34,7 +38,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           <div className="md:col-span-5 space-y-6">
             <div className="inline-flex items-center gap-2 text-[#735c00]">
-              <span className="material-symbols-outlined">auto_stories</span>
+              <MdAutoStories  />
               <span className="text-label-md uppercase tracking-wider">Our Mission</span>
             </div>
             <h2 className="text-headline-lg text-[#570013]">To know, love, and serve God in our neighbors.</h2>
@@ -56,7 +60,7 @@ export default function About() {
               />
             </div>
             <div className="absolute -bottom-8 -left-8 bg-[#fed65b] p-6 rounded-xl shadow-lg max-w-[240px] hidden lg:block">
-              <span className="material-symbols-outlined text-[#745c00] text-4xl mb-2">volunteer_activism</span>
+              <MdVolunteerActivism className="text-[#745c00] text-4xl mb-2" />
               <p className="text-body-md text-[#745c00] font-semibold">120+ Years of Continuous Prayer and Community Service.</p>
             </div>
           </div>
@@ -69,7 +73,7 @@ export default function About() {
           <div className="text-center mb-20">
             <h2 className="text-headline-lg text-[#570013] mb-4">Our Sacred History</h2>
             <div className="decorative-divider max-w-md mx-auto opacity-50">
-              <span className="material-symbols-outlined text-[#735c00]">workspace_premium</span>
+              <MdWorkspacePremium className="text-[#735c00]" />
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -141,7 +145,7 @@ export default function About() {
             className="bg-[#570013] text-white px-8 py-3 rounded-full text-label-md flex items-center gap-2 group transition-all hover:pr-10 whitespace-nowrap"
           >
             Sacramental Care
-            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            <MdArrowForward className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -160,10 +164,10 @@ export default function About() {
                 <p className="text-body-md text-[#584141] mb-4">{bio}</p>
                 <div className="flex gap-2">
                   <a href={`mailto:${email}`} className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
-                    <span className="material-symbols-outlined text-xl">mail</span>
+                    <MdMail className="text-xl" />
                   </a>
                   <button className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
-                    <span className="material-symbols-outlined text-xl">{action}</span>
+                    <DynamicIcon name={action} className="text-xl" />
                   </button>
                 </div>
               </div>

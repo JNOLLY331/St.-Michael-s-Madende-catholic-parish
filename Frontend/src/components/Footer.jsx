@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MdChurch } from 'react-icons/md';
+import DynamicIcon from './DynamicIcon';
+
+
 
 const socialLinks = [
     { icon: 'fa-facebook-f', href: '#', label: 'Facebook', hoverBg: '#1877F2', emoji: '👍' },
@@ -64,7 +68,7 @@ export default function Footer() {
                     <div className="lg:col-span-1 space-y-5" data-reveal-left>
                         <div className="flex items-center gap-3 mb-2">
                             <div className="w-14 h-14 rounded-full bg-[#ffe088] flex items-center justify-center shadow-xl hover:scale-110 hover:rotate-12 transition-all duration-500 cursor-pointer footer-float-icon">
-                                <span className="material-symbols-outlined text-[#570013] text-2xl">church</span>
+                                <MdChurch className="text-[#570013] text-2xl" />
                             </div>
                             <div>
                                 <h2 className="footer-heading font-oswald font-bold text-xl text-[#ffe088] leading-tight cursor-default">
@@ -89,7 +93,7 @@ export default function Footer() {
                                 { icon: 'schedule', text: 'Office: Mon–Fri, 9AM–4PM' },
                             ].map(({ icon, text }) => (
                                 <div key={icon} className="footer-card flex items-start gap-2 cursor-default">
-                                    <span className="material-symbols-outlined text-[#ffe088] text-base mt-0.5 footer-float-icon">{icon}</span>
+                                    <DynamicIcon name={icon} className="text-[#ffe088] text-base mt-0.5 footer-float-icon" />
                                     <span style={{ color: 'var(--footer-text)' }} className="whitespace-pre-line">{text}</span>
                                 </div>
                             ))}

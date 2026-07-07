@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MdArrowForward, MdBackHand, MdLocalPharmacy, MdLocalFireDepartment, MdOpacity, MdSpa, MdLiquor, MdStar } from 'react-icons/md';
+
 
 export default function Sacraments() {
     return (
@@ -29,7 +31,7 @@ export default function Sacraments() {
             </div>
             <div className="max-w-[1200px] mx-auto px-5 md:px-16 flex items-center justify-center mb-20">
                 <div className="flex-1 h-[1px] bg-[#e0bfbf]" />
-                <span className="material-symbols-outlined px-4 text-[#735c00]">chess</span>
+                <MdStar className="px-4 text-4xl text-[#735c00]" />
                 <div className="flex-1 h-[1px] bg-[#e0bfbf]" />
             </div>
 
@@ -62,7 +64,7 @@ export default function Sacraments() {
                 {/* Confirmation */}
                 <div className="md:col-span-4 group relative overflow-hidden rounded-xl border border-[#e0bfbf] bg-[#fbf2ed] p-8 flex flex-col hover:shadow-xl transition-all">
                     <div className="mb-4">
-                        <span className="material-symbols-outlined text-[#735c00] text-[48px]" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
+                        <MdLocalFireDepartment className="text-[#735c00] text-[48px]" />
                     </div>
                     <h3 className="text-headline-md text-[#570013] mb-2">Confirmation</h3>
                     <p className="text-body-md text-[#584141] flex-grow">
@@ -70,14 +72,14 @@ export default function Sacraments() {
                     </p>
                     <button className="mt-8 text-[#735c00] font-bold flex items-center gap-2 hover:gap-4 transition-all w-fit">
                         <span>Preparation Schedule</span>
-                        <span className="material-symbols-outlined">arrow_forward</span>
+                        <MdArrowForward />
                     </button>
                 </div>
 
                 {/* Eucharist */}
                 <div className="md:col-span-4 group relative overflow-hidden rounded-xl border border-[#e0bfbf] bg-[#fbf2ed] p-8 flex flex-col hover:shadow-xl transition-all">
                     <div className="mb-4">
-                        <span className="material-symbols-outlined text-[#735c00] text-[48px]">wine_bar</span>
+                        <MdLiquor className="text-[#735c00] text-[48px]" />
                     </div>
                     <h3 className="text-headline-md text-[#570013] mb-2">The Eucharist</h3>
                     <p className="text-body-md text-[#584141] flex-grow">
@@ -85,7 +87,7 @@ export default function Sacraments() {
                     </p>
                     <button className="mt-8 text-[#735c00] font-bold flex items-center gap-2 hover:gap-4 transition-all w-fit">
                         <span>First Communion Info</span>
-                        <span className="material-symbols-outlined">arrow_forward</span>
+                        <MdArrowForward />
                     </button>
                 </div>
 
@@ -114,7 +116,7 @@ export default function Sacraments() {
                 {/* Reconciliation */}
                 <div className="md:col-span-4 group relative overflow-hidden rounded-xl border border-[#e0bfbf] bg-[#fbf2ed] p-8 flex flex-col hover:shadow-xl transition-all">
                     <div className="mb-4">
-                        <span className="material-symbols-outlined text-[#735c00] text-[48px]">settings_accessibility</span>
+                        <MdSpa className="text-[#735c00] text-[48px]" />
                     </div>
                     <h3 className="text-headline-md text-[#570013] mb-2">Reconciliation</h3>
                     <p className="text-body-md text-[#584141] flex-grow">
@@ -129,7 +131,7 @@ export default function Sacraments() {
                 {/* Holy Orders */}
                 <div className="md:col-span-4 group relative overflow-hidden rounded-xl border border-[#e0bfbf] bg-[#fbf2ed] p-8 flex flex-col hover:shadow-xl transition-all">
                     <div className="mb-4">
-                        <span className="material-symbols-outlined text-[#735c00] text-[48px]">back_hand</span>
+                        <MdBackHand className="text-[#735c00] text-[48px]" />
                     </div>
                     <h3 className="text-headline-md text-[#570013] mb-2">Holy Orders</h3>
                     <p className="text-body-md text-[#584141] flex-grow">
@@ -137,21 +139,21 @@ export default function Sacraments() {
                     </p>
                     <button className="mt-8 text-[#735c00] font-bold flex items-center gap-2 hover:gap-4 transition-all w-fit">
                         <span>Vocation Resources</span>
-                        <span className="material-symbols-outlined">arrow_forward</span>
+                        <MdArrowForward />
                     </button>
                 </div>
 
                 {/* Anointing of the Sick */}
                 <div className="md:col-span-4 group relative overflow-hidden rounded-xl border border-[#e0bfbf] bg-[#fbf2ed] p-8 flex flex-col hover:shadow-xl transition-all">
                     <div className="mb-4">
-                        <span className="material-symbols-outlined text-[#735c00] text-[48px]">opacity</span>
+                        <MdOpacity className="text-[#735c00] text-[48px]" />
                     </div>
                     <h3 className="text-headline-md text-[#570013] mb-2">Anointing of the Sick</h3>
                     <p className="text-body-md text-[#584141] flex-grow">
                         Providing comfort, peace, and spiritual healing for those facing serious illness or the frailty of old age.
                     </p>
                     <button className="mt-8 bg-[#ba1a1a]/10 text-[#ba1a1a] px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-[#ba1a1a]/20 transition-all w-fit">
-                        <span className="material-symbols-outlined text-sm">emergency_home</span>
+                        <MdLocalPharmacy className="text-sm" />
                         <span>Emergency Contact</span>
                     </button>
                 </div>

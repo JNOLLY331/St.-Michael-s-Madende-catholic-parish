@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MdAutoAwesome, MdAutoStories, MdFlare, MdChevronRight, MdMail, MdPerson, MdVolunteerActivism } from 'react-icons/md';
+
 
 export default function Ministries() {
     return (
@@ -16,7 +18,7 @@ export default function Ministries() {
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="flex items-center justify-center gap-4 mb-12">
                     <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-[#e0bfbf]" />
-                    <span className="material-symbols-outlined text-[#735c00] text-2xl">auto_stories</span>
+                    <MdAutoStories className="text-[#735c00] text-2xl" />
                     <h2 className="text-headline-lg text-[#2b271e] uppercase tracking-widest">Liturgical</h2>
                     <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-[#e0bfbf]" />
                 </div>
@@ -72,7 +74,7 @@ export default function Ministries() {
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="flex items-center justify-center gap-4 mb-12">
                     <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-[#e0bfbf]" />
-                    <span className="material-symbols-outlined text-[#735c00] text-2xl">volunteer_activism</span>
+                    <MdVolunteerActivism className="text-[#735c00] text-2xl" />
                     <h2 className="text-headline-lg text-[#2b271e] uppercase tracking-widest">Community Outreach</h2>
                     <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-[#e0bfbf]" />
                 </div>
@@ -87,7 +89,7 @@ export default function Ministries() {
                             <h3 className="text-headline-md text-[#570013] mb-2">St. Vincent de Paul Society</h3>
                             <p className="text-[#584141] mb-6 text-body-md">Providing food, clothing, and essential support to families in need within the Madende community.</p>
                             <div className="flex items-center gap-3">
-                                <span className="material-symbols-outlined text-[#570013]">person</span>
+                                <MdPerson className="text-[#570013]" />
                                 <span className="font-bold">Catherine Wekesa</span>
                             </div>
                         </div>
@@ -101,7 +103,7 @@ export default function Ministries() {
                             <h3 className="text-headline-md text-[#570013] mb-2">Hospital Visitation</h3>
                             <p className="text-[#584141] mb-6 text-body-md">Bringing the Eucharist and emotional support to the sick and homebound, ensuring no member is isolated.</p>
                             <div className="flex items-center gap-3">
-                                <span className="material-symbols-outlined text-[#570013]">person</span>
+                                <MdPerson className="text-[#570013]" />
                                 <span className="font-bold">Fr. Dominic</span>
                             </div>
                         </div>
@@ -132,7 +134,7 @@ export default function Ministries() {
                                 <h3 className="text-headline-md text-[#570013] mb-2">Catholic Youth Organization (CYO)</h3>
                                 <p className="text-[#584141] mb-4 text-body-md">Empowering young people to live as disciples of Jesus Christ through service, social events, and retreats.</p>
                                 <div className="flex items-center gap-2 text-[#570013] cursor-pointer hover:underline">
-                                    <span className="material-symbols-outlined text-sm">mail</span>
+                                    <MdMail className="text-sm" />
                                     <span className="text-label-md">Contact Peter Nabwera</span>
                                 </div>
                             </div>
@@ -142,13 +144,13 @@ export default function Ministries() {
                     {/* Sacred Heart */}
                     <div className="md:col-span-4 bg-[#800020] text-white p-8 rounded-xl flex flex-col justify-between">
                         <div>
-                            <span className="material-symbols-outlined mb-4">brightness_low</span>
+                            <MdFlare className="mb-4 text-3xl" />
                             <h3 className="text-headline-md mb-2">Sacred Heart</h3>
                             <p className="opacity-90 text-body-md">Weekly adoration and contemplative prayer focused on the compassion of Christ.</p>
                         </div>
                         <div className="mt-6 flex items-center justify-between">
                             <span className="text-caption font-bold">Leader: Mrs. Simiyu</span>
-                            <span className="material-symbols-outlined">chevron_right</span>
+                            <MdChevronRight />
                         </div>
                     </div>
 
@@ -170,7 +172,7 @@ export default function Ministries() {
                                 <p className="text-[#584141] text-body-md">Experience the power of the Holy Spirit through vibrant praise, worship, and healing prayers every Thursday evening.</p>
                             </div>
                             <div className="w-12 h-12 bg-[#fed65b] rounded-full flex items-center justify-center text-[#745c00]">
-                                <span className="material-symbols-outlined">auto_awesome</span>
+                                <MdAutoAwesome />
                             </div>
                         </div>
                         <div className="mt-6 flex gap-4">

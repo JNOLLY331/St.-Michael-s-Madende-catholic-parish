@@ -1,4 +1,6 @@
 import { UPCOMING_EVENTS } from '../../data/homeData';
+import { MdArrowForward, MdLocationOn } from 'react-icons/md';
+
 
 const REVEAL_ATTR_BY_INDEX = ['data-reveal-left', 'data-reveal-zoom', 'data-reveal-right'];
 
@@ -17,7 +19,7 @@ export default function EventsSection({ onNavigate }) {
             onClick={() => onNavigate('/events')}
             className="hidden md:flex items-center gap-2 text-[#570013] font-oswald font-bold text-sm uppercase tracking-wide hover:gap-3 transition-all link-slide"
           >
-            View Calendar <span className="material-symbols-outlined">arrow_forward</span>
+            View Calendar <MdArrowForward  />
           </button>
         </div>
 
@@ -52,13 +54,13 @@ export default function EventsSection({ onNavigate }) {
                 </h3>
                 <p className="text-white/80 text-sm line-clamp-2 mb-3">{desc}</p>
                 <div className="flex items-center gap-2 text-[#ffe088]">
-                  <span className="material-symbols-outlined text-lg">location_on</span>
+                  <MdLocationOn className="text-lg" />
                   <span className="font-oswald text-sm tracking-wide">{location}</span>
                 </div>
                 {/* Read more hover line */}
                 <div className="mt-3 flex items-center gap-2 text-white/60 group-hover:text-[#ffe088] transition-colors">
                   <span className="font-oswald text-xs uppercase tracking-widest">Learn More</span>
-                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  <MdArrowForward className="text-sm" />
                 </div>
               </div>
 

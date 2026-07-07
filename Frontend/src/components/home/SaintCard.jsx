@@ -1,4 +1,6 @@
 import { RANK_COLOURS, GUARANTEED_FALLBACKS } from '../../data/saintsData';
+import { MdCalendarToday } from 'react-icons/md';
+
 
 /** A single saint tile used inside the marquee/grid in SaintsMarquee. */
 export default function SaintCard({ saint }) {
@@ -25,7 +27,7 @@ export default function SaintCard({ saint }) {
       </div>
       <div className="saint-card__body">
         <p className="saint-card__date">
-          <span className="material-symbols-outlined" style={{ fontSize: '0.8rem' }}>calendar_today</span>{' '}{saint.date}
+          <MdCalendarToday  style={{ fontSize: '0.8rem' }} />{' '}{saint.date}
         </p>
         <h3 className="saint-card__name">{saint.name}</h3>
       </div>

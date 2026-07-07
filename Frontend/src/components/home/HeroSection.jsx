@@ -1,3 +1,4 @@
+import { MdChurch, MdKeyboardArrowDown, MdMenuBook } from 'react-icons/md';
 /**
  * Full-height hero banner with the day's Gospel reading preview.
  *
@@ -54,7 +55,7 @@ export default function HeroSection({ hero, gospel, onNavigate, onOpenGospelModa
                 onClick={() => handleButtonClick(hero.primaryButtonLink)}
                 className="btn-primary bg-[#ffe088] text-[#40000b] px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide flex items-center justify-center gap-2 shadow-xl"
               >
-                <span className="material-symbols-outlined">menu_book</span>
+                <MdMenuBook  />
                 {hero.primaryButtonText}
               </button>
             )}
@@ -104,15 +105,13 @@ export default function HeroSection({ hero, gospel, onNavigate, onOpenGospelModa
                 aria-haspopup="dialog"
               >
                 <span>Read More</span>
-                <span className="material-symbols-outlined gospel-readmore-chevron" aria-hidden="true">
-                  keyboard_arrow_down
-                </span>
+                <MdKeyboardArrowDown className="gospel-readmore-chevron" aria-hidden="true" />
               </button>
             )}
 
             <div className="flex items-center justify-center gap-3 mt-16">
               <span className="w-8 h-[1px] bg-[#ffe088]/40" />
-              <span className="material-symbols-outlined text-[#ffe088] text-base">church</span>
+              <MdChurch className="text-[#ffe088] text-base" />
               <span className="w-8 h-[1px] bg-[#ffe088]/40" />
             </div>
           </div>
@@ -121,7 +120,7 @@ export default function HeroSection({ hero, gospel, onNavigate, onOpenGospelModa
 
       {/* Scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-white/60 animate-bounce">
-        <span className="material-symbols-outlined text-3xl">keyboard_arrow_down</span>
+        <MdKeyboardArrowDown className="text-3xl" />
       </div>
     </section>
   );

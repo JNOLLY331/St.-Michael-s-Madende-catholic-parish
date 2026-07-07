@@ -1,3 +1,4 @@
+import { MdCheckCircle, MdChurch, MdDiversity3, MdFavorite, MdLock, MdMail, MdVerifiedUser, MdVolunteerActivism } from 'react-icons/md';
 import React, { useState } from 'react';
 
 export default function Donate() {
@@ -16,11 +17,11 @@ export default function Donate() {
                     </p>
                     <div className="flex gap-4 pt-4">
                         <div className="flex items-center gap-2 text-[#570013]">
-                            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
+                            <MdVerifiedUser  style={{ fontVariationSettings: "'FILL' 1" }} />
                             <span className="text-label-md uppercase tracking-wider">Secure Giving</span>
                         </div>
                         <div className="flex items-center gap-2 text-[#570013]">
-                            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
+                            <MdFavorite  style={{ fontVariationSettings: "'FILL' 1" }} />
                             <span className="text-label-md uppercase tracking-wider">Spiritual Legacy</span>
                         </div>
                     </div>
@@ -97,7 +98,7 @@ export default function Donate() {
                         </div>
 
                         <button className="w-full py-5 bg-[#800020] text-white rounded-full text-headline-md flex items-center justify-center gap-3 shadow-lg hover:brightness-110 active:scale-95 transition-all">
-                            <span className="material-symbols-outlined">lock</span> Complete Secure Donation
+                            <MdLock  /> Complete Secure Donation
                         </button>
                         <p className="text-center text-caption mt-4 text-[#584141]">
                             Secure 256-bit SSL encrypted payment processing.
@@ -106,7 +107,7 @@ export default function Donate() {
 
                     <div className="lg:col-span-5 flex flex-col gap-6">
                         <div className="bg-[#fff8f5]/80 backdrop-blur-sm border border-[#e0bfbf]/30 p-8 rounded-xl flex-1 shadow-sm">
-                            <span className="material-symbols-outlined text-[#735c00] text-4xl mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>volunteer_activism</span>
+                            <MdVolunteerActivism className="text-[#735c00] text-4xl mb-2" style={{ fontVariationSettings: "'FILL' 1" }} />
                             <h3 className="text-headline-md text-[#570013] mb-2">Why Your Gift Matters</h3>
                             <p className="text-[#584141] text-body-md mb-4">
                                 Your contributions sustain our daily liturgy, maintain our historic sacred spaces, and fuel our outreach to those in need within Madende.
@@ -114,7 +115,7 @@ export default function Donate() {
                             <ul className="space-y-2">
                                 {['Maintaining our parish grounds', 'Funding local soup kitchens', 'Supporting religious education'].map(li => (
                                     <li key={li} className="flex items-center gap-2">
-                                        <span className="material-symbols-outlined text-[#735c00] text-sm">check_circle</span>
+                                        <MdCheckCircle className="text-[#735c00] text-sm" />
                                         <span className="text-body-md text-[#584141]">{li}</span>
                                     </li>
                                 ))}
@@ -125,14 +126,14 @@ export default function Donate() {
                             <h3 className="text-headline-md text-[#ffe088] mb-4">Other Ways to Give</h3>
                             <div className="space-y-4">
                                 <div className="flex items-start gap-4">
-                                    <span className="material-symbols-outlined text-[#ffe088]">mail</span>
+                                    <MdMail className="text-[#ffe088]" />
                                     <div>
                                         <h4 className="font-bold text-body-md">By Mail</h4>
                                         <p className="text-sm opacity-80">PO Box 123, Madende, St. Michael’s Parish</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
-                                    <span className="material-symbols-outlined text-[#ffe088]">diversity_3</span>
+                                    <MdDiversity3 className="text-[#ffe088]" />
                                     <div>
                                         <h4 className="font-bold text-body-md">Planned Giving</h4>
                                         <p className="text-sm opacity-80">Include the parish in your estate planning.</p>
@@ -147,7 +148,7 @@ export default function Donate() {
             {/* Decorative */}
             <div className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20 text-[#735c00] flex justify-center items-center gap-4">
                 <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-[#8c7071] to-transparent" />
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>church</span>
+                <MdChurch  style={{ fontVariationSettings: "'FILL' 1" }} />
                 <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-[#8c7071] to-transparent" />
             </div>
 

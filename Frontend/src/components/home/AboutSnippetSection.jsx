@@ -1,4 +1,6 @@
 import { ABOUT_SNIPPET_IMAGE_URL } from '../../data/homeData';
+import { MdArrowForward } from 'react-icons/md';
+
 
 /** "Our Heritage" teaser section linking through to the full About page. */
 export default function AboutSnippetSection({ onNavigate }) {
@@ -41,7 +43,7 @@ export default function AboutSnippetSection({ onNavigate }) {
               className="btn-primary bg-[#570013] text-white px-8 py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide shadow-lg inline-flex items-center gap-2"
             >
               Read Our Full History
-              <span className="material-symbols-outlined text-base">arrow_forward</span>
+              <MdArrowForward className="text-base" />
             </button>
           </div>
         </div>

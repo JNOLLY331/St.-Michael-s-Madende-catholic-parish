@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { SAINTS_SEED } from '../../data/saintsData';
+import { useState } from 'react';
+import { useSaintsData } from '../../hooks/useSaintsData';
 import SaintCard from './SaintCard';
 
 /**
@@ -8,38 +8,9 @@ import SaintCard from './SaintCard';
  * and supports filtering by name, date, or rank.
  */
 export default function SaintsMarquee() {
-  const [saints, setSaints] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { saints, loading } = useSaintsData();
   const [query, setQuery] = useState('');
   const [isFilterMode, setIsFilterMode] = useState(false);
-
-  useEffect(() => {
-    const enrich = async () => {
-      const enriched = await Promise.all(
-        SAINTS_SEED.map(async (s) => {
-          try {
-            // Some seed slugs (e.g. "Teresa_of_%C3%81vila") are already percent-encoded.
-            // Decoding first (safe no-op for plain slugs) before re-encoding prevents
-            // double-encoding "%C3%81" into "%25C3%2581", which Wikipedia 403s on.
-            let normalizedSlug = s.wikiSlug;
-            try { normalizedSlug = decodeURIComponent(s.wikiSlug); } catch { /* not encoded, use as-is */ }
-            const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(normalizedSlug)}`;
-            const res = await fetch(wikiUrl, { signal: AbortSignal.timeout(7000) });
-            if (!res.ok) throw new Error('no wiki');
-            const data = await res.json();
-            // Use the Wikipedia-provided thumbnail without mutating it if possible, otherwise fallback
-            const img = data.thumbnail?.source || s.fallbackImg;
-            return { ...s, image: img, extract: data.extract };
-          } catch {
-            return { ...s, image: s.fallbackImg, extract: '' };
-          }
-        })
-      );
-      setSaints(enriched);
-      setLoading(false);
-    };
-    enrich();
-  }, []);
 
   const filtered = query.trim()
     ? saints.filter(s =>

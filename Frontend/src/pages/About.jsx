@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useParishData } from '../hooks/useParishData';
+import { useClergyData } from '../hooks/useClergyData';
 
 export default function About() {
+  const { parish } = useParishData();
+  const { clergy } = useClergyData();
   return (
     <>
       {/* ── Hero ── */}
@@ -35,9 +39,7 @@ export default function About() {
             </div>
             <h2 className="text-headline-lg text-[#570013]">To know, love, and serve God in our neighbors.</h2>
             <p className="text-body-lg text-[#584141] leading-relaxed">
-              At St. Michael Madende, we strive to create a vibrant liturgical community where every individual
-              feels the warmth of Christ's love. Our mission is to nourish the spiritual lives of our parishioners
-              through the Sacraments, education, and acts of charity that extend beyond our church walls.
+              {parish.mission || "At St. Michael Madende, we strive to create a vibrant liturgical community where every individual feels the warmth of Christ's love. Our mission is to nourish the spiritual lives of our parishioners through the Sacraments, education, and acts of charity that extend beyond our church walls."}
             </p>
             <div className="pt-4">
               <button className="border border-[#8c7071] text-[#570013] px-8 py-3 rounded-full text-label-md hover:bg-[#e9e1dc] transition-colors">
@@ -144,29 +146,7 @@ export default function About() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              role: 'Parish Priest',
-              name: 'Rev. Fr. Michael O\'Malley',
-              bio: "Serving St. Michael's since 2015, Fr. Michael is dedicated to youth ministry and liturgical music excellence.",
-              img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcmIp9j0kdavKepp6m7dYg3xSVHDIf9VRJsTIBan3u6LXJyY9lScUIzheFO1jJXuHbK481o8iwaDXuhE_6WsgPVDt5ghcrQeSKK4tS5JCbemZAwR3hTVJrTfUu-ZnU34fjoEaXuYzKNk4ouozcag3I5Lt-6JwbP22Zqfa1xhO_mSHqofQ6y828CAUArBNnG3oEhhMFbiuLV5-osoFgsTQJJIhLFoDOxjMlCOH6RzQc5ezzvzKRt2rHfB3BxeWeVhXoYmWQfw8ADUDX',
-              action: 'schedule',
-            },
-            {
-              role: 'Assistant Priest',
-              name: 'Rev. Fr. David Kiptoo',
-              bio: "Fr. David brings a passion for social justice and leads our community outreach and food pantry initiatives.",
-              img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBxuiYTYZpzUFzxe2CQ6BxhMFZ4Iwvgj0K-1_IwVM93jZjfjPDpOpSBQg7o-7ja5OHekCbuhW39EnXbaXLY-AJoAgggjSLDqI8wAu0W_gn9WSItoHdOMMwqI0-U64z5A69B1oN56gXDGE2JBC_yJBO_6cpWfae26E1bI12U8gH9LjCRgO3U0M5ZfSKujGNJeSy_4wAGDKDzyY8pSSZ3ghip0OlXVkWtoDLuFRUcWsZb16qrNRXY-D2eXS7_QQPza0enyoy4We03Is1u',
-              action: 'schedule',
-            },
-            {
-              role: 'Priest in Residence',
-              name: 'Msgr. John Mutua',
-              bio: "Retired but active, Monsignor Mutua provides spiritual direction and historical perspective for our parish family.",
-              img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDD74zNhbOod1Y4shax1-hf-0qmVISE_YnH7jAvxYFXgiXEh1ES3ChSG8V9JIwAhnaMlZIRn1kr5CE7ru3Jtz4vUnf2lWSRhZzftdl1ntHr5nkdzo1MnpWM5sscB-44OQgnXZ5w-tBE9-q83nwRjSx_dPdiQXtj9kp5FEEzNYMztp9kVW2k3w0a8-XgZggBCQ6w5nyNGKkt8M0sMmFQrWNM81S_mJT5A1beILZSszKuU-B2HMWnIOuAg8tOfworVGyed-ly8Nma_pVS',
-              action: 'history',
-            },
-          ].map(({ role, name, bio, img, action }) => (
+          {clergy.map(({ role, name, bio, img, action, email }) => (
             <div
               key={name}
               className="bg-[#fff8f5] border border-[#e0bfbf] rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group"
@@ -179,9 +159,9 @@ export default function About() {
                 <h3 className="font-serif text-2xl text-[#570013] mb-2">{name}</h3>
                 <p className="text-body-md text-[#584141] mb-4">{bio}</p>
                 <div className="flex gap-2">
-                  <button className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
+                  <a href={`mailto:${email}`} className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
                     <span className="material-symbols-outlined text-xl">mail</span>
-                  </button>
+                  </a>
                   <button className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
                     <span className="material-symbols-outlined text-xl">{action}</span>
                   </button>

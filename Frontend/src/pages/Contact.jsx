@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useParishData } from '../hooks/useParishData';
 
 export default function Contact() {
     const [sent, setSent] = useState(false);
     const [sending, setSending] = useState(false);
+    const { parish } = useParishData();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -86,12 +88,12 @@ export default function Contact() {
                         {
                             icon: 'location_on',
                             title: 'Our Location',
-                            content: '123 Parish Way, Madende Village\nSt. Michael Heights, Region 404',
+                            content: parish.address,
                         },
                         {
                             icon: 'contact_emergency',
                             title: 'Direct Contact',
-                            content: 'Phone: +1 (555) 123-4567\nEmail: office@stmichaelmadende.org',
+                            content: `Phone: ${parish.phone}\nEmail: ${parish.email}`,
                         },
                         {
                             icon: 'schedule',
@@ -130,11 +132,22 @@ export default function Contact() {
                     <div className="bg-[#e9e2d3] p-6 rounded-xl">
                         <h4 className="text-label-md text-[#4b463c] uppercase tracking-widest mb-4">Join our Digital Community</h4>
                         <div className="flex gap-4">
-                            {[{ icon: 'face_nod', label: 'Facebook' }, { icon: 'play_circle', label: 'YouTube' }, { icon: 'rss_feed', label: 'Blog' }].map(({ icon, label }) => (
-                                <a key={icon} href="#" title={label} className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
-                                    <span className="material-symbols-outlined">{icon}</span>
+                            {/* Facebook */}
+                            {parish.facebook && (
+                                <a href={parish.facebook} title="Facebook" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                                    <span className="material-symbols-outlined">face_nod</span>
                                 </a>
-                            ))}
+                            )}
+                            {/* YouTube */}
+                            {parish.youtube && (
+                                <a href={parish.youtube} title="YouTube" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                                    <span className="material-symbols-outlined">play_circle</span>
+                                </a>
+                            )}
+                            {/* General/Blog or fallback if no social links */}
+                            <a href={(parish.website) ? parish.website : "#"} title="Website" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                                <span className="material-symbols-outlined">rss_feed</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -144,21 +157,21 @@ export default function Contact() {
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="bg-[#e9e1dc] rounded-2xl overflow-hidden shadow-inner h-96 relative border border-[#e0bfbf]">
                     <div className="absolute inset-0 bg-cover bg-center">
-                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12413.613858528197!2d34.34668999538447!3d0.4787334552250803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177f830035fa558b%3A0xc93490a4bde2271c!2sSt%20Michael%20madende%20catholic%20church!5e0!3m2!1sen!2ske!4v1783343948700!5m2!1sen!2ske"
-                        width="100%"
-                        height="450"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        title="St. Michael Madende Catholic Church Location"
-                     />
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12413.613858528197!2d34.34668999538447!3d0.4787334552250803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177f830035fa558b%3A0xc93490a4bde2271c!2sSt%20Michael%20madende%20catholic%20church!5e0!3m2!1sen!2ske!4v1783343948700!5m2!1sen!2ske"
+                            width="100%"
+                            height="450"
+                            style={{ border: 0 }}
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            title="St. Michael Madende Catholic Church Location"
+                        />
                     </div>
                     <div className="absolute inset- flex items-center justify-right p-35">
                         <div className="bg-white p-4 rounded-xl shadow-xl flex items-center gap-3 border border-[#e0bfbf]">
                             <span className="material-symbols-outlined text-[#570013] text-3xl">location_on</span>
-                            <div>                                                     
+                            <div>
                                 <p className="font-bold text-[#570013]">St. Michael Madende</p>
                                 <p className="text-caption text-[#584141]">View on Google Maps</p>
                             </div>

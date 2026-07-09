@@ -1,12 +1,7 @@
 from django.urls import path
-from .views import (
-    ParishInformationView,
-    HeroSectionView,
-    LeadershipListView,
-    MassScheduleListView,
-    StatisticListView,
-    SaintListView,
-)
+
+from .views import (HeroSectionView, LeadershipListView, MassScheduleListView,
+                    ParishInformationView, SaintListView, StatisticListView)
 
 urlpatterns = [
     path("parish/", ParishInformationView.as_view(), name="parish-information"),

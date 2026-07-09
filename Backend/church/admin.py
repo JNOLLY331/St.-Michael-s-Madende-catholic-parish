@@ -1,24 +1,23 @@
 from django.contrib import admin
-from .models import (
-    ParishInformation,
-    HeroSection,
-    Leadership,
-    MassSchedule,
-    Statistic,
-    Saint,
-)
+
+from .models import (HeroSection, Leadership, MassSchedule, ParishInformation,
+                     Saint, Statistic)
+
+
 @admin.register(ParishInformation)
 class ParishInformationAdmin(admin.ModelAdmin):
     list_display = (
         "parish_name",
         "phone",
-        "email",)
+        "email",
+    )
 
     search_fields = (
         "parish_name",
         "email",
     )
-    
+
+
 @admin.register(Leadership)
 class LeadershipAdmin(admin.ModelAdmin):
 
@@ -36,10 +35,9 @@ class LeadershipAdmin(admin.ModelAdmin):
         "name",
         "position",
     )
-    ordering = (
-        "display_order",
-    )
-    
+    ordering = ("display_order",)
+
+
 @admin.register(MassSchedule)
 class MassScheduleAdmin(admin.ModelAdmin):
 
@@ -58,8 +56,8 @@ class MassScheduleAdmin(admin.ModelAdmin):
         "display_order",
         "start_time",
     )
-    
-    
+
+
 @admin.register(Statistic)
 class StatisticAdmin(admin.ModelAdmin):
 
@@ -69,10 +67,9 @@ class StatisticAdmin(admin.ModelAdmin):
         "display_order",
     )
 
-    ordering = (
-        "display_order",
-    )
-    
+    ordering = ("display_order",)
+
+
 @admin.register(Saint)
 class SaintAdmin(admin.ModelAdmin):
 
@@ -81,19 +78,14 @@ class SaintAdmin(admin.ModelAdmin):
         "feast_day",
         "display_order",
     )
-    search_fields = (
-        "name",
-    )
-    ordering = (
-        "display_order",
-    )
-    
+    search_fields = ("name",)
+    ordering = ("display_order",)
+
+
 @admin.register(HeroSection)
 class HeroSectionAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "is_active",
     )
-    list_filter = (
-        "is_active",
-    )
+    list_filter = ("is_active",)

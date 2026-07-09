@@ -103,7 +103,7 @@ export default function Navbar() {
                         </div>
                         <div className="text-left">
                             <span className="font-oswald font-bold text-white text-xl tracking-wide block leading-none drop-shadow-lg">
-                                ST. MICHAEL
+                                ST. MICHAEL'S
                                 <br /><span>MADENDE</span>
                             </span>
                             <span className="text-[#ffe088] text-[10px] font-oswald tracking-[0.2em] uppercase">

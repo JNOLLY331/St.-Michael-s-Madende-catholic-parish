@@ -210,17 +210,20 @@ export default function Footer() {
             {/* Bottom Bar */}
             <div className="px-5 md:px-12 py-5">
                 <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="font-oswald tracking-wide text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                    <p className="font-oswald tracking-wide text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                        Designed and developed by:<span className='text-red-800 text-lg tracking-wide'><a href="">Jnolly IT solutions</a> </span>
+                        </p>
+                    <p className="font-oswald tracking-wide text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
                         © {new Date().getFullYear()} St. Michael Madende Catholic Parish. All Rights Reserved.
                     </p>
-                    <div className="flex gap-5">
+                    <div className="flex gap-5 text-sm">
                         {['Privacy Policy', 'Terms of Service', 'Sitemap'].map(item => (
                             <a key={item} href="#" className="bottom-link">
                                 {item}
                             </a>
                         ))}
                     </div>
-                    <p className="font-oswald text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                    <p className="font-oswald text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>
                         Made with <span className="text-red-400">❤️</span> for the Glory of God
                     </p>
                 </div>

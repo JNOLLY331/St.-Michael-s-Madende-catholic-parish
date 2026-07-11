@@ -39,3 +39,25 @@ NEWS_STATUS = (
     ("PUBLISHED", "Published"),
     ("ARCHIVED", "Archived"),
 )
+
+PRAYER_STATUS = (
+    ("PENDING", "Pending"),
+    ("UNDER_PRAYER", "Under Prayer"),
+    ("ANSWERED", "Answered"),
+    ("CLOSED", "Closed"),
+)
+
+PAYMENT_METHODS = (
+    ("CASH", "Cash"),
+    ("MPESA", "M-Pesa"),
+    ("CARD", "Card"),
+    ("BANK", "Bank Transfer"),
+    ("PAYPAL", "PayPal"),
+)
+
+DONATION_STATUS = (
+    ("PENDING", "Pending"),
+    ("COMPLETED", "Completed"),
+    ("FAILED", "Failed"),
+    ("REFUNDED", "Refunded"),
+)

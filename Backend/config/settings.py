@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     "donations",
     "prayers",
     "news",
-    "livestream",
     "contact",
 ]
 

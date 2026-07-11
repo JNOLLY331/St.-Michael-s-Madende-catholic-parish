@@ -8,8 +8,8 @@ urlpatterns = [
     # Administration System
     path("admin/", admin.site.urls),
     # Core Application APIs
-    path("api/church/", include("church.urls")),
-    path("api/accounts/", include("accounts.urls")),
+    path("api/church/", include("church.urls")), # Registered church app
+    path("api/accounts/", include("accounts.urls")), # Registered accounts app
     path("api/ministries/", include("ministries.urls")),  # Registered ministries app
     path("api/events/", include("events.urls")),  # Registered events app
     path("api/news/", include("news.urls")),    # Registered news app
@@ -17,6 +17,7 @@ urlpatterns = [
     path("api/donations/", include("donations.urls")), # Registered prayers app
     path("api/gallery/", include("gallery.urls")),  # Registered gallery app
     path("api/contact/", include("contact.urls")), # Registered contact app
+    path('api/sacraments/', include('sacraments.urls')),  # Registered sacraments app
 
     # OpenAPI 3.0 Documentation Schema Engine
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),

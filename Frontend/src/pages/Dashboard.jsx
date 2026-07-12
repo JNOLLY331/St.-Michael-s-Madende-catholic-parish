@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { MdArrowBack, MdChurch, MdDelete, MdEdit, MdNotifications, MdPerson, MdPersonAdd, MdSearch, MdCheckCircle, MdCancel } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
+import { useAuth } from '../context/AuthContext';
 
 
 
@@ -36,6 +37,7 @@ const sidebarItems = [
     { icon: 'photo_library', label: 'Gallery', id: 'gallery' },
     { icon: 'person', label: 'Admin Profile', id: 'profile' },
     { icon: 'settings', label: 'Settings', id: 'settings' },
+    { icon: 'logout', label: 'Logout', id: 'logout' },
 ];
 
 /* ─── Stat Card ─── */
@@ -78,6 +80,8 @@ const parishioners = [
 
 export default function Dashboard() {
     const navigate = useNavigate();
+    const { user, isAuthenticated, logout } = useAuth();
+
     const [activeTab, setActiveTab] = useState('dashboard');
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [started, setStarted] = useState(false);
@@ -92,6 +96,11 @@ export default function Dashboard() {
         if (statsRef.current) io.observe(statsRef.current);
         return () => io.disconnect();
     }, []);
+
+    // Redirect to login if not authenticated
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
 
     const stats = [
         { icon: 'groups', label: 'Total Believers', value: 3200, change: 4.5, color: 'bg-[#570013]', bgColor: 'bg-[#40000b]' },
@@ -130,7 +139,14 @@ export default function Dashboard() {
                     {sidebarItems.map(({ icon, label, id }) => (
                         <button
                             key={id}
-                            onClick={() => setActiveTab(id)}
+                            onClick={() => {
+                                if (id === 'logout') {
+                                    logout();
+                                    navigate('/login');
+                                } else {
+                                    setActiveTab(id);
+                                }
+                            }}
                             className={`w-full flex items-center gap-3 px-4 py-3 transition-all duration-200 ${activeTab === id
                                 ? 'bg-[#570013] text-white border-r-4 border-[#ffe088]'
                                 : 'text-white/50 hover:bg-white/5 hover:text-white'
@@ -200,8 +216,8 @@ export default function Dashboard() {
                                 <MdPerson className="text-white text-base" />
                             </div>
                             <div className="hidden md:block">
-                                <p className="font-oswald font-bold text-sm text-white">Fr. Emmanuel</p>
-                                <p className="font-oswald text-white/40 text-xs">Administrator</p>
+                                <p className="font-oswald font-bold text-sm text-white">{user?.first_name} {user?.last_name || user?.username}</p>
+                                <p className="font-oswald text-white/40 text-xs">{user?.is_staff ? 'Administrator' : 'Parishioner'}</p>
                             </div>
                         </div>
                     </div>
@@ -220,7 +236,7 @@ export default function Dashboard() {
                                 </div>
                                 <p className="font-oswald text-[#ffe088]/80 tracking-[0.3em] uppercase text-xs mb-2">Welcome Back</p>
                                 <h2 className="font-oswald font-bold text-3xl text-white mb-2">
-                                    Peace be with you, <span className="text-[#ffe088]">Fr. Emmanuel</span>
+                                    Peace be with you, <span className="text-[#ffe088]">{user?.first_name || 'Friend'}</span>
                                 </h2>
                                 <p className="text-white/60 text-sm max-w-xl">
                                     "The Lord is my shepherd; I shall not want." — Psalm 23:1

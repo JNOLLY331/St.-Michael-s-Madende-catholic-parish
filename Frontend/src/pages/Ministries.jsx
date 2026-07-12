@@ -1,9 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdAutoAwesome, MdAutoStories, MdFlare, MdChevronRight, MdMail, MdPerson, MdVolunteerActivism } from 'react-icons/md';
+import { MdAutoStories, MdMail, MdPerson, MdVolunteerActivism } from 'react-icons/md';
 
+import { useMinistriesData } from '../hooks/useMinistriesData';
+import Spinner from '../components/common/Spinner';
+import EmptyState from '../components/common/EmptyState';
 
 export default function Ministries() {
+    // ── Integration: Fetch all ministries from API ─────────────────────────────
+    const { ministries, loading, error } = useMinistriesData();
+
+    // Grouping ministries by their category mapping on the frontend
+    const liturgical = ministries.filter(m => m.category === 'LITURGICAL');
+    const outreach = ministries.filter(m => m.category === 'OUTREACH');
+    const youthAndPrayer = ministries.filter(m => ['YOUTH', 'PRAYER', 'OTHER'].includes(m.category));
+
+    // Fallbacks to generic placeholders if images/values are missing
+    const placeholderImg = "data:image/svg+xml;charset=UTF-8,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23ececec' width='400' height='300'/%3E%3Ctext fill='%23909090' font-family='sans-serif' font-size='30' dy='10.5' font-weight='bold' x='50%25' y='50%25' text-anchor='middle'%3EIMAGE%3C/text%3E%3C/svg%3E";
+
+    // Re-usable loading state template
+    const LoaderSection = () => (
+        <Spinner message="Loading ministries..." />
+    );
+
     return (
         <>
             {/* Hero Section */}
@@ -14,7 +33,13 @@ export default function Ministries() {
                 </p>
             </section>
 
-            {/* Liturgical */}
+            {error && (
+                <div className="max-w-[1200px] mx-auto px-5 text-center text-red-600 mb-10">
+                    <p>Failed to load ministries. Please try again later.</p>
+                </div>
+            )}
+
+            {/* ── Liturgical ──────────────────────────────────────────────────────── */}
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="flex items-center justify-center gap-4 mb-12">
                     <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-[#e0bfbf]" />
@@ -23,54 +48,36 @@ export default function Ministries() {
                     <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-[#e0bfbf]" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {[
-                        {
-                            title: 'Parish Choir',
-                            desc: 'Our liturgical choir leads the congregation in worship through sacred music and traditional hymns.',
-                            img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCtKqTqN-Amx0JWF-jMRVVOEy8tqNHqYIyW0td-miJBppz283Ft7-vh5kyLW-c8cepXHeD0j2KZRp83FbPgHBIlmpMDx3oj0__mwcLl-i85myZTSMfE8isJbsT2A7UxthUvjDKN8wwAjqchpDQlSwaIpXJAmGb960N9hT3V4hFpyqDjBxhGQ3aZVjQf7hucBRq4mgFIRsJxEUnOD1tMl5J0IuyhwX5ScBjgc9h4Ux5kJFln45yZyR6KBfXKMgoKxRvgHOH3kBc0xTqR',
-                            leaderInitials: 'SM',
-                            leaderName: 'Sr. Mary Margaret',
-                            leaderRole: 'Music Director'
-                        },
-                        {
-                            title: 'Altar Servers',
-                            desc: 'Assisting the clergy during the celebration of the Eucharist, fostering a deep sense of reverence among our youth.',
-                            img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD8O561wOSqag1JqEzjaHXraaRtIUSpmI_i-e3kVtmmilVKIm0_hR6n4MFXwNn4iUdMNZ2RyBlViskAVTY9tYsOefxKWnyrj4JFD-C3z_tRESojPzwR_EYijznaVa4vPPxM1YX71_ae2J5OVZRKs5xBojAUOH_BYnA90pnc5juc3Yol8a0AnjkWWCjrZX6VAs9-7zE8nxJY7ZyZ769ngtVm1hZJGNqpnlCYzk00Gcfh9rwS6qHhVL5WmHeWyGipsvX9xqewHRdecVEX',
-                            leaderInitials: 'DM',
-                            leaderName: 'Deacon Michael',
-                            leaderRole: 'Coordinator'
-                        },
-                        {
-                            title: 'Lectors',
-                            desc: 'Proclaimers of the Word who bring the Holy Scriptures to life for the assembly during daily and Sunday liturgy.',
-                            img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYm4MiNrZhVF6CW2ubNkQi_4rVFh3VLOxLRmzBvv233LlWMVtQe9JUW1IL4LlNs-wDxLLFXzuXxvoO9OZZapBEIjRyf81qXnM6oW74KFG_IahhxmasM_mVbpmWV4usAUWi3nda-TIoxLW5dtaMGa3SP2LOctG8C4V89nMcaWZpe_FE8GN7Xb-DYsq-uQEwr-IX0iTGtIjDPmaKuLl1ZpWQ-52aYycrNb_FI5W--MHEOdTxpUcgqTCICI69HXMPbY-yMrWRh1fbg6AH',
-                            leaderInitials: 'JA',
-                            leaderName: 'John Anyona',
-                            leaderRole: 'Head Lector'
-                        }
-                    ].map(m => (
-                        <div key={m.title} className="bg-white border border-[#e0bfbf] p-8 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_-5px_rgba(87,0,19,0.1)] group">
-                            <div className="h-48 mb-6 overflow-hidden rounded-lg">
-                                <img src={m.img} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            </div>
-                            <h3 className="text-headline-md text-[#570013] mb-2">{m.title}</h3>
-                            <p className="text-[#584141] mb-6 text-body-md">{m.desc}</p>
-                            <div className="flex items-center gap-3 pt-4 border-t border-[#e0bfbf]">
-                                <div className="w-10 h-10 rounded-full bg-[#fed65b] flex items-center justify-center text-[#745c00] font-bold">
-                                    {m.leaderInitials}
+                {loading ? <LoaderSection /> : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {liturgical.map(m => (
+                            <div key={m.id} className="bg-white border border-[#e0bfbf] p-8 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_-5px_rgba(87,0,19,0.1)] group">
+                                <div className="h-48 mb-6 overflow-hidden rounded-lg relative">
+                                    <img src={m.image || placeholderImg} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 </div>
-                                <div className="text-caption">
-                                    <p className="font-bold">{m.leaderName}</p>
-                                    <p className="opacity-70">{m.leaderRole}</p>
+                                <h3 className="text-headline-md text-[#570013] mb-2">{m.title}</h3>
+                                <p className="text-[#584141] mb-6 text-body-md line-clamp-3">{m.description}</p>
+                                <div className="flex items-center gap-3 pt-4 border-t border-[#e0bfbf]">
+                                    <div className="w-10 h-10 rounded-full bg-[#fed65b] flex items-center justify-center text-[#745c00] font-bold">
+                                        {m.leaderName ? m.leaderName.charAt(0) : '—'}
+                                    </div>
+                                    <div className="text-caption">
+                                        <p className="font-bold">{m.leaderName || 'To Be Announced'}</p>
+                                        <p className="opacity-70">Coordinator</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                        {liturgical.length === 0 && (
+                            <div className="col-span-full">
+                                <EmptyState title="Liturgical Ministries" message="We are currently organizing our liturgical leaders." icon={MdAutoStories} />
+                            </div>
+                        )}
+                    </div>
+                )}
             </section>
 
-            {/* Community Outreach */}
+            {/* ── Community Outreach ──────────────────────────────────────────────── */}
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="flex items-center justify-center gap-4 mb-12">
                     <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-[#e0bfbf]" />
@@ -79,108 +86,80 @@ export default function Ministries() {
                     <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-[#e0bfbf]" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="group flex flex-col md:flex-row bg-[#f5ece7] border border-[#e0bfbf] rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                        <div className="w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPOQA9hZlCt_S5jymr70xj9IWn2rf1xvfUbc7Hr2jsoKwcS-_28MIrDD9C7Gp9pJ9eDNKugn3wyvqFNiXilp8uPknbswP4H7GkOPOu6BQmfiiwylTGzSE91WAkJGl6uB5rH14Kfw4_F1LbntSjaey3FdYCEiizAM9ZcBjPxt9-5fRA5gShMqSgmFYk6HJXw-N5WSuxZ1vdRoSN-6k5QuKPPEsxrvafL0Izj8E-0SBHEuQOO2SKDVaK3g2yTjTQNXurtqxRZc2E5RuT"
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        </div>
-                        <div className="p-8 flex-1">
-                            <h3 className="text-headline-md text-[#570013] mb-2">St. Vincent de Paul Society</h3>
-                            <p className="text-[#584141] mb-6 text-body-md">Providing food, clothing, and essential support to families in need within the Madende community.</p>
-                            <div className="flex items-center gap-3">
-                                <MdPerson className="text-[#570013]" />
-                                <span className="font-bold">Catherine Wekesa</span>
+                {loading ? <LoaderSection /> : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {outreach.map(m => (
+                            <div key={m.id} className="group flex flex-col md:flex-row bg-[#f5ece7] border border-[#e0bfbf] rounded-xl overflow-hidden hover:shadow-lg transition-all">
+                                <div className="w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
+                                    <img src={m.image || placeholderImg} alt={m.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                </div>
+                                <div className="p-8 flex-1">
+                                    <h3 className="text-headline-md text-[#570013] mb-2">{m.title}</h3>
+                                    <p className="text-[#584141] mb-6 text-body-md line-clamp-3">{m.description}</p>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <MdPerson className="text-[#570013]" />
+                                            <span className="font-bold text-sm">{m.leaderName || 'TBA'}</span>
+                                        </div>
+                                        {m.leaderEmail && (
+                                            <a href={`mailto:${m.leaderEmail}`} className="text-[#570013] hover:text-[#800020]">
+                                                <MdMail size={20} />
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="group flex flex-col md:flex-row bg-[#f5ece7] border border-[#e0bfbf] rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                        <div className="w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3n0NtaWA8-zYey8FlgH8p3JwxualtkL6Mk1ZStTmeY_08qK0inzgfxwKrbtq5c-z9Wx4TWQAgGhksjpWaosWnf9mqf6eU-sTSmjhMnpdhMZyhbeZeTm1JaMfYtuCbNuFnXD00JPCgJiJHyucGDQ2mPG7T7EZJEoWPyQxEKPPlMCjAi1CT19REmv6nDoOvGniy0bxzrn7lvrZyiKE1znrhwAq-o-ypXugIPNkPGpipFlRiXGQRhbYHW_2oEQ5Ey7N-0ckzfiuGn4ht"
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        </div>
-                        <div className="p-8 flex-1">
-                            <h3 className="text-headline-md text-[#570013] mb-2">Hospital Visitation</h3>
-                            <p className="text-[#584141] mb-6 text-body-md">Bringing the Eucharist and emotional support to the sick and homebound, ensuring no member is isolated.</p>
-                            <div className="flex items-center gap-3">
-                                <MdPerson className="text-[#570013]" />
-                                <span className="font-bold">Fr. Dominic</span>
+                        ))}
+                        {outreach.length === 0 && (
+                            <div className="col-span-full">
+                                <EmptyState title="Community Outreach" message="We are arranging outreach programs to serve the community." icon={MdVolunteerActivism} />
                             </div>
-                        </div>
+                        )}
                     </div>
-                </div>
+                )}
             </section>
 
-            {/* Youth & Prayer (Bento Grid) */}
+            {/* ── Youth & Prayer ──────────────────────────────────────────────────── */}
             <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-6">
                     <div>
-                        <h2 className="text-headline-lg text-[#2b271e]">Youth &amp; Prayer</h2>
+                        <h2 className="text-headline-lg text-[#2b271e]">Youth &amp; Other Ministries</h2>
                         <p className="text-[#584141] text-body-md">Building faith for the next generation and sustaining it through communal prayer.</p>
                     </div>
                     <div className="h-px flex-grow bg-[#e0bfbf] mx-8 hidden md:block mb-4" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                    {/* CYO */}
-                    <div className="md:col-span-8 bg-[#efe6e2] p-8 rounded-xl border border-[#e0bfbf]">
-                        <div className="flex flex-col md:flex-row gap-6 items-center">
-                            <div className="w-full md:w-1/3">
-                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6LDV45bKxqVEooFM249H8yaUI6qg15LQ2yp8XLa5DEjQ7gAUILarhLTdZ6OZBnJtNP65XMMq_wXTmk3DF-hVlS2KproQoxxkUR4Kua4K-yjiJ0excxvZvKYNY2nK0i8IPg-z_mQXrL-uGP5EEexAhjSq7u3fdfPTqsyfUlnOwaMHNHtt3iK-e-L5gGlnqFEuJByxFiD2WU9vHknAMbd07iGUqSUBpbQc9-fR7kNM1i2VXYygMFX88MtYnHQTGydCr9RZZ2RHZu713"
-                                    className="rounded-lg shadow-sm" alt="CYO" />
-                            </div>
-                            <div className="flex-1">
-                                <span className="bg-[#735c00] text-white text-[10px] uppercase font-bold px-3 py-1 rounded-full mb-3 inline-block">Youth Ministry</span>
-                                <h3 className="text-headline-md text-[#570013] mb-2">Catholic Youth Organization (CYO)</h3>
-                                <p className="text-[#584141] mb-4 text-body-md">Empowering young people to live as disciples of Jesus Christ through service, social events, and retreats.</p>
-                                <div className="flex items-center gap-2 text-[#570013] cursor-pointer hover:underline">
-                                    <MdMail className="text-sm" />
-                                    <span className="text-label-md">Contact Peter Nabwera</span>
+                {loading ? <LoaderSection /> : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {youthAndPrayer.map(m => (
+                            <div key={m.id} className="bg-[#efe6e2] p-8 rounded-xl border border-[#e0bfbf] flex flex-col h-full hover:shadow-md transition">
+                                <span className={`text-[10px] uppercase font-bold px-3 py-1 rounded-full mb-4 inline-block w-max ${m.category === 'YOUTH' ? 'bg-[#735c00] text-white' : 'bg-[#570013] text-white'
+                                    }`}>
+                                    {m.category}
+                                </span>
+                                <h3 className="text-headline-md text-[#570013] mb-2">{m.title}</h3>
+                                <p className="text-[#584141] mb-6 text-body-md flex-grow">{m.description}</p>
+
+                                <div className="mt-auto border-t border-[#e0bfbf] pt-4">
+                                    {m.meetingSchedule && (
+                                        <p className="text-sm font-medium mb-3 text-[#570013]">🕒 {m.meetingSchedule}</p>
+                                    )}
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2 text-sm text-[#413d33] font-bold">
+                                            <MdPerson className="text-lg opacity-80" /> {m.leaderName || 'Leadership TBA'}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Sacred Heart */}
-                    <div className="md:col-span-4 bg-[#800020] text-white p-8 rounded-xl flex flex-col justify-between">
-                        <div>
-                            <MdFlare className="mb-4 text-3xl" />
-                            <h3 className="text-headline-md mb-2">Sacred Heart</h3>
-                            <p className="opacity-90 text-body-md">Weekly adoration and contemplative prayer focused on the compassion of Christ.</p>
-                        </div>
-                        <div className="mt-6 flex items-center justify-between">
-                            <span className="text-caption font-bold">Leader: Mrs. Simiyu</span>
-                            <MdChevronRight />
-                        </div>
-                    </div>
-
-                    {/* Rosary Circle */}
-                    <div className="md:col-span-4 bg-[#413d33] text-[#e9e2d3] p-8 rounded-xl border border-[#8c7071] shadow-sm">
-                        <h3 className="text-headline-md mb-2 text-[#ffdada]">Rosary Circle</h3>
-                        <p className="opacity-80 text-body-md mb-6">Daily collective prayer sessions honoring the Blessed Mother and interceding for the parish.</p>
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-[#8c7071] flex items-center justify-center text-xs text-white">BK</div>
-                            <span className="text-caption">Benedict Kundu</span>
-                        </div>
-                    </div>
-
-                    {/* Charismatic Renewal */}
-                    <div className="md:col-span-8 bg-[#fbf2ed] border border-[#e0bfbf] p-8 rounded-xl">
-                        <div className="flex justify-between items-start">
-                            <div className="max-w-md">
-                                <h3 className="text-headline-md text-[#570013] mb-2">Charismatic Renewal</h3>
-                                <p className="text-[#584141] text-body-md">Experience the power of the Holy Spirit through vibrant praise, worship, and healing prayers every Thursday evening.</p>
+                        ))}
+                        {youthAndPrayer.length === 0 && (
+                            <div className="col-span-full">
+                                <EmptyState title="Youth & Prayer" message="Gatherings for youth and prayer are being scheduled." />
                             </div>
-                            <div className="w-12 h-12 bg-[#fed65b] rounded-full flex items-center justify-center text-[#745c00]">
-                                <MdAutoAwesome />
-                            </div>
-                        </div>
-                        <div className="mt-6 flex gap-4">
-                            <button className="text-[#570013] font-bold text-label-md uppercase tracking-wider hover:opacity-70 transition-opacity">Learn More</button>
-                            <button className="text-[#584141] text-label-md uppercase tracking-wider hover:text-[#570013] transition-colors">Schedule</button>
-                        </div>
+                        )}
                     </div>
-                </div>
+                )}
             </section>
 
             {/* CTA */}

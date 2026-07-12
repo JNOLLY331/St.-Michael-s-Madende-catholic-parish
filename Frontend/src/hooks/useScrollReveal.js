@@ -11,6 +11,9 @@ export default function useScrollReveal() {
             '[data-reveal-right]',
             '[data-reveal-zoom]',
             '[data-reveal-flip]',
+            '[data-reveal-bounce]',
+            '[data-reveal-spin]',
+            '[data-reveal-text]',
             '.reveal',
         ];
 

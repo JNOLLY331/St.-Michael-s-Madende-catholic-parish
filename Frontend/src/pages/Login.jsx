@@ -1,13 +1,58 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MdArrowForward, MdChurch, MdDiamond, MdLock, MdLogin, MdMail } from 'react-icons/md';
+import { Link, useNavigate } from 'react-router-dom';
+import { MdArrowForward, MdChurch, MdDiamond, MdLock, MdLogin, MdMail, MdWarning } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
-
+import toast from 'react-hot-toast';
+// ── Integration: import the AuthContext hook ──────────────────────────────────
+import { useAuth } from '../context/AuthContext';
 
 
 export default function Login() {
+    const navigate = useNavigate();
+    // ── Integration: destructure login helper and shared auth state ───────────
+    const { login, authLoading, authError, clearAuthError } = useAuth();
+
     const [showPassword, setShowPassword] = useState(false);
     const [focused, setFocused] = useState(false);
+
+    // ── Form field state (controlled inputs) ──────────────────────────────────
+    const [formData, setFormData] = useState({ email: '', password: '' });
+    // Local field-level error (e.g. "email required") separate from server errors
+    const [fieldError, setFieldError] = useState('');
+
+    const handleChange = (e) => {
+        clearAuthError(); // clear server errors while the user types
+        setFieldError('');
+        setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    // ── Integration: handleSubmit calls the real Django login endpoint ─────────
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Basic client-side validation before hitting the network
+        if (!formData.email.trim()) return setFieldError('Email is required.');
+        if (!formData.password) return setFieldError('Password is required.');
+
+        const toastId = toast.loading('🕊️ Signing you in…');
+
+        const result = await login({
+            email: formData.email.trim().toLowerCase(),
+            password: formData.password,
+        });
+
+        if (result.success) {
+            toast.success('🎉 Welcome back! You are now signed in.', { id: toastId, duration: 4000 });
+            // Redirect to dashboard on successful login
+            navigate('/dashboard', { replace: true });
+        } else {
+            toast.error(`🚫 ${result.message || 'Invalid credentials. Please try again.'}`, { id: toastId, duration: 5000 });
+        }
+        // If login failed, authError will be populated by the AuthContext
+    };
+
+    // Combined error to display (prefer server error, fallback to field error)
+    const displayError = authError || fieldError;
 
     return (
         <div className="bg-[#fff8f5] text-[#1e1b18] min-h-screen flex flex-col font-sans">
@@ -39,16 +84,29 @@ export default function Login() {
                         </div>
                     </div>
 
-                    <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+                    {/* ── Integration: server / validation error banner ────────────────── */}
+                    {displayError && (
+                        <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+                            <MdWarning className="shrink-0 text-lg" />
+                            <span>{displayError}</span>
+                        </div>
+                    )}
+
+                    {/* ── Integration: form now calls handleSubmit which hits the API ─── */}
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         {/* Email */}
                         <div>
-                            <label className="block text-label-md text-[#584141] mb-1" htmlFor="login-id">Email or Username</label>
+                            <label className="block text-label-md text-[#584141] mb-1" htmlFor="login-email">Email Address</label>
                             <div className="relative">
                                 <MdMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
-                                    id="login-id"
-                                    type="text"
+                                    id="login-email"
+                                    name="email"
+                                    type="email"
                                     placeholder="your@email.com"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    autoComplete="email"
                                     className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
@@ -66,8 +124,12 @@ export default function Login() {
                                 <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="password"
+                                    name="password"
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="••••••••"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    autoComplete="current-password"
                                     className="w-full pl-10 pr-10 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
@@ -94,14 +156,27 @@ export default function Login() {
                             </label>
                         </div>
 
-                        {/* Submit */}
-                        <Link
-                            to="/dashboard"
-                            className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2"
+                        {/* ── Integration: real submit button (disabled while loading) ──── */}
+                        <button
+                            type="submit"
+                            disabled={authLoading}
+                            className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                            <span>Login to Portal</span>
-                            <MdLogin className="text-lg" />
-                        </Link>
+                            {authLoading ? (
+                                <span className="flex items-center gap-2">
+                                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                                    </svg>
+                                    Signing in…
+                                </span>
+                            ) : (
+                                <>
+                                    <span>Login to Portal</span>
+                                    <MdLogin className="text-lg" />
+                                </>
+                            )}
+                        </button>
                     </form>
 
                     {/* Registration link */}

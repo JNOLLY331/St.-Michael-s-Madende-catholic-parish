@@ -1,16 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParishData } from '../hooks/useParishData';
 import { FaCheckCircle, FaSync, FaPaperPlane, FaMapMarkerAlt, FaAddressCard, FaClock, FaFacebookF, FaYoutube, FaRss } from 'react-icons/fa';
+import { MdWarning } from 'react-icons/md';
+// ── Integration: contactApi sends the form to POST /api/contact/messages/ ────
+import { contactApi } from '../api';
+import { toast } from 'react-hot-toast';
+
 
 export default function Contact() {
-    const [sent, setSent] = useState(false);
-    const [sending, setSending] = useState(false);
+    // ── Integration: load parish info (address, phone, email, social links) ───
     const { parish } = useParishData();
 
-    const handleSubmit = (e) => {
+    // ── Form submission state ──────────────────────────────────────────────────
+    const [sending, setSending] = useState(false);
+
+    // ── Integration: load departments from GET /api/contact/departments/ ───────
+    const [departments, setDepartments] = useState([]);
+    useEffect(() => {
+        contactApi.listDepartments()
+            .then((data) => {
+                const items = Array.isArray(data) ? data : (data?.results ?? []);
+                setDepartments(items);
+            })
+            .catch(() => {
+                // Departments are non-critical — the form still works without them
+            });
+    }, []);
+
+    // ── Controlled form state matching ContactMessage fields ──────────────────
+    const [formData, setFormData] = useState({
+        full_name: '',
+        email: '',
+        phone: '',
+        department: '',
+        subject: '',
+        message: '',
+    });
+
+    const handleChange = (e) => {
+        setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    // ── Integration: submit to POST /api/contact/messages/ ───────────────────
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setSending(true);
-        setTimeout(() => { setSending(false); setSent(true); e.target.reset(); }, 1500);
+
+        const payload = {
+            full_name: formData.full_name.trim(),
+            email: formData.email.trim().toLowerCase(),
+            subject: formData.subject.trim(),
+            message: formData.message.trim(),
+            // Optional fields — only include if provided
+            ...(formData.phone.trim() && { phone: formData.phone.trim() }),
+            ...(formData.department && { department: formData.department }),
+        };
+
+        const promise = contactApi.sendMessage(payload);
+        toast.promise(promise, {
+            loading: 'Sending message...',
+            success: 'Your message has been sent! We\'ll be in touch shortly.',
+            error: (err) => err.message || 'Failed to send message. Please try again.'
+        });
+
+        try {
+            await promise;
+            // Reset the form
+            setFormData({ full_name: '', email: '', phone: '', department: '', subject: '', message: '' });
+        } catch (err) {
+            // Error managed by toast.promise
+        } finally {
+            setSending(false);
+        }
     };
 
     return (
@@ -29,53 +90,108 @@ export default function Contact() {
                 {/* Contact Form */}
                 <div className="lg:col-span-7 bg-[#fbf2ed] p-8 rounded-xl border border-[#e0bfbf] shadow-sm">
                     <h2 className="text-headline-lg text-[#570013] mb-8">Send a Message</h2>
+
+                    {/* ── Integration: all inputs are controlled; form submits to the API ─ */}
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="flex flex-col gap-2">
-                                <label className="text-label-md text-[#584141]" htmlFor="name">Full Name</label>
+                                <label className="text-label-md text-[#584141]" htmlFor="full-name">Full Name</label>
                                 <input
-                                    id="name" name="name" type="text" placeholder="John Doe"
+                                    id="full-name"
+                                    name="full_name"
+                                    type="text"
+                                    placeholder="John Doe"
+                                    required
+                                    value={formData.full_name}
+                                    onChange={handleChange}
                                     className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                                 />
                             </div>
                             <div className="flex flex-col gap-2">
-                                <label className="text-label-md text-[#584141]" htmlFor="email">Email Address</label>
+                                <label className="text-label-md text-[#584141]" htmlFor="contact-email">Email Address</label>
                                 <input
-                                    id="email" name="email" type="email" placeholder="john@example.com"
+                                    id="contact-email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="john@example.com"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                                 />
                             </div>
                         </div>
+
                         <div className="flex flex-col gap-2">
-                            <label className="text-label-md text-[#584141]" htmlFor="subject">Subject</label>
-                            <select
-                                id="subject" name="subject"
+                            <label className="text-label-md text-[#584141]" htmlFor="contact-phone">Phone <span className="opacity-60">(optional)</span></label>
+                            <input
+                                id="contact-phone"
+                                name="phone"
+                                type="tel"
+                                placeholder="+254 700 000 000"
+                                value={formData.phone}
+                                onChange={handleChange}
                                 className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
-                            >
-                                <option>General Inquiry</option>
-                                <option>Sacramental Preparation</option>
-                                <option>Mass Intentions</option>
-                                <option>Ministry Information</option>
-                                <option>Financial Support</option>
-                            </select>
+                            />
                         </div>
+
+                        {/* ── Integration: department select populated from the API ─────── */}
+                        {departments.length > 0 && (
+                            <div className="flex flex-col gap-2">
+                                <label className="text-label-md text-[#584141]" htmlFor="contact-dept">Department</label>
+                                <select
+                                    id="contact-dept"
+                                    name="department"
+                                    value={formData.department}
+                                    onChange={handleChange}
+                                    className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                                >
+                                    <option value="">— Select a department (optional) —</option>
+                                    {departments.map((dept) => (
+                                        <option key={dept.id} value={dept.id}>{dept.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+
                         <div className="flex flex-col gap-2">
-                            <label className="text-label-md text-[#584141]" htmlFor="message">Your Message</label>
+                            <label className="text-label-md text-[#584141]" htmlFor="contact-subject">Subject</label>
+                            <input
+                                id="contact-subject"
+                                name="subject"
+                                type="text"
+                                placeholder="How can we help you?"
+                                required
+                                minLength={5}
+                                value={formData.subject}
+                                onChange={handleChange}
+                                className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label className="text-label-md text-[#584141]" htmlFor="contact-message">Your Message</label>
                             <textarea
-                                id="message" name="message" rows={6} placeholder="How can we help you today?"
+                                id="contact-message"
+                                name="message"
+                                rows={6}
+                                placeholder="Share your thoughts, questions or intentions…"
+                                required
+                                minLength={10}
+                                maxLength={5000}
+                                value={formData.message}
+                                onChange={handleChange}
                                 className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all resize-none"
                             />
                         </div>
+
                         <button
                             type="submit"
-                            disabled={sending || sent}
-                            className={`w-full py-4 rounded-lg text-label-md text-white flex items-center justify-center gap-2 group transition-all ${sent ? 'bg-green-600' : 'bg-[#800020] hover:bg-[#570013]'
-                                }`}
+                            disabled={sending}
+                            className={`w-full py-4 rounded-lg text-label-md text-white flex items-center justify-center gap-2 group transition-all bg-[#800020] hover:bg-[#570013] disabled:opacity-60`}
                         >
-                            {sent ? (
-                                <><FaCheckCircle size={20} /> Sent Successfully</>
-                            ) : sending ? (
-                                <><FaSync size={20} className="animate-spin" /> Sending...</>
+                            {sending ? (
+                                <><FaSync size={20} className="animate-spin" /> Sending…</>
                             ) : (
                                 <><span>Send Message</span><FaPaperPlane size={18} className="group-hover:translate-x-1 transition-transform" /></>
                             )}
@@ -83,7 +199,7 @@ export default function Contact() {
                     </form>
                 </div>
 
-                {/* Contact Info */}
+                {/* Contact Info (unchanged, still uses parish data from the hook) */}
                 <div className="lg:col-span-5 space-y-6">
                     {[
                         {
@@ -133,20 +249,17 @@ export default function Contact() {
                     <div className="bg-[#e9e2d3] p-6 rounded-xl">
                         <h4 className="text-label-md text-[#4b463c] uppercase tracking-widest mb-4">Join our Digital Community</h4>
                         <div className="flex gap-4">
-                            {/* Facebook */}
                             {parish.facebook && (
                                 <a href={parish.facebook} title="Facebook" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
                                     <FaFacebookF size={20} />
                                 </a>
                             )}
-                            {/* YouTube */}
                             {parish.youtube && (
                                 <a href={parish.youtube} title="YouTube" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
                                     <FaYoutube size={20} />
                                 </a>
                             )}
-                            {/* General/Blog or fallback if no social links */}
-                            <a href={(parish.website) ? parish.website : "#"} title="Website" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                            <a href={parish.website ? parish.website : '#'} title="Website" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
                                 <FaRss size={20} />
                             </a>
                         </div>

@@ -37,7 +37,7 @@ export default function Home() {
   const gospel = useDailyGospel();
 
   // Hero content (welcome copy + background image) from GET /api/church/hero/
-  const { hero } = useHeroData();
+  const { hero, loading: heroLoading } = useHeroData();
 
   // Controls the "Read More" reading dialog — isolated to the hero card
   const [isGospelModalOpen, setIsGospelModalOpen] = useState(false);
@@ -46,6 +46,7 @@ export default function Home() {
     <>
       <HeroSection
         hero={hero}
+        loading={heroLoading}
         gospel={gospel}
         onNavigate={handleNav}
         onOpenGospelModal={() => setIsGospelModalOpen(true)}

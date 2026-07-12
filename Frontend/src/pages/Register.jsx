@@ -1,13 +1,89 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdArrowForward, MdChurch, MdDiamond, MdLock, MdMail, MdPerson, MdPersonAdd, MdPhone } from 'react-icons/md';
+import { MdArrowForward, MdCheckCircle, MdChurch, MdDiamond, MdLock, MdMail, MdPerson, MdPersonAdd, MdPhone, MdWarning } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
-
+import toast from 'react-hot-toast';
+// ── Integration: useAuth provides the register() helper ──────────────────────
+import { useAuth } from '../context/AuthContext';
 
 
 export default function Register() {
+
+    // ── Integration: destructure register helper and shared auth state ────────
+    const { register, authLoading, authError, clearAuthError } = useAuth();
+
     const [showPassword, setShowPassword] = useState(false);
     const [focused, setFocused] = useState(false);
+    // Local success state — shown after successful registration (before email verification)
+    const [successMessage, setSuccessMessage] = useState('');
+    const [fieldErrors, setFieldErrors] = useState({});
+
+    // ── Controlled form state matching the Django RegisterSerializer fields ────
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+        phone_number: '',
+        password: '',
+        password2: '',
+    });
+
+    const handleChange = (e) => {
+        clearAuthError();
+        setFieldErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+        setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    // ── Client-side validation ────────────────────────────────────────────────
+    const validate = () => {
+        const errors = {};
+        if (!formData.first_name.trim()) errors.first_name = 'First name is required.';
+        if (!formData.last_name.trim()) errors.last_name = 'Last name is required.';
+        if (!formData.username.trim()) errors.username = 'Username is required.';
+        if (!formData.email.trim()) errors.email = 'Email is required.';
+        if (!formData.password) errors.password = 'Password is required.';
+        if (formData.password !== formData.password2) errors.password2 = 'Passwords do not match.';
+        return errors;
+    };
+
+    // ── Integration: handleSubmit calls the real Django register endpoint ──────
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSuccessMessage('');
+
+        const errors = validate();
+        if (Object.keys(errors).length) {
+            setFieldErrors(errors);
+            toast.error('❌ Please fix the highlighted fields before continuing.', { duration: 4000 });
+            return;
+        }
+
+        const payload = {
+            first_name: formData.first_name.trim(),
+            last_name: formData.last_name.trim(),
+            username: formData.username.trim(),
+            email: formData.email.trim().toLowerCase(),
+            phone_number: formData.phone_number.trim(),
+            password: formData.password,
+            password2: formData.password2,
+        };
+
+        const toastId = toast.loading('✍️ Creating your account…');
+
+        const result = await register(payload);
+
+        if (result.success) {
+            // Registration triggers email verification — don't auto-login.
+            // Instead show a confirmation message and let the user check their inbox.
+            const msg = result.message || 'Registration successful! Please check your email to verify your account.';
+            setSuccessMessage(msg);
+            toast.success(`🎉 Account created! Check your inbox to verify your email.`, { id: toastId, duration: 6000 });
+        } else {
+            toast.error(`🚫 ${result.message || 'Registration failed. Please try again.'}`, { id: toastId, duration: 5000 });
+        }
+        // If registration failed, authError will be populated by AuthContext
+    };
 
     return (
         <div className="bg-[#fff8f5] text-[#1e1b18] min-h-screen flex flex-col font-sans">
@@ -42,7 +118,24 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+                    {/* ── Integration: success banner shown after successful registration ── */}
+                    {successMessage && (
+                        <div className="mb-4 flex items-start gap-2 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 text-sm">
+                            <MdCheckCircle className="shrink-0 text-xl text-green-600 mt-0.5" />
+                            <span>{successMessage}</span>
+                        </div>
+                    )}
+
+                    {/* ── Integration: server error banner ─────────────────────────────── */}
+                    {authError && !successMessage && (
+                        <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+                            <MdWarning className="shrink-0 text-lg" />
+                            <span>{authError}</span>
+                        </div>
+                    )}
+
+                    {/* ── Integration: controlled form hitting the real API on submit ────── */}
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* First Name */}
                             <div>
@@ -51,13 +144,17 @@ export default function Register() {
                                     <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                     <input
                                         id="first-name"
+                                        name="first_name"
                                         type="text"
                                         placeholder="John"
-                                        className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
+                                        value={formData.first_name}
+                                        onChange={handleChange}
+                                        className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.first_name ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                         onFocus={() => setFocused(true)}
                                         onBlur={() => setFocused(false)}
                                     />
                                 </div>
+                                {fieldErrors.first_name && <p className="text-red-500 text-xs mt-1">{fieldErrors.first_name}</p>}
                             </div>
 
                             {/* Last Name */}
@@ -67,14 +164,38 @@ export default function Register() {
                                     <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                     <input
                                         id="last-name"
+                                        name="last_name"
                                         type="text"
                                         placeholder="Doe"
-                                        className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
+                                        value={formData.last_name}
+                                        onChange={handleChange}
+                                        className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.last_name ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                         onFocus={() => setFocused(true)}
                                         onBlur={() => setFocused(false)}
                                     />
                                 </div>
+                                {fieldErrors.last_name && <p className="text-red-500 text-xs mt-1">{fieldErrors.last_name}</p>}
                             </div>
+                        </div>
+
+                        {/* Username */}
+                        <div>
+                            <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-username">Username</label>
+                            <div className="relative">
+                                <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
+                                <input
+                                    id="reg-username"
+                                    name="username"
+                                    type="text"
+                                    placeholder="john.doe"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.username ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                    onFocus={() => setFocused(true)}
+                                    onBlur={() => setFocused(false)}
+                                />
+                            </div>
+                            {fieldErrors.username && <p className="text-red-500 text-xs mt-1">{fieldErrors.username}</p>}
                         </div>
 
                         {/* Email */}
@@ -84,24 +205,32 @@ export default function Register() {
                                 <MdMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="reg-email"
+                                    name="email"
                                     type="email"
                                     placeholder="your@email.com"
-                                    className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    autoComplete="email"
+                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.email ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
                             </div>
+                            {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
                         </div>
 
                         {/* Phone */}
                         <div>
-                            <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-phone">Phone Number</label>
+                            <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-phone">Phone Number <span className="opacity-60">(optional)</span></label>
                             <div className="relative">
                                 <MdPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="reg-phone"
+                                    name="phone_number"
                                     type="tel"
-                                    placeholder="+1 (234) 567-8901"
+                                    placeholder="+254 700 000 000"
+                                    value={formData.phone_number}
+                                    onChange={handleChange}
                                     className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
@@ -116,9 +245,13 @@ export default function Register() {
                                 <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
                                 <input
                                     id="reg-password"
+                                    name="password"
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="Create a strong password"
-                                    className="w-full pl-10 pr-10 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    autoComplete="new-password"
+                                    className={`w-full pl-10 pr-10 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.password ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -130,6 +263,28 @@ export default function Register() {
                                     <DynamicIcon name={showPassword ? 'visibility_off' : 'visibility'} className="text-xl" />
                                 </button>
                             </div>
+                            {fieldErrors.password && <p className="text-red-500 text-xs mt-1">{fieldErrors.password}</p>}
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div>
+                            <label className="block text-label-md text-[#584141] mb-1" htmlFor="reg-password2">Confirm Password</label>
+                            <div className="relative">
+                                <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />
+                                <input
+                                    id="reg-password2"
+                                    name="password2"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Repeat your password"
+                                    value={formData.password2}
+                                    onChange={handleChange}
+                                    autoComplete="new-password"
+                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.password2 ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                    onFocus={() => setFocused(true)}
+                                    onBlur={() => setFocused(false)}
+                                />
+                            </div>
+                            {fieldErrors.password2 && <p className="text-red-500 text-xs mt-1">{fieldErrors.password2}</p>}
                         </div>
 
                         {/* Agree to terms */}
@@ -137,6 +292,7 @@ export default function Register() {
                             <input
                                 id="terms"
                                 type="checkbox"
+                                required
                                 className="w-4 h-4 mt-1 text-[#570013] bg-[#fbf2ed] border-[#e0bfbf] rounded focus:ring-[#570013]"
                             />
                             <label htmlFor="terms" className="text-caption text-[#584141] cursor-pointer leading-tight">
@@ -144,14 +300,27 @@ export default function Register() {
                             </label>
                         </div>
 
-                        {/* Submit */}
-                        <Link
-                            to="/dashboard"
-                            className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2"
+                        {/* ── Integration: real submit button ──────────────────────────────── */}
+                        <button
+                            type="submit"
+                            disabled={authLoading || !!successMessage}
+                            className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                            <span>Create Account</span>
-                            <MdPersonAdd className="text-lg" />
-                        </Link>
+                            {authLoading ? (
+                                <span className="flex items-center gap-2">
+                                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                                    </svg>
+                                    Creating account…
+                                </span>
+                            ) : (
+                                <>
+                                    <span>Create Account</span>
+                                    <MdPersonAdd className="text-lg" />
+                                </>
+                            )}
+                        </button>
                     </form>
 
                     {/* Login link */}

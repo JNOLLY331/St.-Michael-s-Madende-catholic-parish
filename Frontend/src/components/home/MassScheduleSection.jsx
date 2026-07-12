@@ -27,8 +27,8 @@ export default function MassScheduleSection() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Sunday Mass Card — animated */}
           <div
-            className="mass-card md:col-span-4 bg-[#fbf2ed] p-8 rounded-2xl border border-[#e0bfbf] shadow-sm animate-fade-in-up"
-            style={{ animationDelay: '0.1s' }}
+            data-reveal-left
+            className="mass-card md:col-span-4 bg-[#fbf2ed] p-8 rounded-2xl border border-[#e0bfbf] shadow-sm"
           >
             {/* Shimmer overlay */}
             <div className="mass-card__shimmer" />
@@ -58,8 +58,8 @@ export default function MassScheduleSection() {
 
           {/* Daily Devotion Card — animated */}
           <div
-            className="devotion-card md:col-span-8 shadow-xl bg-gradient-to-br from-[#570013] to-[#800020] text-white p-8 rounded-2xl flex flex-col justify-between overflow-hidden relative group animate-fade-in-up"
-            style={{ animationDelay: '0.2s' }}
+            data-reveal-right
+            className="devotion-card md:col-span-8 shadow-xl bg-gradient-to-br from-[#570013] to-[#800020] text-white p-8 rounded-2xl flex flex-col justify-between overflow-hidden relative group"
           >
             {/* Animated rings */}
             <div className="devotion-card__ring devotion-card__ring--1" />
@@ -75,8 +75,9 @@ export default function MassScheduleSection() {
                 {DAILY_DEVOTIONS.map(({ label, time, icon }, idx) => (
                   <div
                     key={label}
+                    data-reveal-zoom
+                    data-delay={`${(idx + 2) * 100}`}
                     className="devotion-time-tile bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-default"
-                    style={{ animationDelay: `${0.4 + idx * 0.1}s` }}
                   >
                     <DynamicIcon name={icon} className="text-[#ffe088] mb-1" style={{ fontSize: '1.1rem' }} />
                     <p className="text-label-md text-white/60 font-oswald">{label}</p>

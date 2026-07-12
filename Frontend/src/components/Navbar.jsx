@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { MdChurch, MdExpandMore, MdPerson } from 'react-icons/md';
 import DynamicIcon from './DynamicIcon';
@@ -79,7 +79,7 @@ export default function Navbar() {
 
     return (
         <header
-            className={`w-full top-0 sticky z-50 transition-all duration-500 ${navbarBg}`}
+            className={`w-full top-0 fixed z-50 transition-all duration-500 ${navbarBg}`}
         >
             {/* Animated top glow bar */}
             <div className="footer-glow-bar" style={{ background: 'linear-gradient(90deg, transparent, #ffe088aa, #ff6b3566, #ffe088aa, transparent)', backgroundSize: '200% 100%' }} />
@@ -142,9 +142,9 @@ export default function Navbar() {
 
                                         {/* Dropdown */}
                                         {dropdown && (
-                                            <div className="nav-dropdown absolute top-full left-0 mt-2 rounded-2xl shadow-2xl shadow-black/30 border py-2 min-w-[210px] z-50"
+                                            <div className="nav-dropdown absolute top-full left-0 mt-2 rounded-none shadow-2xl shadow-black/30 border py-2 min-w-[210px] z-50"
                                                 style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
-                                                <div className="absolute -top-2 left-6 w-4 h-4 rounded-sm rotate-45 border-t border-l"
+                                                <div className="absolute -top-2 left-6 w-4 h-4 rotate-45 border-t border-l"
                                                     style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }} />
                                                 {dropdown.map(({ label: dLabel, to: dTo }, i) => (
                                                     <button

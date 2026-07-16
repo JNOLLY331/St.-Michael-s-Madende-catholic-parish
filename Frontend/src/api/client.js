@@ -28,6 +28,7 @@ export class ApiError extends Error {
 async function parseErrorMessage(res) {
   try {
     const data = await res.clone().json();
+<<<<<<< HEAD
 
     // Top-level human-readable messages take priority
     if (data?.detail) return { message: data.detail, data };
@@ -49,6 +50,12 @@ async function parseErrorMessage(res) {
     }
 
     return { message: `Request failed with status ${res.status}`, data };
+=======
+    // Return both the human-readable message AND raw data so callers can surface field errors
+    const message = data?.detail || data?.message || data?.non_field_errors?.[0]
+      || `Request failed with status ${res.status}`;
+    return { message, data };
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   } catch {
     return { message: `Request failed with status ${res.status}`, data: null };
   }

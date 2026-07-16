@@ -22,9 +22,12 @@ export const accountsApi = {
     // Login with email + password → returns { access, refresh, user }
     login: (data) => apiClient.post(`${BASE}/login/`, data),
 
+<<<<<<< HEAD
     // List all users/parishioners (requires IsAuthenticated)
     getUsers: () => apiClient.get(`${BASE}/users/`),
 
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
     // Blacklist the refresh token on the server (requires IsAuthenticated)
     logout: (refresh) => apiClient.post(`${BASE}/logout/`, { refresh }),
 

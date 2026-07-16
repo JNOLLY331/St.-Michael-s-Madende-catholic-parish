@@ -31,7 +31,11 @@
   border: none;
   cursor: pointer;
   color: #ffe088;
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: 'Oswald', sans-serif;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-size: 0.7rem;
@@ -60,21 +64,35 @@
   }
 }
 
+<<<<<<< HEAD
 /* ─── Backdrop ───────────────────────────────────────────────────── */
 .gospel-modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(10, 5, 5, 0.7);
+=======
+/* ─── Backdrop ────────────────────────────────────────────────────────────── */
+.gospel-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 5, 5, 0.65);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+<<<<<<< HEAD
   z-index: 9999;
   animation: gospel-fade-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   /* IMPORTANT: must not overflow, modal handles its own scroll */
   overflow: hidden;
+=======
+  overflow-y: auto;
+  z-index: 9999;
+  animation: gospel-fade-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 @keyframes gospel-fade-in {
@@ -87,25 +105,38 @@
   }
 }
 
+<<<<<<< HEAD
 /* ─── Modal card ──────────────────────────────────────────────────────── */
+=======
+/* ─── Modal card ──────────────────────────────────────────────────────────── */
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 .gospel-modal {
   position: relative;
   background: #ffffff;
   color: #1a1a1a;
   width: 100%;
   max-width: 660px;
+<<<<<<< HEAD
   /* Always keep within the viewport: 3rem = 1.5rem padding on each side */
   max-height: calc(100dvh - 3rem);
   display: flex;
   flex-direction: column;
+=======
+  max-height: 88vh;
+  overflow-y: auto;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   border-radius: 1.75rem;
   padding: 0;
   box-shadow:
     0 32px 80px rgba(0, 0, 0, 0.28),
     0 0 0 1px rgba(0, 0, 0, 0.06);
   animation: gospel-slide-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+<<<<<<< HEAD
   font-family: var(--font-sans);
   overflow: hidden;
+=======
+  font-family: Arial, Helvetica, sans-serif;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 @keyframes gospel-slide-up {
@@ -120,10 +151,25 @@
   }
 }
 
+<<<<<<< HEAD
 /* Scrollable body area grows to fill remaining height, scrolls if needed */
 .gospel-modal-body {
   flex: 1 1 auto;
   overflow-y: auto;
+=======
+/* Scrollbar inside modal */
+.gospel-modal::-webkit-scrollbar {
+  width: 5px;
+}
+
+.gospel-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gospel-modal::-webkit-scrollbar-thumb {
+  background: #e0bfbf;
+  border-radius: 9999px;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 /* ─── Rich burgundy header band ─────────────────────────────────────────── */
@@ -183,7 +229,11 @@
 
 /* ─── Header typography ──────────────────────────────────────────────────── */
 .gospel-modal-eyebrow {
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: Arial, Helvetica, sans-serif;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   letter-spacing: 0.3em;
   text-transform: uppercase;
   font-size: 0.7rem;
@@ -193,13 +243,19 @@
 }
 
 .gospel-modal-date {
+<<<<<<< HEAD
   font-family: var(--font-sans);
   font-size: 0.85rem;
+=======
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.82rem;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   color: rgba(255, 255, 255, 0.7);
   margin: 0 0 1.1rem;
 }
 
 .gospel-modal-book {
+<<<<<<< HEAD
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.7rem;
@@ -207,13 +263,27 @@
   margin: 0 0 0.3rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+=======
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 800;
+  font-size: 1.55rem;
+  color: #ffffff;
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.01em;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 .gospel-modal-citation {
   display: inline-block;
+<<<<<<< HEAD
   font-family: var(--font-sans);
   font-size: 0.78rem;
   letter-spacing: 0.2em;
+=======
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   text-transform: uppercase;
   color: #ffe088;
   background: rgba(255, 224, 136, 0.12);
@@ -224,16 +294,27 @@
 }
 
 /* ─── Body ───────────────────────────────────────────────────────────────── */
+<<<<<<< HEAD
 /* Padding for scrollable body */
 .gospel-modal-body-inner {
+=======
+.gospel-modal-body {
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   padding: 2rem 2.25rem 2.5rem;
 }
 
 /* Opening quote mark */
+<<<<<<< HEAD
 .gospel-modal-body-inner::before {
   content: '\201C';
   display: block;
   font-family: var(--font-sans);
+=======
+.gospel-modal-body::before {
+  content: '\201C';
+  display: block;
+  font-family: Georgia, serif;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 5rem;
   line-height: 0.5;
   color: #e0bfbf;
@@ -241,12 +322,21 @@
 }
 
 .gospel-modal-text {
+<<<<<<< HEAD
   font-family: var(--font-sans);
   font-size: 1.05rem;
   font-weight: 400;
   line-height: 1.85;
   color: #2d2020;
   margin: 0;
+=======
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #2d2020;
+  margin: 0;
+  font-weight: 400;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 /* Reference tag at the bottom */
@@ -268,6 +358,7 @@
 }
 
 .gospel-modal-ref-text {
+<<<<<<< HEAD
   font-family: var(--font-sans);
   font-size: 0.78rem;
   color: #8c7071;
@@ -290,6 +381,16 @@
 }
 
 /* ─── Mobile overrides ───────────────────────────────────────────────── */
+=======
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.78rem;
+  color: #8c7071;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Mobile overrides ───────────────────────────────────────────────────── */
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 @media (max-width: 767px) {
   .gospel-modal-backdrop {
     padding: 0.75rem;
@@ -297,7 +398,11 @@
   }
 
   .gospel-modal {
+<<<<<<< HEAD
     max-height: calc(100dvh - 1.5rem);
+=======
+    max-height: 92vh;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
     border-radius: 1.5rem 1.5rem 0 0;
   }
 
@@ -307,10 +412,17 @@
   }
 
   .gospel-modal-book {
+<<<<<<< HEAD
     font-size: 1.35rem;
   }
 
   .gospel-modal-body-inner {
+=======
+    font-size: 1.3rem;
+  }
+
+  .gospel-modal-body {
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
     padding: 1.5rem 1.5rem 2rem;
   }
 

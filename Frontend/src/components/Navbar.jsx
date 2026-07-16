@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+<<<<<<< HEAD
 import { MdChurch, MdExpandMore, MdPerson, MdDashboard, MdLogout } from 'react-icons/md';
 import DynamicIcon from './DynamicIcon';
 import { useAuth } from '../context/AuthContext';
+=======
+import { MdChurch, MdExpandMore, MdPerson } from 'react-icons/md';
+import DynamicIcon from './DynamicIcon';
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 
 
@@ -52,7 +57,10 @@ export default function Navbar() {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
+<<<<<<< HEAD
     const { isAuthenticated, user, logout } = useAuth();
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -75,6 +83,7 @@ export default function Navbar() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+<<<<<<< HEAD
     const handleLogout = async () => {
         await logout();
         navigate('/');
@@ -83,17 +92,31 @@ export default function Navbar() {
     const navbarBg = scrolled
         ? 'bg-[#2d0009]/95 backdrop-blur-xl shadow-2xl shadow-black/50'
         : 'bg-gradient-to-r from-[#570013] via-[#6b0017] to-[#570013]';
+=======
+    const navbarBg = scrolled
+        ? 'bg-[#3a000d]/98 backdrop-blur-md shadow-2xl shadow-black/40'
+        : 'bg-[#570013]';
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
     return (
         <header
             className={`w-full top-0 fixed z-50 transition-all duration-500 ${navbarBg}`}
         >
+<<<<<<< HEAD
             {/* Animated accent bar */}
             <div className="h-[2px] w-full" style={{ background: 'linear-gradient(90deg, transparent 0%, #ffe088 30%, #ff9f4a 60%, #ffe088 80%, transparent 100%)' }} />
 
             {/* Top info strip */}
             <div className="bg-[#40000b]/80 text-[#ffe088]/90 text-[11px] px-4 py-1 text-center hidden md:block font-oswald tracking-widest border-b border-white/5">
                 <span>📍 123 Parish Road, Madende &nbsp;|&nbsp; ☎ (123) 456-7890 &nbsp;|&nbsp; ✉ info@stmichaelmadende.org</span>
+=======
+            {/* Animated top glow bar */}
+            <div className="footer-glow-bar" style={{ background: 'linear-gradient(90deg, transparent, #ffe088aa, #ff6b3566, #ffe088aa, transparent)', backgroundSize: '200% 100%' }} />
+
+            {/* Top info strip */}
+            <div className="bg-[#40000b] text-[#ffe088] text-xs px-4 py-1.5 text-center hidden md:block font-oswald tracking-widest">
+                <span>123 Parish Road, Madende &nbsp;|&nbsp; ☎ (123) 456-7890 &nbsp;|&nbsp; ✉ info@stmichaelmadende.org</span>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             </div>
 
             {/* Main navbar */}
@@ -105,6 +128,7 @@ export default function Navbar() {
                         onClick={() => handleNavClick('/')}
                         className="flex items-center gap-3 cursor-pointer group shrink-0"
                     >
+<<<<<<< HEAD
                         <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#ffe088] to-[#f0c040] flex items-center justify-center shadow-lg shadow-black/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 border-2 border-white/20">
                             <MdChurch className="text-[#570013] text-2xl" />
                         </div>
@@ -114,12 +138,27 @@ export default function Navbar() {
                                 <br /><span className="text-[#ffe088]">MADENDE</span>
                             </span>
                             <span className="text-white/60 text-[9px] font-oswald tracking-[0.25em] uppercase">
+=======
+                        <div className="w-12 h-12 rounded-full bg-[#ffe088] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                            <MdChurch className="text-[#570013] text-3xl" />
+                        </div>
+                        <div className="text-left">
+                            <span className="font-oswald font-bold text-white text-xl tracking-wide block leading-none drop-shadow-lg">
+                                ST. MICHAEL'S
+                                <br /><span>MADENDE</span>
+                            </span>
+                            <span className="text-[#ffe088] text-[10px] font-oswald tracking-[0.2em] uppercase">
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                 Catholic Parish
                             </span>
                         </div>
                     </button>
 
+<<<<<<< HEAD
                     {/* Desktop Nav */}
+=======
+                    {/* Desktop Nav — full edge-to-edge spread */}
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                     <nav className="hidden lg:flex items-center flex-1">
                         <div className="flex items-center w-full justify-between px-4">
                             {navLinks.map(({ label, to, dropdown }) => {
@@ -129,6 +168,7 @@ export default function Navbar() {
                                         <button
                                             onClick={() => handleNavClick(to)}
                                             className={`
+<<<<<<< HEAD
                                                 nav-link-text relative flex items-center gap-1 px-2 py-1
                                                 font-oswald font-bold text-sm tracking-wide
                                                 border-b-2 transition-all duration-300
@@ -138,6 +178,17 @@ export default function Navbar() {
                                                 }
                                             `}
                                         >
+=======
+                                                nav-link-text relative flex items-center gap-1 px-2
+                                                border-b-2 transition-all duration-300
+                                                ${active
+                                                    ? 'text-[#ffe088] border-[#ffe088]'
+                                                    : 'text-white/90 border-transparent hover:text-[#ffe088] hover:border-[#ffe088]/60'
+                                                }
+                                            `}
+                                        >
+                                            {/* Active indicator dot */}
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                             {active && (
                                                 <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#ffe088]" />
                                             )}
@@ -149,7 +200,11 @@ export default function Navbar() {
 
                                         {/* Dropdown */}
                                         {dropdown && (
+<<<<<<< HEAD
                                             <div className="nav-dropdown absolute top-full left-0 mt-3 shadow-2xl shadow-black/40 border py-2 min-w-[210px] z-50 rounded-lg overflow-hidden"
+=======
+                                            <div className="nav-dropdown absolute top-full left-0 mt-2 rounded-none shadow-2xl shadow-black/30 border py-2 min-w-[210px] z-50"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                                 style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
                                                 <div className="absolute -top-2 left-6 w-4 h-4 rotate-45 border-t border-l"
                                                     style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }} />
@@ -157,7 +212,11 @@ export default function Navbar() {
                                                     <button
                                                         key={dTo}
                                                         onClick={() => handleNavClick(dTo)}
+<<<<<<< HEAD
                                                         className="w-full text-left px-5 py-2.5 font-oswald text-sm tracking-wide flex items-center gap-2.5 transition-all duration-200 hover:pl-7 group/item"
+=======
+                                                        className="w-full text-left px-5 py-2.5 font-oswald font-bold text-sm tracking-wide flex items-center gap-2 transition-all duration-200 hover:pl-7"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                                         style={{
                                                             color: 'var(--text-primary)',
                                                             animationDelay: `${i * 40}ms`
@@ -165,7 +224,11 @@ export default function Navbar() {
                                                         onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card-hover)'}
                                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                                     >
+<<<<<<< HEAD
                                                         <span className="w-1.5 h-1.5 rounded-full bg-[#570013] opacity-50 group-hover/item:opacity-100 transition-opacity" />
+=======
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#570013] opacity-60" />
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                                         {dLabel}
                                                     </button>
                                                 ))}
@@ -190,11 +253,16 @@ export default function Navbar() {
                         {/* Donate button */}
                         <button
                             onClick={() => handleNavClick('/donate')}
+<<<<<<< HEAD
                             className="btn-primary bg-gradient-to-r from-[#ffe088] to-[#f0c040] text-[#40000b] px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase shadow-lg hover:shadow-[#ffe088]/30 hover:scale-105 transition-all hidden md:block"
+=======
+                            className="btn-primary bg-[#ffe088] text-[#40000b] px-5 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase shadow-lg hover:bg-[#feed9a] transition-all hidden md:block"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                         >
                             Donate
                         </button>
 
+<<<<<<< HEAD
                         {/* Auth buttons */}
                         {isAuthenticated ? (
                             <div className="hidden md:flex items-center gap-2">
@@ -228,6 +296,16 @@ export default function Navbar() {
                                 <span>Portal</span>
                             </button>
                         )}
+=======
+                        {/* Member Portal */}
+                        <button
+                            onClick={() => handleNavClick('/login')}
+                            className="hidden md:flex items-center gap-1 border border-white/30 text-white px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase hover:bg-white/10 transition-colors"
+                        >
+                            <MdPerson className="text-base" />
+                            <span>Portal</span>
+                        </button>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
                         {/* Hamburger */}
                         <button
@@ -243,8 +321,13 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu */}
+<<<<<<< HEAD
             <div className={`lg:hidden overflow-hidden transition-all duration-400 ${menuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 <div className="border-t border-white/10 bg-[#3a000d]/98 backdrop-blur-xl py-4 px-4">
+=======
+            <div className={`lg:hidden overflow-hidden transition-all duration-400 ${menuOpen ? 'max-h-[700px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="border-t border-white/20 bg-[#40000b] py-4 px-4">
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                     <nav className="flex flex-col gap-1">
                         {navLinks.map(({ label, to, dropdown }) => {
                             const active = pathname === to || (to !== '/' && pathname.startsWith(to));
@@ -254,7 +337,11 @@ export default function Navbar() {
                                         onClick={() => dropdown ? setMobileDropdown(mobileDropdown === to ? null : to) : handleNavClick(to)}
                                         className={`w-full text-left font-oswald font-bold text-base py-3 px-4 rounded-xl tracking-widest uppercase flex justify-between items-center transition-all duration-300 ${active
                                             ? 'bg-[#570013] text-[#ffe088] shadow-inner'
+<<<<<<< HEAD
                                             : 'text-white/90 hover:bg-[#570013]/50 hover:text-[#ffe088] hover:translate-x-1'
+=======
+                                            : 'text-white hover:bg-[#570013]/50 hover:text-[#ffe088] hover:translate-x-1'
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                             }`}
                                         style={{ lineHeight: '2' }}
                                     >
@@ -280,6 +367,7 @@ export default function Navbar() {
                                 </div>
                             );
                         })}
+<<<<<<< HEAD
 
                         {/* Mobile auth / dashboard section */}
                         <div className="mt-3 pt-3 border-t border-white/10">
@@ -339,6 +427,23 @@ export default function Navbar() {
                                     </button>
                                 </div>
                             )}
+=======
+                        <div className="flex gap-2 mt-3">
+                            {/* Mobile Theme Toggle */}
+                            <button
+                                onClick={toggleTheme}
+                                className="flex items-center justify-center gap-2 border border-white/30 text-white py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-white/10 transition-colors px-4"
+                            >
+                                <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-base" />
+                                {theme === 'dark' ? 'Light' : 'Dark'}
+                            </button>
+                            <button
+                                onClick={() => handleNavClick('/donate')}
+                                className="flex-1 bg-[#ffe088] text-[#40000b] py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide text-center btn-primary"
+                            >
+                                Donate
+                            </button>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                         </div>
                     </nav>
                 </div>

@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { resolveMediaUrl } from '../api/client';
 import { churchApi } from '../api/endpoints/church';
   
+=======
+import { churchApi, resolveMediaUrl } from '../api';
+
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 // Fallback copy for when the backend is unreachable or the record is inactive.
 // NOTE: image is intentionally null — the HeroSection will show a loading
 // spinner while fetching; only the backend-provided image is displayed.

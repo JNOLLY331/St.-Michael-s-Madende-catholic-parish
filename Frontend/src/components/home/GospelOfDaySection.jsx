@@ -8,7 +8,11 @@ export default function GospelOfDaySection({ onNavigate }) {
           <MdMenuBook className="text-[#ffe088] text-3xl" />
         </div>
         <p className="font-oswald tracking-[0.3em] text-[#ffe088] uppercase text-sm mb-6">Word of the Day</p>
+<<<<<<< HEAD
         <blockquote className="font-oswald text-3xl md:text-4xl text-[#ffdada] italic max-w-3xl mx-auto leading-relaxed mb-6">
+=======
+        <blockquote className="font-serif text-3xl md:text-4xl text-[#ffdada] italic max-w-3xl mx-auto leading-relaxed mb-6">
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
           "I am the way, the truth, and the life. No one comes to the Father except through me."
         </blockquote>
         <cite className="text-body-md text-[#cdc6b8] opacity-80">— John 14:6</cite>

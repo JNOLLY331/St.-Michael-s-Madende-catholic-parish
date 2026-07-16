@@ -20,6 +20,7 @@ User = get_user_model()
 password_reset_token = PasswordResetTokenGenerator()
 
 
+<<<<<<< HEAD
 class UserListView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -32,6 +33,8 @@ class UserListView(APIView):
         return Response(serializer.data)
 
 
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -40,12 +43,15 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
+<<<<<<< HEAD
         # Auto-verify the user so they can log in immediately.
         # Email verification is still sent (printed to console in dev),
         # but users are not blocked from logging in until they verify.
         user.is_verified = True
         user.save(update_fields=["is_verified"])
 
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = account_activation_token.make_token(user)
         verification_link = f"http://localhost:5173/verify-email/{uid}/{token}/"
@@ -56,7 +62,11 @@ class RegisterView(APIView):
         return Response(
             {
                 "success": True,
+<<<<<<< HEAD
                 "message": "Registration successful! You can now log in.",
+=======
+                "message": "Registration successful. Please verify your email.",
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                 "user": UserSerializer(user).data,
             },
             status=status.HTTP_201_CREATED,
@@ -98,6 +108,15 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
 
+<<<<<<< HEAD
+=======
+        if not user.is_verified:
+            return Response(
+                {"success": False, "message": "Verify your email before logging in."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
         refresh = RefreshToken.for_user(user)
         return Response(
             {

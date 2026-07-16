@@ -31,8 +31,13 @@ function formatTime(timeStr) {
 
 // ── Reveal attributes cycling (maintains visual variety from the static version)
 const REVEAL_ATTRS = [
+<<<<<<< HEAD
     'scale-in', 'fade-left', 'fade-right',
     'fade-up', 'fade-up', 'fade-up',
+=======
+    'data-reveal-zoom', 'data-reveal-left', 'data-reveal-right',
+    'data-reveal-flip', 'data-reveal-bounce', 'data-reveal-spin',
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 ];
 
 export default function Events() {
@@ -128,9 +133,15 @@ export default function Events() {
                             return (
                                 <div
                                     key={event.id}
+<<<<<<< HEAD
                                     data-aos={reveal}
                                     data-delay={i * 100}
                                     className="group cursor-pointer rounded-2xl overflow-hidden shadow-sm card-hover card-glow border smooth-transition"
+=======
+                                    {...{ [reveal]: '' }}
+                                    data-delay={i * 100}
+                                    className="group cursor-pointer rounded-2xl overflow-hidden shadow-sm card-hover card-glow border"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                     style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
                                 >
                                     <div className="aspect-video relative overflow-hidden">

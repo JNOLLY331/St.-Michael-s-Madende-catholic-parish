@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { resolveMediaUrl } from '../api/client';
 import { donationsApi } from '../api/endpoints/donations';
+=======
+import { donationsApi } from '../api';
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 /**
  * Fetches active donation campaigns from GET /api/donations/campaigns/.

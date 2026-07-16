@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { resolveMediaUrl } from '../api/client';
 import { galleryApi } from '../api/endpoints/gallery';
+=======
+import { galleryApi, resolveMediaUrl } from '../api';
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 /**
  * Fetches gallery albums and their media items from:

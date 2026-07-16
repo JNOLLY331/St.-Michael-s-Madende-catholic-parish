@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { resolveMediaUrl } from '../api/client';
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 /**
  * Animates a number from 0 up to `target` using an easeOutExpo curve.

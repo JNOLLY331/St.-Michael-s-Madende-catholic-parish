@@ -2,11 +2,17 @@
 
 @theme {
   /* ─── Fonts ─── */
+<<<<<<< HEAD
   --font-serif: 'EB Garamond', Georgia, serif;
   --font-sans: 'Source Sans 3', system-ui, sans-serif;
   --font-family-oswald: "Oswald", sans-serif;
   --font-family-serif: var(--font-serif);
   --font-family-sans: var(--font-sans);
+=======
+  --font-family-oswald: "Oswald", sans-serif;
+  --font-family-serif: "EB Garamond", Georgia, serif;
+  --font-family-sans: "Source Sans 3", system-ui, sans-serif;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
   /* ─── Sacred Community Color Palette ─── */
   --color-primary: #570013;
@@ -104,7 +110,11 @@
   --accent-gold-dim: #e9c349;
   --accent-maroon: #570013;
   --accent-maroon-dark: #40000b;
+<<<<<<< HEAD
   --footer-bg: hsl(0, 0%, 13%);
+=======
+  --footer-bg: #1a1208;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   --footer-text: rgba(255, 255, 255, 0.6);
   --footer-border: rgba(255, 255, 255, 0.1);
   --section-alt: #f5ece7;
@@ -127,9 +137,15 @@
   --accent-gold-dim: #c9a030;
   --accent-maroon: #ff6070;
   --accent-maroon-dark: #b03040;
+<<<<<<< HEAD
   --footer-bg: #202020;
   --footer-text: rgba(255, 255, 255, 0.5);
   --footer-border: rgba(5, 5, 5, 0.644))
+=======
+  --footer-bg: #0a0507;
+  --footer-text: rgba(255, 255, 255, 0.5);
+  --footer-border: rgba(255, 255, 255, 0.08);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   --section-alt: #1a0d10;
   --navbar-bg: #1a0508;
   --navbar-scrolled: rgba(20, 3, 8, 0.98);
@@ -152,7 +168,11 @@ html {
 }
 
 body {
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: var(--font-family-sans);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   background-color: var(--bg-page);
   color: var(--text-primary);
   min-height: 100dvh;
@@ -160,13 +180,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.4s ease, color 0.4s ease;
   overflow-x: hidden;
+<<<<<<< HEAD
   scroll-behavior: smooth;
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 
 
 /* ─── Typography helpers ─── */
 .font-oswald {
+<<<<<<< HEAD
   font-family: var(--font-serif);
 }
 
@@ -176,10 +200,22 @@ body {
 
 .font-sans {
   font-family: var(--font-sans);
+=======
+  font-family: var(--font-family-oswald);
+}
+
+.font-serif {
+  font-family: var(--font-family-serif);
+}
+
+.font-sans {
+  font-family: var(--font-family-sans);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 /* Text styles */
 .text-display-lg {
+<<<<<<< HEAD
   font-family: var(--font-serif);
   font-size: 48px;
   font-weight: 600;
@@ -189,41 +225,72 @@ body {
 
 .text-headline-lg {
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-serif);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+}
+
+.text-headline-lg {
+  font-family: var(--font-family-serif);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 32px;
   font-weight: 600;
   line-height: 40px;
 }
 
 .text-headline-lg-mobile {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-serif);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 28px;
   font-weight: 600;
   line-height: 36px;
 }
 
 .text-headline-md {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-serif);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 24px;
   font-weight: 500;
   line-height: 32px;
 }
 
 .text-body-lg {
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: var(--font-family-sans);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
 }
 
 .text-body-md {
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: var(--font-family-sans);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
 }
 
 .text-label-md {
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: var(--font-family-sans);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -231,7 +298,11 @@ body {
 }
 
 .text-caption {
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: var(--font-family-sans);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -265,7 +336,11 @@ body {
    NAVBAR — TALLER FONT
 ═══════════════════════════════════════════════════════ */
 .nav-link-text {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 2.2;
@@ -778,7 +853,11 @@ body {
 .bottom-link {
   position: relative;
   color: rgba(255, 255, 255, 0.4);
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   transition: color 0.25s ease, transform 0.25s ease;
@@ -1159,7 +1238,11 @@ body {
 }
 
 .saints-section__eyebrow {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   letter-spacing: 0.3em;
   color: rgba(87, 0, 19, 0.6);
   text-transform: uppercase;
@@ -1173,7 +1256,11 @@ body {
 
 .saints-section__title {
   font-size: 2.75rem;
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
@@ -1223,7 +1310,11 @@ body {
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   color: var(--text-primary);
+<<<<<<< HEAD
   font-family: var(--font-sans);
+=======
+  font-family: 'Inter', sans-serif;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }
 
 .saints-search::placeholder {
@@ -1264,7 +1355,11 @@ body {
 
 .saints-filter-count {
   margin-top: 1rem;
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 0.85rem;
@@ -1282,7 +1377,11 @@ body {
 }
 
 .saints-loading-text {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   color: var(--text-primary);
   font-size: 1.25rem;
   letter-spacing: 0.05em;
@@ -1457,7 +1556,11 @@ body {
   position: absolute;
   top: 12px;
   left: 12px;
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -1479,7 +1582,11 @@ body {
 }
 
 .saint-card__date {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -1495,7 +1602,11 @@ body {
 }
 
 .saint-card__name {
+<<<<<<< HEAD
   font-family: var(--font-serif);
+=======
+  font-family: var(--font-family-oswald);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -1523,6 +1634,7 @@ body {
   to {
     opacity: 1;
   }
+<<<<<<< HEAD
 }
 
 /* Homepage specific font overrides to retain original fonts */
@@ -1719,4 +1831,6 @@ body {
 
 .smooth-transition {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 }

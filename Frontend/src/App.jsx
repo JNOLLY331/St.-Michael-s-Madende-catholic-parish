@@ -21,9 +21,12 @@ import Donate from './pages/Donate';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
+<<<<<<< HEAD
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import VerifyEmail from './pages/VerifyEmail';
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 import Dashboard from './pages/Dashboard';
 
 export default function App() {
@@ -40,7 +43,11 @@ export default function App() {
                         toastOptions={{
                             duration: 4000,
                             style: {
+<<<<<<< HEAD
                                 fontFamily: 'var(--font-sans)',
+=======
+                                fontFamily: 'var(--font-family-sans)',
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                 fontWeight: '700',
                                 fontSize: '0.95rem',
                                 borderRadius: '14px',
@@ -98,9 +105,12 @@ export default function App() {
                         {/* ── Auth & dashboard (portal layout) ── */}
                         <Route path="/login" element={<PortalLayout><Login /></PortalLayout>} />
                         <Route path="/register" element={<PortalLayout><Register /></PortalLayout>} />
+<<<<<<< HEAD
                         <Route path="/forgot-password" element={<PortalLayout><ForgotPassword /></PortalLayout>} />
                         <Route path="/reset-password/:uidb64/:token" element={<PortalLayout><ResetPassword /></PortalLayout>} />
                         <Route path="/verify-email/:uidb64/:token" element={<PortalLayout><VerifyEmail /></PortalLayout>} />
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                         <Route path="/dashboard" element={<Dashboard />} />
                     </Routes>
                 </AuthProvider>

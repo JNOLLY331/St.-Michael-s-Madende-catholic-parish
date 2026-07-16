@@ -15,14 +15,21 @@ export default function useScrollReveal() {
             '[data-reveal-spin]',
             '[data-reveal-text]',
             '.reveal',
+<<<<<<< HEAD
             '[data-aos]',
         ].join(',');
+=======
+        ];
+
+        const els = document.querySelectorAll(selectors.join(','));
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
         const io = new IntersectionObserver(
             (entries) => {
                 entries.forEach((e) => {
                     if (e.isIntersecting) {
                         e.target.classList.add('revealed');
+<<<<<<< HEAD
                         // Also add 'visible' for legacy support
                         e.target.classList.add('visible');
                         // Add aos-animate for new animations
@@ -32,12 +39,18 @@ export default function useScrollReveal() {
                         const delay = e.target.dataset.delay || 0;
                         if (delay) e.target.style.transitionDelay = `${delay}ms`;
                         io.unobserve(e.target);
+=======
+                        // stagger children
+                        const delay = e.target.dataset.delay || 0;
+                        e.target.style.transitionDelay = `${delay}ms`;
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                     }
                 });
             },
             { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
         );
 
+<<<<<<< HEAD
         // function to observe new elements
         const observeElements = (root) => {
             if (!root || !root.querySelectorAll) return;
@@ -96,5 +109,9 @@ export default function useScrollReveal() {
             io.disconnect();
             mo.disconnect();
         };
+=======
+        els.forEach((el) => io.observe(el));
+        return () => els.forEach((el) => io.unobserve(el));
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
     }, [pathname]);
 }

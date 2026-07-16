@@ -50,6 +50,7 @@ export default function GospelReadingModal({ gospel, onClose }) {
           <p className="gospel-modal-citation">{gospel.citation}</p>
         </div>
 
+<<<<<<< HEAD
         {/* ── White scrollable body ── */}
         <div className="gospel-modal-body">
           <div className="gospel-modal-body-inner">
@@ -62,6 +63,18 @@ export default function GospelReadingModal({ gospel, onClose }) {
                 {gospel.book} {gospel.citation} · Roman Catholic Lectionary
               </span>
             </div>
+=======
+        {/* ── White body ── */}
+        <div className="gospel-modal-body">
+          <p className="gospel-modal-text">{gospel.text}</p>
+
+          {/* Reference footer */}
+          <div className="gospel-modal-ref">
+            <span className="gospel-modal-ref-dot" />
+            <span className="gospel-modal-ref-text">
+              {gospel.book} {gospel.citation} · Roman Catholic Lectionary
+            </span>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
           </div>
         </div>
       </div>

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Link, useNavigate } from 'react-router-dom';
+=======
+import { Link } from 'react-router-dom';
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 import { MdArrowForward, MdCheckCircle, MdChurch, MdDiamond, MdLock, MdMail, MdPerson, MdPersonAdd, MdPhone, MdWarning } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
 import toast from 'react-hot-toast';
@@ -8,14 +12,21 @@ import { useAuth } from '../context/AuthContext';
 
 
 export default function Register() {
+<<<<<<< HEAD
     const navigate = useNavigate();
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
     // ── Integration: destructure register helper and shared auth state ────────
     const { register, authLoading, authError, clearAuthError } = useAuth();
 
     const [showPassword, setShowPassword] = useState(false);
     const [focused, setFocused] = useState(false);
+<<<<<<< HEAD
     // Local success state — shown after successful registration
+=======
+    // Local success state — shown after successful registration (before email verification)
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
     const [successMessage, setSuccessMessage] = useState('');
     const [fieldErrors, setFieldErrors] = useState({});
 
@@ -75,6 +86,7 @@ export default function Register() {
         const result = await register(payload);
 
         if (result.success) {
+<<<<<<< HEAD
             const msg = result.message || 'Registration successful! You can now log in.';
             setSuccessMessage(msg);
             toast.success(`🎉 Account created! Redirecting to login…`, { id: toastId, duration: 3000 });
@@ -93,6 +105,14 @@ export default function Register() {
                     setFieldErrors(serverFieldErrors);
                 }
             }
+=======
+            // Registration triggers email verification — don't auto-login.
+            // Instead show a confirmation message and let the user check their inbox.
+            const msg = result.message || 'Registration successful! Please check your email to verify your account.';
+            setSuccessMessage(msg);
+            toast.success(`🎉 Account created! Check your inbox to verify your email.`, { id: toastId, duration: 6000 });
+        } else {
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             toast.error(`🚫 ${result.message || 'Registration failed. Please try again.'}`, { id: toastId, duration: 5000 });
         }
         // If registration failed, authError will be populated by AuthContext

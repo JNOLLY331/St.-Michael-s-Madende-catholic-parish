@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { resolveMediaUrl } from '../api/client';
 import { sacramentsApi } from '../api/endpoints/sacraments';
+=======
+import { sacramentsApi } from '../api';
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 export function useSacramentsData() {
     const [sacraments, setSacraments] = useState([]);
@@ -20,6 +24,7 @@ export function useSacramentsData() {
                     setSacraments(items.map(s => ({
                         id: s.id,
                         name: s.name,
+<<<<<<< HEAD
                         slug: s.slug || '',
                         // sacrament_type is the choice key (e.g. "BAPTISM", "MATRIMONY")
                         sacramentType: s.sacrament_type || '',
@@ -36,6 +41,14 @@ export function useSacramentsData() {
                         requiresDocuments: s.requires_documents ?? false,
                         // nested requirements array
                         requirements: Array.isArray(s.requirements) ? s.requirements : [],
+=======
+                        description: s.description,
+                        category: s.category || '', // e.g. "INITIATION"
+                        image: s.image,
+                        scheduleInfo: s.schedule_info || '',
+                        contactInfo: s.contact_info || '',
+                        slug: s.slug || s.name.toLowerCase().replace(/\s+/g, '-'),
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                     })));
                 }
             } catch (err) {

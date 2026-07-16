@@ -159,6 +159,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
 ]
 
+<<<<<<< HEAD
 # ─── Email Configuration ──────────────────────────────────────────────────────
 # In development, print emails to the console instead of sending them.
 # Set EMAIL_BACKEND to smtp in production and fill in the SMTP settings below.
@@ -173,6 +174,8 @@ DEFAULT_FROM_EMAIL = "St. Michael Madende <noreply@stmichaelmadende.org>"
 # EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 # DRF and rest_Framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (

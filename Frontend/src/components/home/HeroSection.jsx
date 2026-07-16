@@ -102,7 +102,10 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
           </p>
           <h1 className="text-display-lg mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             {hero.headingLine1}
+<<<<<<< HEAD
 
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             {hero.headingLine2 && (
               <>
                 <br />
@@ -124,7 +127,11 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
             {hero.secondaryButtonText && (
               <button
                 onClick={() => handleButtonClick(hero.secondaryButtonLink)}
+<<<<<<< HEAD
                 className="border-2 border-white/60 text-white px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide transition-all hover:bg-white/10 hover:border-white bg-white/10 backdrop-blur-lg"
+=======
+                className="border-2 border-white/60 text-white px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide transition-all hover:bg-white/10 hover:border-white backdrop-blur-sm"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
               >
                 {hero.secondaryButtonText}
               </button>
@@ -134,7 +141,11 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
         {/* Daily Reading — sits on the same hero background */}
         <div className="hidden lg:block w-full max-w-xl shrink-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+<<<<<<< HEAD
           <div className="relative border border-white/25 rounded-3xl px-12 py-14 text-center text-white animate-float-gentle bg-white/10 backdrop-blur-lg"
+=======
+          <div className="relative border border-white/25 rounded-3xl px-12 py-14 text-center text-white animate-float-gentle backdrop-blur-sm"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             style={{ animationDelay: '0.6s' }}>
             <span className="absolute top-6 left-1/2 -translate-x-1/2 w-10 h-[1px] bg-[#ffe088]/50" />
             <p className="font-oswald tracking-[0.35em] text-[#ffe088] uppercase text-xs mb-4 mt-4">✦ Daily Reading ✦</p>
@@ -149,7 +160,11 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
               </svg>
 
               <div className="gospel-preview-wrap">
+<<<<<<< HEAD
                 <p className="font-oswald font-bold not-italic text-white text-[1.75rem] md:text-[2rem] leading-[1.45] tracking-[0.01em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+=======
+                <p className="font-serif font-bold not-italic text-white text-[1.75rem] md:text-[2rem] leading-[1.45] tracking-[0.01em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                   {gospel.loading ? 'Loading today\u2019s Gospel reading\u2026' : gospel.text}
                 </p>
                 {!gospel.loading && <div className="gospel-fade-overlay" aria-hidden="true" />}

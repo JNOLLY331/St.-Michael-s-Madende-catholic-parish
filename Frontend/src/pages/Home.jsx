@@ -43,7 +43,11 @@ export default function Home() {
   const [isGospelModalOpen, setIsGospelModalOpen] = useState(false);
 
   return (
+<<<<<<< HEAD
     <div className="home-page">
+=======
+    <>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
       <HeroSection
         hero={hero}
         loading={heroLoading}
@@ -69,6 +73,10 @@ export default function Home() {
       <DonationSection onNavigate={handleNav} />
 
       <GospelOfDaySection onNavigate={handleNav} />
+<<<<<<< HEAD
     </div>
+=======
+    </>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   );
 }

@@ -27,18 +27,24 @@ class SacramentSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True,
     )
+<<<<<<< HEAD
     # Human-readable label for the sacrament type choice
     sacrament_type_display = serializers.CharField(
         source="get_sacrament_type_display",
         read_only=True,
     )
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
     class Meta:
         model = Sacrament
         fields = (
             "id",
+<<<<<<< HEAD
             "sacrament_type",
             "sacrament_type_display",
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             "name",
             "slug",
             "short_description",
@@ -58,7 +64,10 @@ class SacramentSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "id",
             "slug",
+<<<<<<< HEAD
             "sacrament_type_display",
+=======
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             "created_at",
             "updated_at",
         )

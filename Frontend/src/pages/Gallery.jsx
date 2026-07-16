@@ -17,9 +17,19 @@ const FALLBACK_PHOTOS = [
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDiFp6Nv9HQK8JMgy_cvZMl2YmkcrusObqEl0T-0Utz_8oSVTZgma-xfB9PGr1FWpfaTejdgrUWgC6QW705s7_ae16dBqGOeyXxxudijlIxfTgKKEdjMN7n1q7wXcwYhE3GBLfbao78by3SA2E7qK8l0Os4bRnLhApjJs3zsFfCvdWQFPvhWFevFJk71K9Av7e2wUoCBNvzHP7OijaaGAayhXwJ5S_WmSZrm2-RtCSB8snf17X2ut1Ikphu8MN0dauMOrFWJdCDiWTb',
 ];
 
+<<<<<<< HEAD
 export default function Gallery() {
     const [lightbox, setLightbox] = useState(null);
     const [hoveredIdx, setHoveredIdx] = useState(null);
+=======
+const REVEAL_ATTRS = [
+    'data-reveal-left', 'data-reveal-zoom', 'data-reveal-right',
+    'data-reveal-flip', 'data-reveal-bounce', 'data-reveal-spin',
+];
+
+export default function Gallery() {
+    const [lightbox, setLightbox] = useState(null);
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
     // ── Integration: fetch real gallery media from the backend ────────────────
     const { media, loading } = useGalleryData();
@@ -31,6 +41,7 @@ export default function Gallery() {
 
     return (
         <>
+<<<<<<< HEAD
             {/* ── Page Header ──────────────────────────────────────────────────── */}
             <section style={{
                 padding: '64px 0 32px',
@@ -77,6 +88,27 @@ export default function Gallery() {
                 {loading && <Spinner message="Loading the beauty of our parish..." />}
 
                 {/* Empty */}
+=======
+            <section className="py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
+                <div data-reveal>
+                    <h1 className="text-display-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>
+                        Parish Gallery
+                    </h1>
+                    <p className="text-body-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                        Glimpses of grace across our beautiful sanctuary and vibrant community life.
+                    </p>
+                    <div className="w-16 h-1 bg-[#735c00] mx-auto mt-4 rounded-full" />
+                </div>
+            </section>
+
+            <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
+                {/* ── Integration: loading skeleton ──────────────────────────────── */}
+                {loading && (
+                    <Spinner message="Loading the beauty of our parish..." />
+                )}
+
+                {/* ── Integration: empty state (backend returned nothing) ─────────── */}
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                 {!loading && displayPhotos.length === 0 && (
                     <EmptyState
                         title="Gallery Coming Soon"
@@ -85,6 +117,7 @@ export default function Gallery() {
                     />
                 )}
 
+<<<<<<< HEAD
                 {/* Masonry Grid */}
                 {!loading && displayPhotos.length > 0 && (
                     <div style={{
@@ -157,6 +190,38 @@ export default function Gallery() {
                                             textTransform: 'uppercase',
                                             marginTop: '4px',
                                         }}>View</p>
+=======
+                {/* ── Integration: masonry grid with real media URLs ─────────────── */}
+                {!loading && displayPhotos.length > 0 && (
+                    <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                        {displayPhotos.map(({ src, caption }, i) => (
+                            <div
+                                key={i}
+                                {...{ [REVEAL_ATTRS[i % REVEAL_ATTRS.length]]: '' }}
+                                data-delay={i * 80}
+                                className="break-inside-avoid rounded-2xl overflow-hidden cursor-pointer group shadow-sm card-hover border"
+                                style={{ borderColor: 'var(--border-color)' }}
+                                onClick={() => setLightbox({ src, caption })}
+                            >
+                                <div className="relative overflow-hidden">
+                                    <img
+                                        src={src}
+                                        alt={caption || `Parish gallery ${i + 1}`}
+                                        className="w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        loading="lazy"
+                                        onError={(e) => {
+                                            // Hide broken images gracefully
+                                            e.target.closest('[class*="break-inside"]').style.display = 'none';
+                                        }}
+                                    />
+                                    {/* hover overlay */}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-400"
+                                        style={{ background: 'rgba(87,0,19,0.45)', backdropFilter: 'blur(2px)' }}>
+                                        <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-400">
+                                            <MdZoomIn className="text-4xl" />
+                                            <p className="font-oswald text-sm tracking-widest uppercase mt-1">View</p>
+                                        </div>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                     </div>
                                 </div>
                             </div>
@@ -165,6 +230,7 @@ export default function Gallery() {
                 )}
             </section>
 
+<<<<<<< HEAD
             {/* ── Lightbox ─────────────────────────────────────────────────────── */}
             {lightbox && (
                 <div
@@ -227,6 +293,23 @@ export default function Gallery() {
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.4)'}
                             onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+=======
+            {/* Lightbox — shows caption from the API if available */}
+            {lightbox && (
+                <div
+                    className="fixed inset-0 z-[9999] flex items-center justify-center"
+                    style={{ background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)' }}
+                    onClick={() => setLightbox(null)}
+                >
+                    <div className="relative max-w-5xl w-full mx-4 animate-fade-in-up">
+                        <img src={lightbox.src} alt={lightbox.caption || 'Gallery photo'}
+                            className="w-full rounded-2xl shadow-2xl max-h-[85vh] object-contain" />
+                        {lightbox.caption && (
+                            <p className="text-white/80 text-center text-sm mt-3 font-serif">{lightbox.caption}</p>
+                        )}
+                        <button
+                            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white hover:bg-white/40 transition-colors flex items-center justify-center"
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                             onClick={() => setLightbox(null)}
                         >
                             <MdClose />

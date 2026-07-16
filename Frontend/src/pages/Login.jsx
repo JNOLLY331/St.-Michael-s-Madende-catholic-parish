@@ -118,7 +118,11 @@ export default function Login() {
                         <div>
                             <div className="flex justify-between items-center mb-1">
                                 <label className="block text-label-md text-[#584141]" htmlFor="password">Password</label>
+<<<<<<< HEAD
                                 <Link to="/forgot-password" className="text-caption text-[#570013] hover:underline">Forgot Password?</Link>
+=======
+                                <a href="#" className="text-caption text-[#570013] hover:underline">Forgot Password?</a>
+>>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                             </div>
                             <div className="relative">
                                 <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />

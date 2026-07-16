@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upcoming Events | St. Michael Madende</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary-fixed-dim": "#ffb3b5",
+                "surface": "#fff8f5",
+                "outline-variant": "#e0bfbf",
+                "on-tertiary": "#ffffff",
+                "surface-container": "#f5ece7",
+                "secondary-container": "#fed65b",
+                "on-primary-container": "#ff828a",
+                "inverse-surface": "#34302c",
+                "error": "#ba1a1a",
+                "tertiary": "#2b271e",
+                "surface-container-low": "#fbf2ed",
+                "tertiary-fixed-dim": "#cdc6b8",
+                "surface-bright": "#fff8f5",
+                "primary-container": "#800020",
+                "surface-variant": "#e9e1dc",
+                "on-tertiary-fixed-variant": "#4b463c",
+                "inverse-primary": "#ffb3b5",
+                "tertiary-fixed": "#e9e2d3",
+                "on-primary-fixed": "#40000b",
+                "on-tertiary-container": "#aea89a",
+                "secondary": "#735c00",
+                "on-tertiary-fixed": "#1e1b13",
+                "on-secondary-fixed-variant": "#574500",
+                "on-background": "#1e1b18",
+                "on-surface": "#1e1b18",
+                "surface-dim": "#e1d8d4",
+                "tertiary-container": "#413d33",
+                "surface-container-high": "#efe6e2",
+                "inverse-on-surface": "#f8efea",
+                "on-primary-fixed-variant": "#8e0f28",
+                "on-secondary": "#ffffff",
+                "secondary-fixed-dim": "#e9c349",
+                "background": "#fff8f5",
+                "on-error-container": "#93000a",
+                "secondary-fixed": "#ffe088",
+                "on-primary": "#ffffff",
+                "on-surface-variant": "#584141",
+                "on-error": "#ffffff",
+                "on-secondary-fixed": "#241a00",
+                "outline": "#8c7071",
+                "surface-tint": "#af2b3e",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-highest": "#e9e1dc",
+                "primary-fixed": "#ffdada",
+                "error-container": "#ffdad6",
+                "on-secondary-container": "#745c00",
+                "primary": "#570013"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "margin-desktop": "64px",
+                "stack-md": "16px",
+                "section-gap": "80px",
+                "stack-lg": "32px",
+                "stack-sm": "8px",
+                "margin-mobile": "20px",
+                "unit": "8px",
+                "gutter": "24px",
+                "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                "headline-md": ["EB Garamond"],
+                "body-md": ["\"Source Sans 3\""],
+                "headline-lg-mobile": ["EB Garamond"],
+                "label-md": ["\"Source Sans 3\""],
+                "headline-lg": ["EB Garamond"],
+                "display-lg": ["EB Garamond"],
+                "body-lg": ["\"Source Sans 3\""],
+                "caption": ["\"Source Sans 3\""]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fff8f5;
+            color: #1e1b18;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .decorative-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+        }
+        .decorative-line::before, .decorative-line::after {
+            content: "";
+            height: 1px;
+            flex-grow: 1;
+            background-color: #e0bfbf;
+        }
+        .event-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(87, 0, 19, 0.15);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md bg-surface selection:bg-primary-fixed selection:text-primary">
+<!-- Top Navigation Shell -->
+<header class="w-full top-0 sticky z-[100] bg-surface dark:bg-tertiary-container border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max-width mx-auto">
+<div class="flex items-center gap-3 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim text-3xl" data-icon="church">church</span>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">St. Michael Madende</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer" href="#">Mass Schedule</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary transition-colors duration-200 cursor-pointer" href="#">Events</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer" href="#">Ministries</a>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md text-label-md hover:opacity-90 transition-all active:scale-95">Donate</button>
+</nav>
+<button class="md:hidden text-primary" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-3xl" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<!-- Mobile Drawer Overlay -->
+<div class="fixed inset-0 bg-black/40 z-[200] hidden transition-opacity duration-300" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<div class="fixed top-0 right-0 h-full w-80 bg-surface dark:bg-surface-dim shadow-xl translate-x-full transition-transform duration-300 z-[201] rounded-l-xl" id="drawer">
+<div class="flex flex-col gap-unit py-stack-lg h-full">
+<div class="px-6 pb-4 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">Parish Menu</h2>
+<span class="material-symbols-outlined cursor-pointer" data-icon="close" onclick="toggleDrawer()">close</span>
+</div>
+<nav class="flex flex-col mt-4">
+<a class="text-on-surface-variant dark:text-on-surface px-6 py-4 flex items-center gap-4 hover:bg-surface-variant transition-all" href="#"><span class="material-symbols-outlined" data-icon="home">home</span> Home</a>
+<a class="text-on-surface-variant dark:text-on-surface px-6 py-4 flex items-center gap-4 hover:bg-surface-variant transition-all" href="#"><span class="material-symbols-outlined" data-icon="schedule">schedule</span> Mass Schedule</a>
+<a class="bg-secondary-container text-on-secondary-container rounded-lg mx-4 px-4 py-4 flex items-center gap-4" href="#"><span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span> Events</a>
+<a class="text-on-surface-variant dark:text-on-surface px-6 py-4 flex items-center gap-4 hover:bg-surface-variant transition-all" href="#"><span class="material-symbols-outlined" data-icon="groups">groups</span> Ministries</a>
+<a class="text-on-surface-variant dark:text-on-surface px-6 py-4 flex items-center gap-4 hover:bg-surface-variant transition-all" href="#"><span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span> Donate</a>
+</nav>
+</div>
+</div>
+<!-- Hero Section -->
+<section class="relative h-[353px] min-h-[300px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+
+<div class="absolute inset-0 bg-gradient-to-b from-surface/50 to-surface"></div>
+</div>
+<div class="relative z-10 text-center max-w-3xl px-margin-mobile">
+<h1 class="font-display-lg text-display-lg md:text-[56px] text-primary leading-tight mb-4">Parish Events &amp; Gatherings</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Join us in fellowship, prayer, and celebration as we grow together in faith and community.</p>
+</div>
+</section>
+<!-- Filter & Search (Subtle) -->
+<div class="max-w-container-max-width mx-auto px-margin-desktop mb-stack-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant pb-6">
+<div class="flex gap-4 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+<button class="bg-primary text-on-primary px-5 py-2 rounded-full font-label-md text-label-md">All Events</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Festivals</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Retreats</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Concerts</button>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full font-body-md text-body-md w-full md:w-64 focus:border-primary focus:ring-0 transition-colors" placeholder="Search events..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Featured Event (Bento Style Large Card) -->
+<main class="max-w-container-max-width mx-auto px-margin-desktop pb-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+<div class="lg:col-span-8 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest event-card-hover transition-all duration-500">
+<div class="flex flex-col md:flex-row h-full">
+<div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A cinematic, high-angle shot of a vibrant outdoor Catholic parish festival at St. Michael Madende. People of all ages are gathered under warm, golden hour sunlight. Colorful banners in burgundy and gold flutter in the breeze. Long wooden tables are filled with food, and a small stage with a choir is visible in the background. The atmosphere is joyous, sacred, and communal, with the elegant stone architecture of the church framing the scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ7eJQWbXjJKVb3NWoh0_2G3N7E4ZSmbbJpFM1ELK7WZ8duz30Pb02bEmY1r1PDi74Rvq4L32SKWf44Bq_ka5lXfNsso8EwskYKqcJfkJoFzoBHN05ncYuoxGU2d9O4NLT0UG6IqllK3MD36e0YbhL0FTKkgHwPW71YjSaAx9zSCewRs8QRo36PLsTc_8OlED2hRuOzuEPvi_Fp7VMCepHps9QLcinM4J7Fmpa8QNaX4WcURYHpl7sUVrbpfF5FBtDQfTclaHu2ULl"/>
+</div>
+<div class="md:w-1/2 p-8 flex flex-col justify-between">
+<div>
+<span class="inline-block bg-secondary-container text-on-secondary-container font-label-md text-label-md px-3 py-1 rounded-full mb-4">Featured Festival</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-3">Annual Parish Summer Harvest Festival</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">A day of gratitude, local music, and traditional parish cuisine. Join us as we celebrate the blessings of the season with our entire community.</p>
+<div class="space-y-3">
+<div class="flex items-center gap-3 text-secondary">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-md text-label-md">August 24, 2024</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+<span class="font-body-md text-body-md">11:00 AM — 6:00 PM</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-md text-body-md">Main Parish Grounds</span>
+</div>
+</div>
+</div>
+<button class="mt-8 border border-primary text-primary px-8 py-3 rounded-full font-label-md text-label-md hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2 group/btn">
+                            Learn More <span class="material-symbols-outlined group-hover/btn:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Side Card (Quote or Small Highlight) -->
+<div class="lg:col-span-4 bg-primary-container text-on-primary rounded-xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-xl">
+
+<span class="material-symbols-outlined text-4xl mb-6 text-secondary-fixed" data-icon="format_quote">format_quote</span>
+<blockquote class="font-headline-md text-headline-md italic mb-6 relative z-10 leading-relaxed">
+                    "For where two or three are gathered in my name, I am there among them."
+                </blockquote>
+<cite class="font-label-md text-label-md not-italic opacity-80 uppercase tracking-widest relative z-10">— Matthew 18:20</cite>
+</div>
+</div>
+<!-- Secondary Grid of Events -->
+<div class="decorative-line mb-12">
+<span class="material-symbols-outlined text-outline" data-icon="diamond" style="font-variation-settings: 'FILL' 1;">diamond</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Event Card 1 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden event-card-hover transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A serene indoor shot of a silent spiritual retreat. The room is minimalist with light cream walls and soft wooden flooring. Gentle sunlight streams through a high window, illuminating a simple wooden cross on the wall. A few parishioners are seen in quiet contemplation, blurred slightly to maintain privacy. The mood is deeply peaceful, reverent, and meditative, utilizing a soft primary-fixed and surface color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3O4vHXdKPg4KguIy7528DrPaFcp0KkgCa0ieUulNZgzXSRlhqRSiRNR6OlJPd9ymFQ7namb3hkhTTf1Qy33rbuSAqGf6Tl9ZivTBmBibmMaaXy4x8OHgKGFn91bXTO9a6EIiNYRIoQLY2mhOrxnTwgDhNUE8HWiyIMoreTKuHR6mYjCLKZkmqmAWtZazr_GUkN9xMynIwZ6e98DBEECQucD4R9oWNBESP3xztWC5gYKGckU-caT50h1V4y02ZMfVTsiOQTaOWnodY"/>
+<div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md rounded-lg p-2 text-center min-w-[60px] shadow-sm">
+<span class="block font-headline-md text-headline-md text-primary leading-none">12</span>
+<span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Sept</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Quiet Waters: Weekend Silent Retreat</h3>
+<div class="flex items-center gap-2 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-caption text-caption">Fri 6 PM — Sun 12 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3">A journey into silence and prayer led by Father Dominic. Perfect for those seeking spiritual renewal away from the noise of daily life.</p>
+<button class="w-full py-3 rounded-full border border-outline-variant text-primary font-label-md text-label-md hover:bg-surface-variant transition-colors active:scale-95">Learn More</button>
+</div>
+</article>
+<!-- Event Card 2 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden event-card-hover transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="An elegant evening choir concert inside a candlelit cathedral. The St. Michael's choir members are dressed in dark burgundy robes, their faces illuminated by soft candlelight. The grand organ is visible in the background against ancient stone pillars. The lighting is low and atmospheric, creating long, soft shadows. The overall aesthetic is classical, high-end, and sacred, evoking a feeling of transcendental beauty." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-vrlbjGmQSfsc9X5d32Zmji7B0hNvIzV4-MujgVM3FwbQogj0AB9ZHAKp_lG288JH5V8DYVr71trw_GnIl2WO506kxpVEPQqxJLAYls1FGeev-iltnlLsLqFzZdFm8occg-TXRCX1zFke6D9HPmtKR4IFBvYEihA9z2s15sKtG7o3QvArHRdGBvC61cu9aATTQi6i83bnSKTrXXGOBNiSaXUVmUxxMagq7O9iPUmHvCburVuSGXCFQMyDp6Ol3KALaNMKRCBBAT8b"/>
+<div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md rounded-lg p-2 text-center min-w-[60px] shadow-sm">
+<span class="block font-headline-md text-headline-md text-primary leading-none">05</span>
+<span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Oct</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Vesper Choral Concert: Sacred Echoes</h3>
+<div class="flex items-center gap-2 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-caption text-caption">7:30 PM — 9:00 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3">The Parish Choir presents an evening of Renaissance and contemporary choral masterpieces to lift the spirit and celebrate sacred music.</p>
+<button class="w-full py-3 rounded-full border border-outline-variant text-primary font-label-md text-label-md hover:bg-surface-variant transition-colors active:scale-95">Learn More</button>
+</div>
+</article>
+<!-- Event Card 3 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden event-card-hover transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A warm, inviting community hall setup for a family bingo and trivia night. Tables are decorated with simple gold-toned cloths. Parish families are seen laughing and interacting. The room is brightly lit with warm bulbs. The atmosphere is casual, welcoming, and lively. The focus is on the human connection and multi-generational fellowship within the St. Michael Madende community." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeGKZa4FK-YB3cY9fWrqdqkEciUxzNdzXf6sjvSsOPW1GjmwwytCL_ARcxA7IV2kHo6EH1-YKPni8PEv0aLsUfuvI73ako-HjlPOZc8oTnthpV8hLMQmmc6XOPhYDxc9rOYk_nSOGNGdMfSGI7R4IX-RciJFTbJnllFZpf5ctB-dGahJ3HcmvlQF_WCb2Qr_VFM9pYP-cs9JjF9D0rqS5rZWDDwcgpClRi-RTwojAFRerXBcDYRv4erTPJItkNFKsENOiBnJBIkswM"/>
+<div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md rounded-lg p-2 text-center min-w-[60px] shadow-sm">
+<span class="block font-headline-md text-headline-md text-primary leading-none">19</span>
+<span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Oct</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Parish Family Bingo &amp; Trivia Night</h3>
+<div class="flex items-center gap-2 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-caption text-caption">6:00 PM — 8:30 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3">A night of fun for all ages! Snacks provided by the Parish Council. Grand prizes including a weekend getaway at the Retreat House.</p>
+<button class="w-full py-3 rounded-full border border-outline-variant text-primary font-label-md text-label-md hover:bg-surface-variant transition-colors active:scale-95">Learn More</button>
+</div>
+</article>
+</div>
+</main>
+<!-- Call to Action Section -->
+<section class="bg-tertiary-container py-20 px-margin-desktop text-center">
+<div class="max-w-2xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-tertiary-container mb-4">Want to Volunteer?</h2>
+<p class="font-body-lg text-body-lg text-on-tertiary-container opacity-80 mb-8">Every event is made possible by the generous hearts of our parishioners. Join an event committee today.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-secondary-container text-on-secondary-container px-8 py-3 rounded-full font-label-md text-label-md hover:opacity-90 transition-all">Sign Up to Help</button>
+<button class="border border-on-tertiary-container text-on-tertiary-container px-8 py-3 rounded-full font-label-md text-label-md hover:bg-on-tertiary-container hover:text-tertiary-container transition-all">Contact Organizers</button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full mt-section-gap bg-tertiary dark:bg-tertiary-container">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-margin-desktop py-stack-lg max-w-container-max-width mx-auto">
+<div class="space-y-4">
+<h2 class="font-headline-md text-headline-md text-secondary-fixed">St. Michael Madende</h2>
+<p class="text-tertiary-fixed-dim opacity-80 font-body-md text-body-md">A Sanctuary for Prayer, a Community for Growth. Serving our parishioners with devotion since 1924.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer" data-icon="facebook">face_nod</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer" data-icon="youtube_activity">youtube_activity</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer" data-icon="mail">mail</span>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="font-label-md text-label-md text-secondary-fixed uppercase tracking-widest">Quick Links</h3>
+<nav class="flex flex-col gap-2">
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Mass Times</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Sacraments</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Ministries</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors font-body-md" href="#">Privacy Policy</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h3 class="font-label-md text-label-md text-secondary-fixed uppercase tracking-widest">Parish Office</h3>
+<p class="text-tertiary-fixed-dim opacity-80 font-body-md">123 Parish Lane, Madende District<br/>Open Mon-Fri: 9:00 AM - 4:00 PM<br/>Phone: (555) 012-3456</p>
+<p class="text-secondary-fixed font-bold">© 2024 St. Michael Madende Catholic Parish. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/90 backdrop-blur-md border-t border-outline-variant flex justify-around items-center h-16 px-margin-mobile shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="church">church</span>
+<span class="font-label-md text-[10px]">Mass</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-label-md text-[10px]">Events</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-label-md text-[10px]">Donate</span>
+</a>
+<button class="flex flex-col items-center justify-center text-on-surface-variant" onclick="toggleDrawer()">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="font-label-md text-[10px]">More</span>
+</button>
+</nav>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const isOpen = !drawer.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            } else {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('section.relative');
+            const shader = hero.querySelector('webgl-shader');
+            if (shader) {
+                shader.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Intersection Observer for card animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('article').forEach(card => {
+            card.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700', 'ease-out');
+            observer.observe(card);
+        });
+    </script>
+</body></html>

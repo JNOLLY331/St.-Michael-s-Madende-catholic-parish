@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ministries | St. Michael Madende</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&amp;family=Source+Sans+3:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#ffb3b5",
+                    "surface": "#fff8f5",
+                    "outline-variant": "#e0bfbf",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f5ece7",
+                    "secondary-container": "#fed65b",
+                    "on-primary-container": "#ff828a",
+                    "inverse-surface": "#34302c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#2b271e",
+                    "surface-container-low": "#fbf2ed",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "surface-bright": "#fff8f5",
+                    "primary-container": "#800020",
+                    "surface-variant": "#e9e1dc",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "inverse-primary": "#ffb3b5",
+                    "tertiary-fixed": "#e9e2d3",
+                    "on-primary-fixed": "#40000b",
+                    "on-tertiary-container": "#aea89a",
+                    "secondary": "#735c00",
+                    "on-tertiary-fixed": "#1e1b13",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-background": "#1e1b18",
+                    "on-surface": "#1e1b18",
+                    "surface-dim": "#e1d8d4",
+                    "tertiary-container": "#413d33",
+                    "surface-container-high": "#efe6e2",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#e9c349",
+                    "background": "#fff8f5",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffe088",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#584141",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#241a00",
+                    "outline": "#8c7071",
+                    "surface-tint": "#af2b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e9e1dc",
+                    "primary-fixed": "#ffdada",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#745c00",
+                    "primary": "#570013"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "stack-md": "16px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["\"Source Sans 3\""],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["\"Source Sans 3\""],
+                    "headline-lg": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["\"Source Sans 3\""],
+                    "caption": ["\"Source Sans 3\""]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ministry-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -5px rgba(87, 0, 19, 0.1);
+        }
+        .sacred-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+        .sacred-divider::before, .sacred-divider::after {
+            content: '';
+            height: 1px;
+            flex-grow: 1;
+            background: linear-gradient(to right, transparent, #e0bfbf, transparent);
+        }
+        @media (max-width: 768px) {
+            .sacred-divider::before, .sacred-divider::after {
+                background: #e0bfbf;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed-dim selection:text-primary">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-tertiary-container shadow-sm dark:shadow-none border-b border-outline-variant dark:border-outline">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max-width mx-auto">
+<div class="flex items-center gap-3 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">church</span>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">St. Michael Madende</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Home</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary" href="#">Ministries</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Mass Schedule</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Events</a>
+</nav>
+<button class="bg-primary-container text-on-primary text-label-md px-6 py-2 rounded-full hover:opacity-90 transition-opacity">Donate</button>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-12 pb-section-gap">
+<!-- Hero Section -->
+<section class="mb-section-gap">
+<div class="text-center max-w-3xl mx-auto space-y-stack-md">
+<h2 class="font-display-lg text-display-lg text-primary">Parish Ministries</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant italic">"For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many." — Mark 10:45</p>
+</div>
+</section>
+<!-- Liturgical Ministries -->
+<section class="mb-section-gap">
+<div class="sacred-divider mb-12">
+<span class="material-symbols-outlined text-secondary text-2xl">auto_stories</span>
+<h3 class="font-headline-lg text-headline-lg text-tertiary uppercase tracking-widest">Liturgical</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Choir -->
+<div class="ministry-card bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl transition-all duration-300">
+<div class="h-48 mb-6 overflow-hidden rounded-lg">
+<img class="w-full h-full object-cover" data-alt="A dignified group of diverse parish choir members wearing professional burgundy and gold robes, standing in a historic stone cathedral with stained glass windows in the background. The lighting is soft and ethereal, capturing a moment of reverent musical performance. The style is sophisticated, clean, and evokes a high-end light-mode aesthetic with warm tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtKqTqN-Amx0JWF-jMRVVOEy8tqNHqYIyW0td-miJBppz283Ft7-vh5kyLW-c8cepXHeD0j2KZRp83FbPgHBIlmpMDx3oj0__mwcLl-i85myZTSMfE8isJbsT2A7UxthUvjDKN8wwAjqchpDQlSwaIpXJAmGb960N9hT3V4hFpyqDjBxhGQ3aZVjQf7hucBRq4mgFIRsJxEUnOD1tMl5J0IuyhwX5ScBjgc9h4Ux5kJFln45yZyR6KBfXKMgoKxRvgHOH3kBc0xTqR"/>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Parish Choir</h4>
+<p class="text-on-surface-variant mb-6 font-body-md">Our liturgical choir leads the congregation in worship through sacred music and traditional hymns during Sunday High Mass.</p>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">SM</div>
+<div class="text-caption">
+<p class="font-bold">Sr. Mary Margaret</p>
+<p class="opacity-70">Music Director</p>
+</div>
+</div>
+</div>
+<!-- Altar Servers -->
+<div class="ministry-card bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl transition-all duration-300">
+<div class="h-48 mb-6 overflow-hidden rounded-lg">
+<img class="w-full h-full object-cover" data-alt="A focused young altar server in a crisp white surplice and red cassock holding a ceremonial gold cross during a procession. The scene is set in a peaceful church interior with warm wood textures and soft daylight filtering through tall windows. The aesthetic is clean, minimalist, and deeply respectful, following a burgundy and cream color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8O561wOSqag1JqEzjaHXraaRtIUSpmI_i-e3kVtmmilVKIm0_hR6n4MFXwNn4iUdMNZ2RyBlViskAVTY9tYsOefxKWnyrj4JFD-C3z_tRESojPzwR_EYijznaVa4vPPxM1YX71_ae2J5OVZRKs5xBojAUOH_BYnA90pnc5juc3Yol8a0AnjkWWCjrZX6VAs9-7zE8nxJY7ZyZ769ngtVm1hZJGNqpnlCYzk00Gcfh9rwS6qHhVL5WmHeWyGipsvX9xqewHRdecVEX"/>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Altar Servers</h4>
+<p class="text-on-surface-variant mb-6 font-body-md">Assisting the clergy during the celebration of the Eucharist, fostering a deep sense of reverence among our youth.</p>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">DM</div>
+<div class="text-caption">
+<p class="font-bold">Deacon Michael</p>
+<p class="opacity-70">Coordinator</p>
+</div>
+</div>
+</div>
+<!-- Lectors -->
+<div class="ministry-card bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl transition-all duration-300">
+<div class="h-48 mb-6 overflow-hidden rounded-lg">
+<img class="w-full h-full object-cover" data-alt="A close-up shot of an open ancient Bible resting on a carved wooden ambo, with a single beam of light illuminating the text. The background shows the soft-focus architectural details of a modern-classic sanctuary. The image uses a palette of warm gold, deep wood browns, and soft creams, conveying a sense of sacred wisdom and tradition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYm4MiNrZhVF6CW2ubNkQi_4rVFh3VLOxLRmzBvv233LlWMVtQe9JUW1IL4LlNs-wDxLLFXzuXxvoO9OZZapBEIjRyf81qXnM6oW74KFG_IahhxmasM_mVbpmWV4usAUWi3nda-TIoxLW5dtaMGa3SP2LOctG8C4V89nMcaWZpe_FE8GN7Xb-DYsq-uQEwr-IX0iTGtIjDPmaKuLl1ZpWQ-52aYycrNb_FI5W--MHEOdTxpUcgqTCICI69HXMPbY-yMrWRh1fbg6AH"/>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Lectors</h4>
+<p class="text-on-surface-variant mb-6 font-body-md">Proclaimers of the Word who bring the Holy Scriptures to life for the assembly during daily and Sunday liturgy.</p>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">JA</div>
+<div class="text-caption">
+<p class="font-bold">John Anyona</p>
+<p class="opacity-70">Head Lector</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Community Outreach -->
+<section class="mb-section-gap">
+<div class="sacred-divider mb-12">
+<span class="material-symbols-outlined text-secondary text-2xl">volunteer_activism</span>
+<h3 class="font-headline-lg text-headline-lg text-tertiary uppercase tracking-widest">Community Outreach</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- St. Vincent de Paul -->
+<div class="group flex flex-col md:flex-row bg-surface-container border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="w-full md:w-2/5 h-64 md:h-auto">
+<img class="w-full h-full object-cover" data-alt="Parish volunteers in simple clothing packing food baskets and supplies in a bright, clean community hall. The scene is active and warm, emphasizing dignity and service. The color palette is earthy and grounded, with soft burgundy accents in the background. The lighting is natural and inviting, showing a sense of community spirit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPOQA9hZlCt_S5jymr70xj9IWn2rf1xvfUbc7Hr2jsoKwcS-_28MIrDD9C7Gp9pJ9eDNKugn3wyvqFNiXilp8uPknbswP4H7GkOPOu6BQmfiiwylTGzSE91WAkJGl6uB5rH14Kfw4_F1LbntSjaey3FdYCEiizAM9ZcBjPxt9-5fRA5gShMqSgmFYk6HJXw-N5WSuxZ1vdRoSN-6k5QuKPPEsxrvafL0Izj8E-0SBHEuQOO2SKDVaK3g2yTjTQNXurtqxRZc2E5RuT"/>
+</div>
+<div class="p-stack-lg flex-1">
+<h4 class="font-headline-md text-headline-md text-primary mb-2">St. Vincent de Paul Society</h4>
+<p class="text-on-surface-variant mb-6 font-body-md">Providing food, clothing, and essential support to families in need within the Madende community through compassionate service.</p>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">person</span>
+<span class="font-bold text-on-surface">Catherine Wekesa</span>
+</div>
+</div>
+</div>
+<!-- Hospital Ministry -->
+<div class="group flex flex-col md:flex-row bg-surface-container border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="w-full md:w-2/5 h-64 md:h-auto">
+<img class="w-full h-full object-cover" data-alt="A peaceful close-up of two hands joined in prayer on a clean white linen background, illuminated by soft golden window light. The image captures a sense of comfort, healing, and spiritual support. The aesthetic is extremely minimalist and high-end, utilizing the parish's signature cream and soft grey tones for a calming effect." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3n0NtaWA8-zYey8FlgH8p3JwxualtkL6Mk1ZStTmeY_08qK0inzgfxwKrbtq5c-z9Wx4TWQAgGhksjpWaosWnf9mqf6eU-sTSmjhMnpdhMZyhbeZeTm1JaMfYtuCbNuFnXD00JPCgJiJHyucGDQ2mPG7T7EZJEoWPyQxEKPPlMCjAi1CT19REmv6nDoOvGniy0bxzrn7lvrZyiKE1znrhwAq-o-ypXugIPNkPGpipFlRiXGQRhbYHW_2oEQ5Ey7N-0ckzfiuGn4ht"/>
+</div>
+<div class="p-stack-lg flex-1">
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Hospital Visitation</h4>
+<p class="text-on-surface-variant mb-6 font-body-md">Bringing the Eucharist and emotional support to the sick and homebound, ensuring no member is isolated from our spiritual family.</p>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">person</span>
+<span class="font-bold text-on-surface">Fr. Dominic</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Youth & Prayer Groups (Bento Grid Style) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Youth Title & Intro -->
+<div class="md:col-span-12 flex flex-col md:flex-row justify-between items-end mb-6">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-tertiary">Youth &amp; Prayer</h3>
+<p class="text-on-surface-variant font-body-md">Building faith for the next generation and sustaining it through communal prayer.</p>
+</div>
+<div class="h-px flex-grow bg-outline-variant mx-8 hidden md:block mb-4"></div>
+</div>
+<!-- Youth Group -->
+<div class="md:col-span-8 bg-surface-container-high p-stack-lg rounded-xl border border-outline-variant">
+<div class="flex flex-col md:flex-row gap-6 items-center">
+<div class="w-full md:w-1/3">
+<img class="rounded-lg shadow-sm" data-alt="A dynamic group of young adults laughing and talking in a modern, sunlit parish center decorated with contemporary religious art. The scene is energetic and welcoming, featuring a bright light-mode aesthetic with pops of burgundy and gold. The composition is candid and professional, capturing authentic community life." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6LDV45bKxqVEooFM249H8yaUI6qg15LQ2yp8XLa5DEjQ7gAUILarhLTdZ6OZBnJtNP65XMMq_wXTmk3DF-hVlS2KproQoxxkUR4Kua4K-yjiJ0excxvZvKYNY2nK0i8IPg-z_mQXrL-uGP5EEexAhjSq7u3fdfPTqsyfUlnOwaMHNHtt3iK-e-L5gGlnqFEuJByxFiD2WU9vHknAMbd07iGUqSUBpbQc9-fR7kNM1i2VXYygMFX88MtYnHQTGydCr9RZZ2RHZu713"/>
+</div>
+<div class="flex-1">
+<span class="bg-secondary text-on-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full mb-3 inline-block">Youth Ministry</span>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Catholic Youth Organization (CYO)</h4>
+<p class="text-on-surface-variant mb-4">Empowering young people to live as disciples of Jesus Christ through service, social events, and retreats.</p>
+<div class="flex items-center gap-2 text-primary cursor-pointer hover:underline">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span class="text-label-md">Contact Peter Nabwera</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Prayer Group 1 -->
+<div class="md:col-span-4 bg-primary-container text-on-primary p-stack-lg rounded-xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined mb-4">brightness_low</span>
+<h4 class="font-headline-md text-headline-md mb-2">Sacred Heart</h4>
+<p class="opacity-90 text-body-md">Weekly adoration and contemplative prayer focused on the compassion of Christ.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<span class="text-caption font-bold">Leader: Mrs. Simiyu</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Prayer Group 2 -->
+<div class="md:col-span-4 bg-tertiary-container text-on-tertiary-container p-stack-lg rounded-xl border border-outline shadow-sm">
+<h4 class="font-headline-md text-headline-md mb-2 text-primary-fixed">Rosary Circle</h4>
+<p class="opacity-80 text-body-md mb-6">Daily collective prayer sessions honoring the Blessed Mother and interceding for the parish.</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-outline flex items-center justify-center text-xs">BK</div>
+<span class="text-caption">Benedict Kundu</span>
+</div>
+</div>
+<!-- Prayer Group 3 -->
+<div class="md:col-span-8 bg-surface-container-low border border-outline-variant p-stack-lg rounded-xl">
+<div class="flex justify-between items-start">
+<div class="max-w-md">
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Charismatic Renewal</h4>
+<p class="text-on-surface-variant font-body-md">Experience the power of the Holy Spirit through vibrant praise, worship, and healing prayers every Thursday evening.</p>
+</div>
+<div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+</div>
+<div class="mt-4 flex gap-4">
+<button class="text-primary font-bold text-label-md uppercase tracking-wider hover:opacity-70 transition-opacity">Learn More</button>
+<button class="text-on-surface-variant text-label-md uppercase tracking-wider hover:text-primary transition-colors">Schedule</button>
+</div>
+</div>
+</section>
+<!-- Call to Action -->
+<section class="mt-section-gap bg-surface-variant p-stack-lg md:p-20 rounded-3xl text-center">
+<h3 class="font-display-lg text-headline-lg text-primary mb-4">Called to Serve?</h3>
+<p class="text-on-surface-variant max-w-2xl mx-auto mb-8 font-body-lg">Every parishioner is invited to share their unique talents and time. Join a ministry today and help us grow our vibrant community of faith.</p>
+<div class="flex flex-col md:flex-row justify-center gap-4">
+<button class="bg-primary text-on-primary px-10 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-md">Register to Volunteer</button>
+<button class="border border-primary text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/5 transition-colors">Inquiry Form</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-section-gap bg-tertiary dark:bg-tertiary-container">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-margin-desktop py-stack-lg max-w-container-max-width mx-auto">
+<div>
+<h4 class="font-headline-md text-headline-md text-secondary-fixed mb-4">St. Michael Madende</h4>
+<p class="text-tertiary-fixed-dim opacity-80 font-body-md max-w-xs">A sanctuary of faith, tradition, and community service in the heart of our parish.</p>
+</div>
+<div class="flex flex-col gap-2">
+<h5 class="text-on-tertiary font-bold mb-2">Quick Links</h5>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Mass Times</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Sacraments</a>
+<a class="text-secondary-fixed font-bold" href="#">Ministries</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-2">
+<h5 class="text-on-tertiary font-bold mb-2">Connect</h5>
+<p class="text-tertiary-fixed-dim opacity-80">123 Parish Way, Madende</p>
+<p class="text-tertiary-fixed-dim opacity-80">office@stmichaelmadende.org</p>
+<div class="flex gap-4 mt-4">
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer">face_nod</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer">mail</span>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 py-6 text-center">
+<p class="text-tertiary-fixed-dim opacity-60 text-caption">© 2024 St. Michael Madende Catholic Parish. All Rights Reserved.</p>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-full bg-surface/90 backdrop-blur-md border-t border-outline-variant shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex justify-around items-center h-16 px-margin-mobile">
+<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90">
+<span class="material-symbols-outlined">church</span>
+<span class="font-label-md text-label-md">Mass</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary rounded-full px-4 py-1 transition-transform active:scale-90">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">Ministries</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Donate</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform active:scale-90">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-md text-label-md">More</span>
+</div>
+</div>
+</nav>
+<script>
+        // Micro-interactions for ministry cards
+        document.querySelectorAll('.ministry-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const img = card.querySelector('img');
+                if(img) img.style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                const img = card.querySelector('img');
+                if(img) img.style.transform = 'scale(1)';
+            });
+        });
+        
+        // CSS for image zoom
+        document.querySelectorAll('img').forEach(img => {
+            img.style.transition = 'transform 0.5s ease';
+        });
+    </script>
+</body></html>

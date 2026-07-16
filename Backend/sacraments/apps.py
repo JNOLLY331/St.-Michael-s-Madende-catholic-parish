@@ -1,0 +1,9 @@
+from django.apps import AppConfig
+
+
+class SacramentsConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "sacraments"
+
+    def ready(self):
+        import sacraments.signals

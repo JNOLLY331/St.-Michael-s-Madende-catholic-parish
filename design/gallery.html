@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gallery | St. Michael Madende Catholic Parish</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#ffb3b5",
+                    "surface": "#fff8f5",
+                    "outline-variant": "#e0bfbf",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f5ece7",
+                    "secondary-container": "#fed65b",
+                    "on-primary-container": "#ff828a",
+                    "inverse-surface": "#34302c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#2b271e",
+                    "surface-container-low": "#fbf2ed",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "surface-bright": "#fff8f5",
+                    "primary-container": "#800020",
+                    "surface-variant": "#e9e1dc",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "inverse-primary": "#ffb3b5",
+                    "tertiary-fixed": "#e9e2d3",
+                    "on-primary-fixed": "#40000b",
+                    "on-tertiary-container": "#aea89a",
+                    "secondary": "#735c00",
+                    "on-tertiary-fixed": "#1e1b13",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-background": "#1e1b18",
+                    "on-surface": "#1e1b18",
+                    "surface-dim": "#e1d8d4",
+                    "tertiary-container": "#413d33",
+                    "surface-container-high": "#efe6e2",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#e9c349",
+                    "background": "#fff8f5",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffe088",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#584141",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#241a00",
+                    "outline": "#8c7071",
+                    "surface-tint": "#af2b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e9e1dc",
+                    "primary-fixed": "#ffdada",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#745c00",
+                    "primary": "#570013"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "stack-md": "16px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["Source Sans 3"],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["Source Sans 3"],
+                    "headline-lg": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["Source Sans 3"],
+                    "caption": ["Source Sans 3"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .gallery-card:hover .overlay {
+            opacity: 1;
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-tertiary-container z-50 border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none transition-all duration-300">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max-width mx-auto">
+<div class="flex items-center gap-stack-sm cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-size: 32px;">church</span>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">St. Michael Madende</h1>
+</div>
+<nav class="hidden md:flex items-center gap-stack-lg">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-label-md text-label-md" href="#">Mass Schedule</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary py-1 font-label-md text-label-md" href="#">Gallery</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-label-md text-label-md" href="#">Ministries</a>
+<button class="bg-primary-container text-white px-6 py-2 rounded-full font-label-md text-label-md hover:bg-primary transition-colors shadow-sm">Donate</button>
+</nav>
+<button class="md:hidden p-2 text-primary" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Navigation Drawer (Mobile) -->
+<div class="fixed inset-0 bg-black/50 z-[60] hidden transition-opacity duration-300" id="drawer">
+<div class="h-full w-80 bg-surface dark:bg-surface-dim rounded-r-xl shadow-xl flex flex-col gap-unit py-stack-lg transition-transform duration-300 -translate-x-full" id="drawerContent">
+<div class="px-6 flex justify-between items-center mb-4">
+<span class="font-headline-md text-headline-md text-primary">Parish Menu</span>
+<button onclick="toggleDrawer()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="flex flex-col overflow-y-auto">
+<a class="text-on-surface-variant dark:text-on-surface px-4 py-3 hover:bg-surface-variant transition-all flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">home</span> Home
+                </a>
+<a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">subscriptions</span> Gallery
+                </a>
+<a class="text-on-surface-variant dark:text-on-surface px-4 py-3 hover:bg-surface-variant transition-all flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">schedule</span> Mass Schedule
+                </a>
+<a class="text-on-surface-variant dark:text-on-surface px-4 py-3 hover:bg-surface-variant transition-all flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">volunteer_activism</span> Donate
+                </a>
+</div>
+</div>
+</div>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<!-- Hero Section for Gallery -->
+<div class="text-center mb-16">
+<h2 class="font-display-lg text-display-lg text-primary mb-4">Parish Life in Focus</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Capture the sacred moments, communal joy, and architectural heritage of St. Michael Madende.
+            </p>
+<div class="flex justify-center mt-stack-lg">
+<div class="w-12 h-0.5 bg-secondary-fixed"></div>
+<div class="mx-4"><span class="material-symbols-outlined text-secondary text-sm">church</span></div>
+<div class="w-12 h-0.5 bg-secondary-fixed"></div>
+</div>
+</div>
+<!-- Filter Chips (Custom UI Element) -->
+<div class="flex flex-wrap justify-center gap-stack-md mb-12">
+<button class="px-6 py-2 rounded-full border border-primary bg-primary text-white font-label-md text-label-md">All Photos</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container transition-colors font-label-md text-label-md">Architecture</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container transition-colors font-label-md text-label-md">Celebrations</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container transition-colors font-label-md text-label-md">Ministries</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container transition-colors font-label-md text-label-md">Liturgies</button>
+</div>
+<!-- Bento Grid Gallery -->
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-6 auto-rows-[250px]">
+<!-- Item 1: Large Featured (Architecture) -->
+<div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A majestic wide-angle shot of St. Michael Madende church at sunset. The classic brick architecture is bathed in golden light against a soft lilac sky. The church spire stands tall, and the foreground shows manicured green lawns and elegant stone walkways. The lighting is ethereal, creating a sanctuary-like mood in a high-end photography style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDi4mC0c_-ws8Q30_C9c_2v6v0q0bgUel5jSqOtnlJtMEnnNsYP8zi3g1m5WYt0pCbknEzc9TyuhucWxKhTjM8DBn1g7C2xmwHNBXnWQ_tNu0FQdr_4q0_0Z8WHsuW5PirpzsH9o-RGfODnOGR5m6I0dF0r7Ik-VLCVTgnIxbunjewlElzHOFPLrujXVlQ-PPiJhmXUXQ1OIJeO5a5bLpgzfT-rIOKcjy01KJwZLDIUvpJIWTRurIARO7MNSpQWYCAcNlwApFtvaIkA')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-lg">
+<span class="text-white font-label-md text-label-md mb-2">Architecture</span>
+<h3 class="text-white font-headline-md text-headline-md">The Sanctuary at Dusk</h3>
+</div>
+</div>
+<!-- Item 2: Vertical (Celebration) -->
+<div class="md:col-span-1 md:row-span-2 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A close-up, high-detail photograph of a Sunday Mass celebration at St. Michael Madende. The image focuses on a pair of hands holding a hymnal, with soft-focus parishioners in traditional attire in the background. Rays of sunlight stream through stained glass windows, creating colorful patterns on the wooden pews. The atmosphere is quiet, reverent, and communal." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9Sbjws-v-Wm62qpaFPc17HJweExQikWTd_Xp3adPie3zCshHggHy1wC_AE0YL_LycCFxExjzwgzSHvsidWlyBj88OizmVsOxlxBwt6FDnXq9UjbmJIgpZyGz7bhU3a4pMoLfpqW4h9N8A3D7XpHZ0aqk1HWnmPeO7Hgevp8qm4MEwXTZpl4xSmmEcKIBO2SETdb7yXnC2DzM4kzHmtGNtgL_a7eqGbtkYXpfUtSTGwRSKomz4pYjEUEhUWDiog16TTk-cyVrJPkpu')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-lg">
+<span class="text-white font-label-md text-label-md mb-2">Liturgy</span>
+<h3 class="text-white font-headline-md text-headline-md">Songs of Praise</h3>
+</div>
+</div>
+<!-- Item 3: Square (Community) -->
+<div class="md:col-span-1 md:row-span-1 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A heartwarming scene of parish community life outdoors at St. Michael Madende. A group of diverse parishioners, including children and elderly, are gathered around a table with tea and refreshments after service. Their expressions are joyful and authentic. The lighting is bright and natural, emphasizing a welcoming, airy, and warm light-mode aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJCLYrVTVGKg55hU5GFLmoclhWdDDr7W2gJXPekejzDBZO0hm8uoywg1ojNbx9u36MQI6FBYOxHCcN3lEfgf2GMt4WbGSHqKPf9HpooFxZAkQI65eKzpnTpBPKqpq-jVvUTq1VzCLs2feeKM0QkT9ofwqIpXlAFN5KW5JjSzR8wrXr6a9pHTde_n37mvKKIenioCycPjrXxYg9G2LettNxC7-ohrnxAcFzUvQ4oiWDmd5rAr6q2ee7bznT_jFRK46vBz2BBnkC6G2I')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-md">
+<h3 class="text-white font-headline-md text-headline-md text-body-lg">Sunday Fellowship</h3>
+</div>
+</div>
+<!-- Item 4: Square (Ministry) -->
+<div class="md:col-span-1 md:row-span-1 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="An artistic shot of the parish youth choir practicing in the nave of the church. The young singers are dressed in simple robes, their faces filled with concentration and passion. The background features the elegant wooden altar and golden crucifix of St. Michael Madende. The photography uses a shallow depth of field to create an intimate, sacred atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfYZgXVrNOghIrm_G9GRBV0j8Ieh1WcsJByxJN-2dmGEXJFwiM-JwaDR-zteK2TaZ4S4pcT_bCnPHxINWq8GqNW0LLDQTyjAMprRkvfmAGP3sjrAPCpz-9YCkSHGU3PoAZXnE3s3ZEsSrNBfvn6-PusSXcjA_uyHq1myzclc2jSh46MwIoTpexZbcJMlttNIuyUQm6OY8muYgXgn7CpnCElYgCvAzEAqypLWGPhAC_k2eHdiUU8plLnCmP21e4ImvZbhyuHeFfGNBz')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-md">
+<h3 class="text-white font-headline-md text-headline-md text-body-lg">Youth Choir Practice</h3>
+</div>
+</div>
+<!-- Item 5: Horizontal (Celebration) -->
+<div class="md:col-span-2 md:row-span-1 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A festive, wide-shot of the parish garden during a community festival. Strings of lights are draped between trees, and stalls with local crafts and foods are visible. The scene is bustling with life, captured in a vibrant, documentary style that evokes a sense of tradition and celebration. Warm burgundy and gold tones are present in the decor." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAHHPDPO5draIhGZnvaitf218FGYaNIRfOaE1YJqENY7lpSwgAAoJ1FF-3eBfi5Kl4Ibt5fia53sWFsrAXz1jKwAQDoqPrS93XWpAogD50JxpW9moOJLijO34Bz25enBDI3UKsPMRp7MoPpQOkWt5uN26yeZNFGFr1C-bb3epdBY5Uz9Li7U7p1htI_hisweyhE_Vp2mYdSHGD-kLInWV1b_OIXXUtFFCF9x4GVVKuwiB_FHptFqlOQei6uXFCjoHtc7lhd5UO0YZ6v')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-md">
+<span class="text-white font-label-md text-label-md">Celebrations</span>
+<h3 class="text-white font-headline-md text-headline-md">Parish Feast Day</h3>
+</div>
+</div>
+<!-- Item 6: Square (Architecture detail) -->
+<div class="md:col-span-1 md:row-span-1 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Macro detail of the stained glass window at St. Michael Madende depicting St. Michael the Archangel. The colors are rich reds, deep blues, and brilliant golds. Sunlight passes through the glass, projecting vibrant hues onto the interior stone wall. The photography is sharp and editorial, highlighting the intricate craftsmanship of the ecclesiastical art." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjxsn4Miw8T5D9oeeDdI-eMaHvRX80eqckLBojktIqIsOpcUKlt75of3-CVvRav5FUujg-dnqcJKGTGSzctNt7GGKAAPVoVPTE9sPCh85pRnbMm5iKfhUTDY54BdJD3O5JVk1sJZaQNZcPzlYEeBXCFAYG-OoLwC2xdwaw3zlb6cDSHauWvr4oLHZN8gcUkIl2tM9rnMQofIv8txEt8ycuaR7-q2VN7GScvCEYOCVkh79eVHKRJ9fJtRh8yujAAMK7F24zjgktfPtA')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-md">
+<h3 class="text-white font-headline-md text-headline-md text-body-lg">Sacred Artistry</h3>
+</div>
+</div>
+<!-- Item 7: Square (Sacraments) -->
+<div class="md:col-span-1 md:row-span-1 relative group overflow-hidden rounded-xl bg-surface-container gallery-card cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A tender photograph of a baptism ceremony at the stone font in St. Michael Madende. Water is being poured from a silver vessel onto a baby's head. The surrounding family is seen in soft focus, their faces reflecting emotion and piety. The palette is dominated by whites, creams, and soft wood tones, conveying a sense of purity and new beginnings." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWZiVMh3CRaDzTHYVThb-0_sdq8EvqKOvZTNEJmUy0ixUNg94voY8VtFknHUbs_oK_wC_ZpDgEw0bbdwoyL2FoZRHuVHILH2SKG4eZNIgquoLWy4VJCtN93dc2HatuO7nJnfXkjzRN6rvTtq5xuRde38RL-5mEFZYLQySNBpANt1e_QjYKXv0z-15V7oFzyHYEg3-Z2YR41SwIjRdn0_P75kQDmFMLtOMnTKNA_0Ta1KNORU1AY9DikEilgR6JhMdVM_RIixAyh5ZW')"></div>
+<div class="overlay absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-300 flex flex-col justify-end p-stack-md">
+<h3 class="text-white font-headline-md text-headline-md text-body-lg">Holy Baptism</h3>
+</div>
+</div>
+</div>
+<!-- Load More Button -->
+<div class="mt-20 text-center">
+<button class="group relative inline-flex items-center gap-stack-md px-10 py-4 bg-transparent border-2 border-primary text-primary font-label-md text-label-md rounded-full hover:bg-primary hover:text-white transition-all duration-300 overflow-hidden" id="loadMore">
+<span class="relative z-10">Load More Memories</span>
+<span class="material-symbols-outlined relative z-10 group-hover:translate-y-1 transition-transform">expand_more</span>
+<div class="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-section-gap bg-tertiary dark:bg-tertiary-container text-on-tertiary dark:text-tertiary-fixed font-body-md text-body-md py-stack-lg border-t border-outline/10">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-margin-desktop py-stack-lg max-w-container-max-width mx-auto">
+<div class="flex flex-col gap-stack-md">
+<span class="font-headline-md text-headline-md text-secondary-fixed">St. Michael Madende</span>
+<p class="opacity-80 leading-relaxed">
+                    A Catholic community rooted in faith, serving with love, and growing in the light of the Gospel since 1954.
+                </p>
+<div class="flex gap-4 mt-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed">face_nod</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed">share</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed">location_on</span>
+</div>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<h4 class="font-bold text-secondary-fixed mb-2">Quick Links</h4>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Mass Times</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Sacraments</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Ministries</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="text-tertiary-fixed-dim opacity-80 hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<h4 class="font-bold text-secondary-fixed mb-2">Contact Us</h4>
+<p class="opacity-80">123 Parish Road, Madende</p>
+<p class="opacity-80">Phone: +1 (555) 012-3456</p>
+<p class="opacity-80">Email: office@stmichaelmadende.org</p>
+</div>
+</div>
+<div class="border-t border-white/10 mt-stack-lg pt-stack-md text-center px-margin-mobile">
+<p class="opacity-60 text-sm">© 2024 St. Michael Madende Catholic Parish. All Rights Reserved.</p>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-full bg-surface/90 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-[0_-4px_12px_rgba(0,0,0,0.05)] h-16 flex justify-around items-center px-margin-mobile">
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">church</span>
+<span>Mass</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 font-label-md text-label-md scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">subscriptions</span>
+<span>Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span>Donate</span>
+</a>
+<button class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">menu</span>
+<span>More</span>
+</button>
+</nav>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const drawerContent = document.getElementById('drawerContent');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawer.classList.add('opacity-100');
+                    drawerContent.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.remove('opacity-100');
+                drawerContent.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Close drawer on outside click
+        document.getElementById('drawer').addEventListener('click', (e) => {
+            if (e.target.id === 'drawer') toggleDrawer();
+        });
+
+        // Simple Load More Simulation
+        const loadMoreBtn = document.getElementById('loadMore');
+        loadMoreBtn.addEventListener('click', () => {
+            const btnText = loadMoreBtn.querySelector('span');
+            btnText.textContent = "Loading...";
+            
+            // Artificial delay to simulate content loading
+            setTimeout(() => {
+                btnText.textContent = "All Memories Loaded";
+                loadMoreBtn.classList.add('opacity-50', 'pointer-events-none');
+            }, 1000);
+        });
+    </script>
+</body></html>

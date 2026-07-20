@@ -50,10 +50,6 @@ class EventAdmin(admin.ModelAdmin):
     ordering = ("-start_date",)
 
     readonly_fields = (
-<<<<<<< HEAD
-=======
-        "slug",
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
         "registered_count",
         "available_slots",
         "created_at",
@@ -130,10 +126,6 @@ class EventAdmin(admin.ModelAdmin):
                 "fields": (
                     "organizer",
                     "ministry",
-<<<<<<< HEAD
-=======
-                    "church",
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                 ),
             },
         ),

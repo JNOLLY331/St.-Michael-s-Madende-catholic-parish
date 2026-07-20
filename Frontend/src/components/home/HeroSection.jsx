@@ -318,17 +318,24 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
                   {hero.headingLine2}
                 </span>
                 <br />
-                <span
-                  className="inline-block text-[#ffe088] font-oswald tracking-[0.3em] uppercase mt-3 whitespace-nowrap overflow-hidden border-r-[4px] border-[#ffe088]"
-                  style={{
-                    fontSize: 'clamp(1.5rem, 3.5vw, 2.5rem)',
-                    textShadow: '0 4px 15px rgba(255,224,136,0.3)',
-                    width: '15ch',
-                    animation: 'typing-effect 4s steps(15, end) infinite alternate, blink-caret-effect 0.75s step-end infinite',
-                    verticalAlign: 'bottom'
-                  }}
-                >
-                  Catholic Church
+                <span className="relative inline-block mt-3" style={{ fontFamily: 'var(--font-serif)', color: '#c5832b', textShadow: '0 4px 15px rgba(197,131,43,0.3)', verticalAlign: 'bottom' }}>
+                  {/* Invisible placeholder to establish the bounds correctly */}
+                  <span className="opacity-0 tracking-wide">Catholic Church</span>
+
+                  {/* Animated layer using Framer Motion */}
+                  <motion.span
+                    className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[4px] border-[#c5832b] tracking-wide"
+                    initial={{ width: "0%" }}
+                    animate={{ width: ["0%", "100%", "100%", "0%"] }}
+                    transition={{
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "linear",
+                      times: [0, 0.4, 0.6, 1]
+                    }}
+                  >
+                    Catholic Church
+                  </motion.span>
                 </span>
               </>
             )}

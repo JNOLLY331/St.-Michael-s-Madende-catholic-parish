@@ -6,18 +6,7 @@ import { MdChurch, MdExpandMore, MdPerson, MdArrowForward } from 'react-icons/md
 import DynamicIcon from './DynamicIcon';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Add inline keyframes for the typewriter effect
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-  @keyframes typing-effect {
-    from { width: 0; }
-    to { width: 17ch; }
-  }
-  @keyframes blink-caret-effect {
-    50% { border-color: transparent; }
-  }
-`;
-document.head.appendChild(styleSheet);
+// Removed inline typical stylesheet as we are using Framer Motion now
 
 const navLinks = [
     { label: 'Home', to: '/' },
@@ -140,15 +129,21 @@ export default function Navbar() {
                             <span className="font-oswald font-black text-white text-[20px] leading-tight tracking-[0.03em] drop-shadow-md">
                                 ST. MICHAEL'S
                             </span>
-                            <span
-                                className="inline-block text-[#ffe088] text-[10.5px] font-oswald tracking-[0.25em] font-medium uppercase mt-0.5 whitespace-nowrap overflow-hidden border-r-[2px] border-[#ffe088]"
-                                style={{
-                                    textShadow: '0 2px 4px rgba(0,0,0,0.5)',
-                                    width: '15ch',
-                                    animation: 'typing-effect 4s steps(15, end) infinite alternate, blink-caret-effect 0.75s step-end infinite'
-                                }}
-                            >
-                                Catholic Church
+                            <span className="relative inline-block text-[10.5px] font-oswald tracking-[0.25em] font-medium uppercase mt-0.5" style={{ color: '#c5832b', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                                <span className="opacity-0">Catholic Church</span>
+                                <motion.span
+                                    className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[2px] border-[#c5832b]"
+                                    initial={{ width: "0%" }}
+                                    animate={{ width: ["0%", "100%", "100%", "0%"] }}
+                                    transition={{
+                                        duration: 6,
+                                        repeat: Infinity,
+                                        ease: "linear",
+                                        times: [0, 0.4, 0.6, 1]
+                                    }}
+                                >
+                                    Catholic Church
+                                </motion.span>
                             </span>
                         </div>
                     </button>

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdChurch } from 'react-icons/md';
+import { MdChurch, MdFavorite } from 'react-icons/md';
 import DynamicIcon from './DynamicIcon';
 
 
 
 const socialLinks = [
-    { icon: 'fa-facebook-f', href: '#', label: 'Facebook', hoverBg: '#1877F2', emoji: '👍' },
-    { icon: 'fa-youtube', href: '#', label: 'YouTube', hoverBg: '#FF0000', emoji: '▶️' },
-    { icon: 'fa-whatsapp', href: '#', label: 'WhatsApp', hoverBg: '#25D366', emoji: '💬' },
-    { icon: 'fa-instagram', href: '#', label: 'Instagram', hoverBg: '#C13584', emoji: '📸' },
-    { icon: 'fa-x-twitter', href: '#', label: 'X/Twitter', hoverBg: '#000000', emoji: '🐦' },
-    { icon: 'fa-telegram', href: '#', label: 'Telegram', hoverBg: '#229ED9', emoji: '✈️' },
+    { icon: 'fa-facebook-f', href: '#', label: 'Facebook', hoverBg: '#1877F2' },
+    { icon: 'fa-youtube', href: '#', label: 'YouTube', hoverBg: '#FF0000' },
+    { icon: 'fa-whatsapp', href: '#', label: 'WhatsApp', hoverBg: '#25D366' },
+    { icon: 'fa-instagram', href: '#', label: 'Instagram', hoverBg: '#C13584' },
+    { icon: 'fa-x-twitter', href: '#', label: 'X/Twitter', hoverBg: '#000000' },
+    { icon: 'fa-telegram', href: '#', label: 'Telegram', hoverBg: '#229ED9' },
 ];
 
 const quickLinks = [
@@ -49,7 +49,7 @@ export default function Footer() {
     const handleSubscribe = (e) => {
         e.preventDefault();
         if (!email) return;
-        setSubStatus('✅ Thank you! You have been subscribed.');
+        setSubStatus('Thank you! You have been subscribed.');
         setEmail('');
         setTimeout(() => setSubStatus(''), 4000);
     };
@@ -80,7 +80,7 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <p className="text-sm leading-relaxed" style={{ color: 'var(--footer-text)' }}>
+                        <p className="text-sm leading-relaxed font-oswald" style={{ color: 'var(--footer-text)' }}>
                             A Roman Catholic Parish dedicated to the spiritual growth of all through
                             liturgy, service, and community. Rooted in faith since 1960.
                         </p>
@@ -94,7 +94,7 @@ export default function Footer() {
                             ].map(({ icon, text }) => (
                                 <div key={icon} className="footer-card flex items-start gap-2 cursor-default">
                                     <DynamicIcon name={icon} className="text-[#ffe088] text-base mt-0.5 footer-float-icon" />
-                                    <span style={{ color: 'var(--footer-text)' }} className="whitespace-pre-line">{text}</span>
+                                    <span style={{ color: 'var(--footer-text)' }} className="whitespace-pre-line font-oswald text-sm">{text}</span>
                                 </div>
                             ))}
                         </div>
@@ -146,7 +146,7 @@ export default function Footer() {
                                 style={{ borderColor: 'var(--footer-border)' }}>
                                 Newsletter
                             </h3>
-                            <p className="text-sm mb-3" style={{ color: 'var(--footer-text)' }}>
+                            <p className="text-sm mb-3 font-oswald" style={{ color: 'var(--footer-text)' }}>
                                 Subscribe to receive weekly updates and reflections from our Parish Priest.
                             </p>
                             <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -212,7 +212,7 @@ export default function Footer() {
                 <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="font-oswald tracking-wide text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
                         Designed and developed by:<span className='text-red-800 text-lg tracking-wide'><a href="">Jnolly IT solutions</a> </span>
-                        </p>
+                    </p>
                     <p className="font-oswald tracking-wide text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
                         © {new Date().getFullYear()} St. Michael Madende Catholic Parish. All Rights Reserved.
                     </p>
@@ -223,8 +223,8 @@ export default function Footer() {
                             </a>
                         ))}
                     </div>
-                    <p className="font-oswald text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                        Made with <span className="text-red-400">❤️</span> for the Glory of God
+                    <p className="font-oswald text-sm flex items-center justify-center gap-1" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                        Made with <MdFavorite className="text-red-400" /> for the Glory of God
                     </p>
                 </div>
             </div>

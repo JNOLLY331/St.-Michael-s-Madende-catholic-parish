@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { churchApi } from '../api/endpoints/church';
-=======
 import { churchApi, resolveMediaUrl } from '../api';
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 import { SAINTS_SEED } from '../data/saintsData';
 
 export function useSaintsData() {

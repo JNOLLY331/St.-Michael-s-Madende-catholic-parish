@@ -28,34 +28,10 @@ export class ApiError extends Error {
 async function parseErrorMessage(res) {
   try {
     const data = await res.clone().json();
-<<<<<<< HEAD
-
-    // Top-level human-readable messages take priority
-    if (data?.detail) return { message: data.detail, data };
-    if (data?.message) return { message: data.message, data };
-    if (data?.non_field_errors?.[0]) return { message: data.non_field_errors[0], data };
-
-    // DRF serializer field-level errors: { "password": ["too common."], "email": ["exists."] }
-    // Collect every field's first error and join into a readable sentence.
-    if (data && typeof data === 'object') {
-      const fieldMessages = Object.entries(data)
-        .filter(([, val]) => Array.isArray(val) && val.length > 0)
-        .map(([field, msgs]) => {
-          const label = field.replace(/_/g, ' ');
-          return `${label}: ${msgs[0]}`;
-        });
-      if (fieldMessages.length > 0) {
-        return { message: fieldMessages.join(' · '), data };
-      }
-    }
-
-    return { message: `Request failed with status ${res.status}`, data };
-=======
     // Return both the human-readable message AND raw data so callers can surface field errors
     const message = data?.detail || data?.message || data?.non_field_errors?.[0]
       || `Request failed with status ${res.status}`;
     return { message, data };
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
   } catch {
     return { message: `Request failed with status ${res.status}`, data: null };
   }
@@ -88,7 +64,7 @@ async function request(path, { method = 'GET', body, headers, isFormData = false
   // For FormData uploads we must NOT set Content-Type (browser sets multipart boundary)
   const contentType = isFormData ? {} : (body ? { 'Content-Type': 'application/json' } : {});
 
-  const res = await fetch(`${BASE_URL}${path}`, {
+  let res = await fetch(`${BASE_URL}${path}`, {
     method,
     headers: {
       ...contentType,
@@ -98,6 +74,21 @@ async function request(path, { method = 'GET', body, headers, isFormData = false
     body: isFormData ? body : (body ? JSON.stringify(body) : undefined),
     ...rest,
   });
+
+  // If the token is invalid/expired, DRF will return 401 even for public (AllowAny) endpoints.
+  // We can retry the request anonymously (without the Authorization header) to see if it succeeds.
+  if (res.status === 401 && accessToken) {
+    tokenStore.clear();
+    res = await fetch(`${BASE_URL}${path}`, {
+      method,
+      headers: {
+        ...contentType,
+        ...headers,
+      },
+      body: isFormData ? body : (body ? JSON.stringify(body) : undefined),
+      ...rest,
+    });
+  }
 
   if (!res.ok) {
     const { message, data } = await parseErrorMessage(res);

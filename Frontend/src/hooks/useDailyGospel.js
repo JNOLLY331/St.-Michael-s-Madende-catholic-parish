@@ -1,8 +1,4 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { resolveMediaUrl } from '../api/client';
-=======
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 const formatDate = (d) => d.toLocaleDateString('en-US', {
   weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',

@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { resolveMediaUrl } from '../api/client';
-import { churchApi } from '../api/endpoints/church';
-=======
 import { churchApi } from '../api';
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 export function useMassScheduleData() {
     const [schedule, setSchedule] = useState([]);

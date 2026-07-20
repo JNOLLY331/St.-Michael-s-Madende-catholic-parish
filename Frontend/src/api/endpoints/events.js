@@ -15,11 +15,7 @@ export const eventsApi = {
     // Public listing — pass params like { is_featured: true, category: 'LITURGY', page: 2 }
     list: (params) => {
         const qs = params ? '?' + new URLSearchParams(params).toString() : '';
-<<<<<<< HEAD
-        return apiClient.get(`${BASE}${qs}`);
-=======
         return apiClient.get(`${BASE}/${qs}`);
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
     },
 
     // Single event detail by id or slug

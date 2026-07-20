@@ -17,11 +17,6 @@ const FALLBACK_PHOTOS = [
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDiFp6Nv9HQK8JMgy_cvZMl2YmkcrusObqEl0T-0Utz_8oSVTZgma-xfB9PGr1FWpfaTejdgrUWgC6QW705s7_ae16dBqGOeyXxxudijlIxfTgKKEdjMN7n1q7wXcwYhE3GBLfbao78by3SA2E7qK8l0Os4bRnLhApjJs3zsFfCvdWQFPvhWFevFJk71K9Av7e2wUoCBNvzHP7OijaaGAayhXwJ5S_WmSZrm2-RtCSB8snf17X2ut1Ikphu8MN0dauMOrFWJdCDiWTb',
 ];
 
-<<<<<<< HEAD
-export default function Gallery() {
-    const [lightbox, setLightbox] = useState(null);
-    const [hoveredIdx, setHoveredIdx] = useState(null);
-=======
 const REVEAL_ATTRS = [
     'data-reveal-left', 'data-reveal-zoom', 'data-reveal-right',
     'data-reveal-flip', 'data-reveal-bounce', 'data-reveal-spin',
@@ -29,7 +24,6 @@ const REVEAL_ATTRS = [
 
 export default function Gallery() {
     const [lightbox, setLightbox] = useState(null);
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
     // ── Integration: fetch real gallery media from the backend ────────────────
     const { media, loading } = useGalleryData();
@@ -41,54 +35,6 @@ export default function Gallery() {
 
     return (
         <>
-<<<<<<< HEAD
-            {/* ── Page Header ──────────────────────────────────────────────────── */}
-            <section style={{
-                padding: '64px 0 32px',
-                textAlign: 'center',
-                maxWidth: '1200px',
-                margin: '0 auto',
-                padding: '64px 20px 32px',
-            }}>
-                <h1 style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: 'clamp(2rem, 5vw, 3rem)',
-                    color: 'var(--accent-maroon)',
-                    marginBottom: '16px',
-                    fontWeight: 700,
-                    letterSpacing: '0.02em',
-                }}>
-                    Parish Gallery
-                </h1>
-                <p style={{
-                    fontSize: '1.1rem',
-                    color: 'var(--text-secondary)',
-                    maxWidth: '600px',
-                    margin: '0 auto',
-                    lineHeight: 1.6,
-                }}>
-                    Glimpses of grace across our beautiful sanctuary and vibrant community life.
-                </p>
-                <div style={{
-                    width: '64px',
-                    height: '4px',
-                    background: '#735c00',
-                    margin: '16px auto 0',
-                    borderRadius: '2px',
-                }} />
-            </section>
-
-            {/* ── Gallery Grid ─────────────────────────────────────────────────── */}
-            <section style={{
-                maxWidth: '1200px',
-                margin: '0 auto',
-                padding: '0 20px 80px',
-            }}>
-                {/* Loading */}
-                {loading && <Spinner message="Loading the beauty of our parish..." />}
-
-                {/* Empty */}
-=======
             <section className="py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
                 <div data-reveal>
                     <h1 className="text-display-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>
@@ -108,7 +54,6 @@ export default function Gallery() {
                 )}
 
                 {/* ── Integration: empty state (backend returned nothing) ─────────── */}
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                 {!loading && displayPhotos.length === 0 && (
                     <EmptyState
                         title="Gallery Coming Soon"
@@ -117,80 +62,6 @@ export default function Gallery() {
                     />
                 )}
 
-<<<<<<< HEAD
-                {/* Masonry Grid */}
-                {!loading && displayPhotos.length > 0 && (
-                    <div style={{
-                        columns: 'auto 280px',
-                        gap: '20px',
-                    }}>
-                        {displayPhotos.map(({ src, caption }, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    breakInside: 'avoid',
-                                    marginBottom: '20px',
-                                    borderRadius: '16px',
-                                    overflow: 'hidden',
-                                    cursor: 'pointer',
-                                    border: '1px solid var(--border-color)',
-                                    boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
-                                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                                    transform: hoveredIdx === i ? 'translateY(-4px)' : 'translateY(0)',
-                                    boxShadow: hoveredIdx === i
-                                        ? 'var(--shadow-card-hover, 0 16px 40px -10px rgba(87,0,19,0.22))'
-                                        : '0 2px 12px rgba(0,0,0,0.08)',
-                                    position: 'relative',
-                                }}
-                                onMouseEnter={() => setHoveredIdx(i)}
-                                onMouseLeave={() => setHoveredIdx(null)}
-                                onClick={() => setLightbox({ src, caption })}
-                            >
-                                <img
-                                    src={src}
-                                    alt={caption || `Parish gallery ${i + 1}`}
-                                    loading="lazy"
-                                    style={{
-                                        width: '100%',
-                                        display: 'block',
-                                        objectFit: 'cover',
-                                        transition: 'transform 0.7s ease',
-                                        transform: hoveredIdx === i ? 'scale(1.08)' : 'scale(1)',
-                                    }}
-                                    onError={(e) => {
-                                        // Hide broken images gracefully
-                                        const wrapper = e.target.closest('[style*="break-inside"]') || e.target.parentElement;
-                                        if (wrapper) wrapper.style.display = 'none';
-                                    }}
-                                />
-
-                                {/* Hover overlay */}
-                                <div style={{
-                                    position: 'absolute',
-                                    inset: 0,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    background: 'rgba(87,0,19,0.45)',
-                                    backdropFilter: 'blur(2px)',
-                                    opacity: hoveredIdx === i ? 1 : 0,
-                                    transition: 'opacity 0.35s ease',
-                                }}>
-                                    <div style={{
-                                        color: '#fff',
-                                        textAlign: 'center',
-                                        transform: hoveredIdx === i ? 'translateY(0)' : 'translateY(12px)',
-                                        transition: 'transform 0.35s ease',
-                                    }}>
-                                        <MdZoomIn style={{ fontSize: '2.2rem' }} />
-                                        <p style={{
-                                            fontFamily: 'var(--font-serif)',
-                                            fontSize: '0.75rem',
-                                            letterSpacing: '0.15em',
-                                            textTransform: 'uppercase',
-                                            marginTop: '4px',
-                                        }}>View</p>
-=======
                 {/* ── Integration: masonry grid with real media URLs ─────────────── */}
                 {!loading && displayPhotos.length > 0 && (
                     <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
@@ -221,7 +92,6 @@ export default function Gallery() {
                                             <MdZoomIn className="text-4xl" />
                                             <p className="font-oswald text-sm tracking-widest uppercase mt-1">View</p>
                                         </div>
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                     </div>
                                 </div>
                             </div>
@@ -230,70 +100,6 @@ export default function Gallery() {
                 )}
             </section>
 
-<<<<<<< HEAD
-            {/* ── Lightbox ─────────────────────────────────────────────────────── */}
-            {lightbox && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        zIndex: 9999,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'rgba(0,0,0,0.92)',
-                        backdropFilter: 'blur(12px)',
-                    }}
-                    onClick={() => setLightbox(null)}
-                >
-                    <div
-                        style={{ position: 'relative', maxWidth: '960px', width: '100%', margin: '0 16px' }}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <img
-                            src={lightbox.src}
-                            alt={lightbox.caption || 'Gallery photo'}
-                            style={{
-                                width: '100%',
-                                borderRadius: '16px',
-                                boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
-                                maxHeight: '85vh',
-                                objectFit: 'contain',
-                                display: 'block',
-                            }}
-                        />
-                        {lightbox.caption && (
-                            <p style={{
-                                color: 'rgba(255,255,255,0.8)',
-                                textAlign: 'center',
-                                fontSize: '0.875rem',
-                                marginTop: '12px',
-                                fontStyle: 'italic',
-                            }}>
-                                {lightbox.caption}
-                            </p>
-                        )}
-                        <button
-                            style={{
-                                position: 'absolute',
-                                top: '12px',
-                                right: '12px',
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '50%',
-                                background: 'rgba(255,255,255,0.2)',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '1.25rem',
-                                transition: 'background 0.2s',
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.4)'}
-                            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
-=======
             {/* Lightbox — shows caption from the API if available */}
             {lightbox && (
                 <div
@@ -309,7 +115,6 @@ export default function Gallery() {
                         )}
                         <button
                             className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white hover:bg-white/40 transition-colors flex items-center justify-center"
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                             onClick={() => setLightbox(null)}
                         >
                             <MdClose />

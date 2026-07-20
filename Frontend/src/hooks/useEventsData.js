@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { resolveMediaUrl } from '../api/client';
-import { eventsApi } from '../api/endpoints/events';
-=======
 import { eventsApi, resolveMediaUrl } from '../api';
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
 
 // ─── Fallback data shown while the API is loading or unavailable ──────────────
 const FALLBACK_EVENTS = [];

@@ -1,51 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-<<<<<<< HEAD
-import { MdChurch, MdExpandMore, MdPerson, MdDashboard, MdLogout } from 'react-icons/md';
-import DynamicIcon from './DynamicIcon';
 import { useAuth } from '../context/AuthContext';
-=======
-import { MdChurch, MdExpandMore, MdPerson } from 'react-icons/md';
+import { MdChurch, MdExpandMore, MdPerson, MdArrowForward } from 'react-icons/md';
 import DynamicIcon from './DynamicIcon';
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
+import { motion, AnimatePresence } from 'framer-motion';
 
-
+// Add inline keyframes for the typewriter effect
+const styleSheet = document.createElement("style");
+styleSheet.innerText = `
+  @keyframes typing-effect {
+    from { width: 0; }
+    to { width: 17ch; }
+  }
+  @keyframes blink-caret-effect {
+    50% { border-color: transparent; }
+  }
+`;
+document.head.appendChild(styleSheet);
 
 const navLinks = [
     { label: 'Home', to: '/' },
     {
         label: 'About', to: '/about',
         dropdown: [
-            { label: 'Our History', to: '/about#history' },
-            { label: 'Parish Priests', to: '/about#priests' },
-            { label: 'Parish Council', to: '/about#council' },
+            { label: 'Our History', to: '/about#history', icon: 'auto_stories' },
+            { label: 'Parish Priests', to: '/about#priests', icon: 'person_4' },
+            { label: 'Parish Council', to: '/about#council', icon: 'groups' },
         ],
     },
     {
         label: 'Mass Schedule', to: '/mass-schedule',
         dropdown: [
-            { label: 'Sunday Mass', to: '/mass-schedule#sunday' },
-            { label: 'Daily Mass', to: '/mass-schedule#daily' },
-            { label: 'Holy Days', to: '/mass-schedule#holydays' },
+            { label: 'Sunday Mass', to: '/mass-schedule#sunday', icon: 'wb_sunny' },
+            { label: 'Daily Mass', to: '/mass-schedule#daily', icon: 'calendar_month' },
+            { label: 'Holy Days', to: '/mass-schedule#holydays', icon: 'stars' },
         ],
     },
     {
         label: 'Sacraments', to: '/sacraments',
         dropdown: [
-            { label: 'Baptism', to: '/sacraments#baptism' },
-            { label: 'First Communion', to: '/sacraments#communion' },
-            { label: 'Confirmation', to: '/sacraments#confirmation' },
-            { label: 'Marriage', to: '/sacraments#marriage' },
+            { label: 'Baptism', to: '/sacraments#baptism', icon: 'water_drop' },
+            { label: 'First Communion', to: '/sacraments#communion', icon: 'bakery_dining' },
+            { label: 'Confirmation', to: '/sacraments#confirmation', icon: 'local_fire_department' },
+            { label: 'Marriage', to: '/sacraments#marriage', icon: 'favorite' },
         ],
     },
     {
         label: 'Ministries', to: '/ministries',
         dropdown: [
-            { label: 'Youth Ministry', to: '/ministries#youth' },
-            { label: "Women's Guild", to: '/ministries#women' },
-            { label: "Men's Fellowship", to: '/ministries#men' },
-            { label: 'Choir', to: '/ministries#choir' },
+            { label: 'Youth Ministry', to: '/ministries#youth', icon: 'diversity_3' },
+            { label: "Women's Guild", to: '/ministries#women', icon: 'face_3' },
+            { label: "Men's Fellowship", to: '/ministries#men', icon: 'face_6' },
+            { label: 'Choir', to: '/ministries#choir', icon: 'queue_music' },
         ],
     },
     { label: 'Events', to: '/events' },
@@ -57,17 +64,16 @@ export default function Navbar() {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-<<<<<<< HEAD
-    const { isAuthenticated, user, logout } = useAuth();
-=======
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
+    const { isAuthenticated } = useAuth();
 
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [mobileDropdown, setMobileDropdown] = useState(null);
+    const [hoveredLink, setHoveredLink] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(null); // the 'to' of the currently open dropdown
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 50);
+        const onScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
@@ -75,379 +81,321 @@ export default function Navbar() {
     useEffect(() => {
         setMenuOpen(false);
         setMobileDropdown(null);
+        setIsDropdownOpen(null);
+        setHoveredLink(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [pathname]);
 
     const handleNavClick = (to) => {
         navigate(to);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-<<<<<<< HEAD
-    const handleLogout = async () => {
-        await logout();
-        navigate('/');
-    };
+    // Advanced dynamic styles using modern glassmorphism
+    const navbarBgClasses = scrolled
+        ? 'bg-[#40000b]/80 backdrop-blur-2xl shadow-xl shadow-black/10 border-b border-white/10'
+        : 'bg-transparent border-b border-transparent';
 
-    const navbarBg = scrolled
-        ? 'bg-[#2d0009]/95 backdrop-blur-xl shadow-2xl shadow-black/50'
-        : 'bg-gradient-to-r from-[#570013] via-[#6b0017] to-[#570013]';
-=======
-    const navbarBg = scrolled
-        ? 'bg-[#3a000d]/98 backdrop-blur-md shadow-2xl shadow-black/40'
-        : 'bg-[#570013]';
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
+    const getPadding = () => scrolled ? 'py-3' : 'py-5';
 
     return (
-        <header
-            className={`w-full top-0 fixed z-50 transition-all duration-500 ${navbarBg}`}
-        >
-<<<<<<< HEAD
-            {/* Animated accent bar */}
-            <div className="h-[2px] w-full" style={{ background: 'linear-gradient(90deg, transparent 0%, #ffe088 30%, #ff9f4a 60%, #ffe088 80%, transparent 100%)' }} />
-
-            {/* Top info strip */}
-            <div className="bg-[#40000b]/80 text-[#ffe088]/90 text-[11px] px-4 py-1 text-center hidden md:block font-oswald tracking-widest border-b border-white/5">
-                <span>📍 123 Parish Road, Madende &nbsp;|&nbsp; ☎ (123) 456-7890 &nbsp;|&nbsp; ✉ info@stmichaelmadende.org</span>
-=======
-            {/* Animated top glow bar */}
-            <div className="footer-glow-bar" style={{ background: 'linear-gradient(90deg, transparent, #ffe088aa, #ff6b3566, #ffe088aa, transparent)', backgroundSize: '200% 100%' }} />
-
-            {/* Top info strip */}
-            <div className="bg-[#40000b] text-[#ffe088] text-xs px-4 py-1.5 text-center hidden md:block font-oswald tracking-widest">
-                <span>123 Parish Road, Madende &nbsp;|&nbsp; ☎ (123) 456-7890 &nbsp;|&nbsp; ✉ info@stmichaelmadende.org</span>
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-            </div>
-
-            {/* Main navbar */}
-            <div className="w-full px-0">
-                <div className="flex justify-between items-center px-4 md:px-6 py-2 w-full">
-
-                    {/* Brand */}
-                    <button
-                        onClick={() => handleNavClick('/')}
-                        className="flex items-center gap-3 cursor-pointer group shrink-0"
-                    >
-<<<<<<< HEAD
-                        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#ffe088] to-[#f0c040] flex items-center justify-center shadow-lg shadow-black/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 border-2 border-white/20">
-                            <MdChurch className="text-[#570013] text-2xl" />
+        <header className="w-full fixed top-0 z-[100] flex justify-center pointer-events-none">
+            {/* The transparent / frosted outer container wrapper to make the navbar act like an edge-to-edge floating header */}
+            <motion.div
+                initial={false}
+                animate={{
+                    backgroundColor: scrolled ? 'rgba(58, 0, 13, 0.95)' : 'rgba(87, 0, 19, 1)',
+                    y: 0,
+                    width: '100%',
+                }}
+                className={`w-full relative pointer-events-auto transition-all duration-700 ease-out flex flex-col justify-center items-center ${scrolled ? 'backdrop-blur-xl border-b border-white/5 shadow-2xl' : 'shadow-none'
+                    }`}
+            >
+                {/* Slim info top bar - fade out nicely when scrolling */}
+                <motion.div
+                    initial={{ height: 'auto', opacity: 1 }}
+                    animate={{ height: scrolled ? 0 : 'auto', opacity: scrolled ? 0 : 1 }}
+                    className="w-full bg-[#300008] text-[#ffe088]/80 text-[10.5px] px-4 font-oswald tracking-[0.2em] font-medium uppercase overflow-hidden hidden md:block"
+                >
+                    <div className="flex justify-center items-center gap-10 py-1.5 min-h-[26px]">
+                        <span>St. Michael Madende Catholic Parish</span>
+                        <div className="flex items-center gap-6">
+                            <span className="flex items-center gap-2"><DynamicIcon name="phone" className="text-sm text-[#ffe088]" /> (123) 456-7890</span>
+                            <span className="flex items-center gap-2"><DynamicIcon name="mail" className="text-sm text-[#ffe088]" /> info@stmichaelmadende.org</span>
                         </div>
-                        <div className="text-left">
-                            <span className="font-oswald font-bold text-white text-[18px] tracking-wide block leading-tight drop-shadow-lg">
-                                ST. MICHAEL'S
-                                <br /><span className="text-[#ffe088]">MADENDE</span>
-                            </span>
-                            <span className="text-white/60 text-[9px] font-oswald tracking-[0.25em] uppercase">
-=======
-                        <div className="w-12 h-12 rounded-full bg-[#ffe088] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                            <MdChurch className="text-[#570013] text-3xl" />
+                    </div>
+                </motion.div>
+
+                {/* Animated colored glow bar */}
+                <div className="w-full h-[1px] opacity-60" style={{ background: 'linear-gradient(90deg, transparent, #ffe088, #ff6b35, #ffe088, transparent)', backgroundSize: '200% 100%', animation: 'footerGlowSweep 4s linear infinite' }} />
+
+                <div className={`w-full max-w-[1440px] px-4 lg:px-8 transition-all duration-700 ease-out flex items-center justify-between ${getPadding()}`}>
+
+                    {/* Brand / Logo Area */}
+                    <button onClick={() => handleNavClick('/')} className="flex items-center gap-4 cursor-pointer group shrink-0 outline-none">
+                        <div className="w-11 h-11 rounded-2xl bg-[#ffe088] flex items-center justify-center shadow-lg shadow-[#ffe088]/20 group-hover:scale-105 group-hover:rotate-[8deg] transition-all duration-500 overflow-hidden relative">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[#ffae00] to-[#ffe088] opacity-80" />
+                            <MdChurch className="text-[#570013] text-2xl relative z-10 drop-shadow-sm" />
                         </div>
-                        <div className="text-left">
-                            <span className="font-oswald font-bold text-white text-xl tracking-wide block leading-none drop-shadow-lg">
+                        <div className="text-left flex flex-col justify-center">
+                            <span className="font-oswald font-black text-white text-[20px] leading-tight tracking-[0.03em] drop-shadow-md">
                                 ST. MICHAEL'S
-                                <br /><span>MADENDE</span>
                             </span>
-                            <span className="text-[#ffe088] text-[10px] font-oswald tracking-[0.2em] uppercase">
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                                Catholic Parish
+                            <span
+                                className="inline-block text-[#ffe088] text-[10.5px] font-oswald tracking-[0.25em] font-medium uppercase mt-0.5 whitespace-nowrap overflow-hidden border-r-[2px] border-[#ffe088]"
+                                style={{
+                                    textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                                    width: '15ch',
+                                    animation: 'typing-effect 4s steps(15, end) infinite alternate, blink-caret-effect 0.75s step-end infinite'
+                                }}
+                            >
+                                Catholic Church
                             </span>
                         </div>
                     </button>
 
-<<<<<<< HEAD
-                    {/* Desktop Nav */}
-=======
-                    {/* Desktop Nav — full edge-to-edge spread */}
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                    <nav className="hidden lg:flex items-center flex-1">
-                        <div className="flex items-center w-full justify-between px-4">
-                            {navLinks.map(({ label, to, dropdown }) => {
-                                const active = pathname === to || (to !== '/' && pathname.startsWith(to));
-                                return (
-                                    <div key={to} className="nav-item relative group">
-                                        <button
-                                            onClick={() => handleNavClick(to)}
-                                            className={`
-<<<<<<< HEAD
-                                                nav-link-text relative flex items-center gap-1 px-2 py-1
-                                                font-oswald font-bold text-sm tracking-wide
-                                                border-b-2 transition-all duration-300
-                                                ${active
-                                                    ? 'text-[#ffe088] border-[#ffe088]'
-                                                    : 'text-white/85 border-transparent hover:text-[#ffe088] hover:border-[#ffe088]/50'
-                                                }
-                                            `}
-                                        >
-=======
-                                                nav-link-text relative flex items-center gap-1 px-2
-                                                border-b-2 transition-all duration-300
-                                                ${active
-                                                    ? 'text-[#ffe088] border-[#ffe088]'
-                                                    : 'text-white/90 border-transparent hover:text-[#ffe088] hover:border-[#ffe088]/60'
-                                                }
-                                            `}
-                                        >
-                                            {/* Active indicator dot */}
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                                            {active && (
-                                                <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#ffe088]" />
-                                            )}
-                                            {label}
-                                            {dropdown && (
-                                                <MdExpandMore className="text-sm transition-transform duration-300 group-hover:rotate-180" />
-                                            )}
-                                        </button>
+                    {/* Desktop Navigation Links */}
+                    <nav className="hidden lg:flex items-center gap-1.5 relative h-full">
+                        {navLinks.map((link) => {
+                            const isPathActive = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
+                            const isHovered = hoveredLink === link.label;
+                            const isMegaMenuOpen = isDropdownOpen === link.label;
 
-                                        {/* Dropdown */}
-                                        {dropdown && (
-<<<<<<< HEAD
-                                            <div className="nav-dropdown absolute top-full left-0 mt-3 shadow-2xl shadow-black/40 border py-2 min-w-[210px] z-50 rounded-lg overflow-hidden"
-=======
-                                            <div className="nav-dropdown absolute top-full left-0 mt-2 rounded-none shadow-2xl shadow-black/30 border py-2 min-w-[210px] z-50"
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                                                style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
-                                                <div className="absolute -top-2 left-6 w-4 h-4 rotate-45 border-t border-l"
-                                                    style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }} />
-                                                {dropdown.map(({ label: dLabel, to: dTo }, i) => (
-                                                    <button
-                                                        key={dTo}
-                                                        onClick={() => handleNavClick(dTo)}
-<<<<<<< HEAD
-                                                        className="w-full text-left px-5 py-2.5 font-oswald text-sm tracking-wide flex items-center gap-2.5 transition-all duration-200 hover:pl-7 group/item"
-=======
-                                                        className="w-full text-left px-5 py-2.5 font-oswald font-bold text-sm tracking-wide flex items-center gap-2 transition-all duration-200 hover:pl-7"
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                                                        style={{
-                                                            color: 'var(--text-primary)',
-                                                            animationDelay: `${i * 40}ms`
-                                                        }}
-                                                        onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card-hover)'}
-                                                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                    >
-<<<<<<< HEAD
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#570013] opacity-50 group-hover/item:opacity-100 transition-opacity" />
-=======
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#570013] opacity-60" />
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                                                        {dLabel}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </nav>
-
-                    {/* Right actions */}
-                    <div className="flex items-center gap-2 shrink-0">
-                        {/* Theme Toggle */}
-                        <button
-                            onClick={toggleTheme}
-                            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-                            className={`theme-toggle ${theme === 'dark' ? 'dark' : ''}`}
-                            aria-label="Toggle theme"
-                        />
-
-                        {/* Donate button */}
-                        <button
-                            onClick={() => handleNavClick('/donate')}
-<<<<<<< HEAD
-                            className="btn-primary bg-gradient-to-r from-[#ffe088] to-[#f0c040] text-[#40000b] px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase shadow-lg hover:shadow-[#ffe088]/30 hover:scale-105 transition-all hidden md:block"
-=======
-                            className="btn-primary bg-[#ffe088] text-[#40000b] px-5 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase shadow-lg hover:bg-[#feed9a] transition-all hidden md:block"
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                        >
-                            Donate
-                        </button>
-
-<<<<<<< HEAD
-                        {/* Auth buttons */}
-                        {isAuthenticated ? (
-                            <div className="hidden md:flex items-center gap-2">
-                                {/* Dashboard button */}
-                                <button
-                                    onClick={() => handleNavClick('/dashboard')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase transition-all duration-300 ${pathname === '/dashboard'
-                                            ? 'bg-[#ffe088] text-[#40000b] shadow-lg'
-                                            : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
-                                        }`}
-                                >
-                                    <MdDashboard className="text-base" />
-                                    <span>Dashboard</span>
-                                </button>
-                                {/* Logout button */}
-                                <button
-                                    onClick={handleLogout}
-                                    className="flex items-center gap-1 border border-white/20 bg-white/5 text-white/80 px-3 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase hover:bg-red-900/40 hover:text-white hover:border-red-400/40 transition-all duration-300"
-                                    title={`Logout (${user?.first_name || user?.username})`}
-                                >
-                                    <MdLogout className="text-base" />
-                                    <span className="hidden xl:inline">Logout</span>
-                                </button>
-                            </div>
-                        ) : (
-                            <button
-                                onClick={() => handleNavClick('/login')}
-                                className="hidden md:flex items-center gap-1.5 border border-white/25 bg-white/8 text-white px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase hover:bg-white/15 hover:border-white/40 transition-all duration-300"
-                            >
-                                <MdPerson className="text-base" />
-                                <span>Portal</span>
-                            </button>
-                        )}
-=======
-                        {/* Member Portal */}
-                        <button
-                            onClick={() => handleNavClick('/login')}
-                            className="hidden md:flex items-center gap-1 border border-white/30 text-white px-4 py-2 rounded-full font-oswald font-bold text-sm tracking-wide uppercase hover:bg-white/10 transition-colors"
-                        >
-                            <MdPerson className="text-base" />
-                            <span>Portal</span>
-                        </button>
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-
-                        {/* Hamburger */}
-                        <button
-                            onClick={() => setMenuOpen(v => !v)}
-                            className="lg:hidden p-2 text-white hover:text-[#ffe088] transition-colors"
-                            aria-label="Toggle menu"
-                        >
-                            <DynamicIcon name={menuOpen ? 'close' : 'menu'} className="text-3xl transition-transform duration-300"
-                                style={{ transform: menuOpen ? 'rotate(90deg)' : 'rotate(0deg)' }} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-<<<<<<< HEAD
-            <div className={`lg:hidden overflow-hidden transition-all duration-400 ${menuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="border-t border-white/10 bg-[#3a000d]/98 backdrop-blur-xl py-4 px-4">
-=======
-            <div className={`lg:hidden overflow-hidden transition-all duration-400 ${menuOpen ? 'max-h-[700px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="border-t border-white/20 bg-[#40000b] py-4 px-4">
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                    <nav className="flex flex-col gap-1">
-                        {navLinks.map(({ label, to, dropdown }) => {
-                            const active = pathname === to || (to !== '/' && pathname.startsWith(to));
                             return (
-                                <div key={to}>
+                                <div
+                                    key={link.to}
+                                    className="relative px-2 py-2"
+                                    onMouseEnter={() => {
+                                        setHoveredLink(link.label);
+                                        if (link.dropdown) setIsDropdownOpen(link.label);
+                                    }}
+                                    onMouseLeave={() => {
+                                        setHoveredLink(null);
+                                        if (link.dropdown) setIsDropdownOpen(null);
+                                    }}
+                                >
                                     <button
-                                        onClick={() => dropdown ? setMobileDropdown(mobileDropdown === to ? null : to) : handleNavClick(to)}
-                                        className={`w-full text-left font-oswald font-bold text-base py-3 px-4 rounded-xl tracking-widest uppercase flex justify-between items-center transition-all duration-300 ${active
-                                            ? 'bg-[#570013] text-[#ffe088] shadow-inner'
-<<<<<<< HEAD
-                                            : 'text-white/90 hover:bg-[#570013]/50 hover:text-[#ffe088] hover:translate-x-1'
-=======
-                                            : 'text-white hover:bg-[#570013]/50 hover:text-[#ffe088] hover:translate-x-1'
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                                            }`}
-                                        style={{ lineHeight: '2' }}
+                                        onClick={() => handleNavClick(link.to)}
+                                        className="relative flex items-center whitespace-nowrap gap-1.5 px-3 py-1.5 outline-none font-sans font-bold text-[16px] transition-colors duration-200"
+                                        style={{ color: isPathActive || isHovered ? '#fff' : 'rgba(255,255,255,0.75)' }}
                                     >
-                                        {label}
-                                        {dropdown && (
-                                            <MdExpandMore className={`text-base transition-transform duration-300 ${mobileDropdown === to ? 'rotate-180' : ''}`} />
+                                        {link.label}
+                                        {link.dropdown && (
+                                            <MdExpandMore className={`text-lg transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMegaMenuOpen ? '-rotate-180 text-[#ffe088]' : ''}`} />
+                                        )}
+
+                                        {/* Hover Indicator Background (Mac OS style pill) */}
+                                        {isHovered && (
+                                            <motion.div
+                                                layoutId="desktopNavHoverIndicator"
+                                                className="absolute inset-0 bg-white/10 rounded-full border border-white/5"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                transition={{ duration: 0.25, ease: 'easeOut' }}
+                                            />
+                                        )}
+
+                                        {/* Active page indicator dot */}
+                                        {isPathActive && !isHovered && (
+                                            <motion.div layoutId="desktopNavActiveIndicator" className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#ffe088] shadow-[0_0_8px_#ffe088]" />
                                         )}
                                     </button>
-                                    {dropdown && mobileDropdown === to && (
-                                        <div className="pl-4 pb-2 flex flex-col gap-1 mt-1">
-                                            {dropdown.map(({ label: dLabel, to: dTo }, i) => (
-                                                <button
-                                                    key={dTo}
-                                                    onClick={() => handleNavClick(dTo)}
-                                                    className="w-full text-left font-oswald text-sm py-2 px-4 rounded-lg text-[#ffe088]/80 hover:text-[#ffe088] hover:bg-[#570013]/50 hover:translate-x-2 transition-all tracking-wide"
-                                                    style={{ transitionDelay: `${i * 40}ms` }}
-                                                >
-                                                    › {dLabel}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    )}
+
+                                    {/* ── Desktop Dropdown Mega-Menu ── */}
+                                    <AnimatePresence>
+                                        {link.dropdown && isMegaMenuOpen && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                                                exit={{ opacity: 0, y: 8, scale: 0.98, transition: { duration: 0.1 } }}
+                                                className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-[260px]"
+                                            >
+                                                {/* Hidden hover bridge so mouse doesn't fall off */}
+                                                <div className="absolute top-0 left-0 w-full h-8" />
+
+                                                <div className="relative p-2 rounded-2xl overflow-hidden shadow-2xl bg-[#000000]/60 backdrop-blur-2xl border border-white/10 overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/5 before:to-transparent before:pointer-events-none">
+                                                    <div className="flex flex-col gap-1 relative z-10">
+                                                        {link.dropdown.map((subLink, idx) => (
+                                                            <button
+                                                                key={subLink.to}
+                                                                onClick={() => {
+                                                                    handleNavClick(subLink.to);
+                                                                    setIsDropdownOpen(null);
+                                                                }}
+                                                                className="group/dl flex items-center justify-between text-left px-3 py-2.5 rounded-xl transition-all duration-300 hover:bg-white/10 outline-none w-full"
+                                                            >
+                                                                <div className="flex items-center gap-3">
+                                                                    {subLink.icon && (
+                                                                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover/dl:bg-[#ffe088]/20 group-hover/dl:border-[#ffe088]/40 transition-colors">
+                                                                            <DynamicIcon name={subLink.icon} className="text-[17px] text-white/70 group-hover/dl:text-[#ffe088] transition-colors" />
+                                                                        </div>
+                                                                    )}
+                                                                    <span className="font-sans font-bold text-[15px] text-white/90 group-hover/dl:text-white transition-colors">
+                                                                        {subLink.label}
+                                                                    </span>
+                                                                </div>
+                                                                <MdArrowForward className="text-white/30 text-sm opacity-0 -translate-x-2 group-hover/dl:opacity-100 group-hover/dl:translate-x-0 transition-all duration-300" />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             );
                         })}
-<<<<<<< HEAD
-
-                        {/* Mobile auth / dashboard section */}
-                        <div className="mt-3 pt-3 border-t border-white/10">
-                            {isAuthenticated ? (
-                                <div className="flex flex-col gap-2">
-                                    <div className="px-4 py-2 text-[#ffe088]/60 font-oswald text-xs tracking-widest uppercase">
-                                        Signed in as {user?.first_name || user?.username}
-                                    </div>
-                                    <button
-                                        onClick={() => handleNavClick('/dashboard')}
-                                        className={`w-full flex items-center gap-2 font-oswald font-bold text-base py-3 px-4 rounded-xl tracking-wide uppercase transition-all duration-300 ${pathname === '/dashboard'
-                                                ? 'bg-[#ffe088] text-[#40000b]'
-                                                : 'bg-[#570013]/60 text-[#ffe088] hover:bg-[#570013]'
-                                            }`}
-                                    >
-                                        <MdDashboard className="text-base" />
-                                        Dashboard
-                                    </button>
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={toggleTheme}
-                                            className="flex items-center justify-center gap-2 border border-white/20 text-white py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-white/10 transition-colors px-4"
-                                        >
-                                            <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-base" />
-                                            {theme === 'dark' ? 'Light' : 'Dark'}
-                                        </button>
-                                        <button
-                                            onClick={handleLogout}
-                                            className="flex-1 flex items-center justify-center gap-2 border border-red-400/30 bg-red-900/30 text-white py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-red-900/50 transition-colors"
-                                        >
-                                            <MdLogout className="text-base" />
-                                            Logout
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="flex gap-2">
-                                    <button
-                                        onClick={toggleTheme}
-                                        className="flex items-center justify-center gap-2 border border-white/30 text-white py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-white/10 transition-colors px-4"
-                                    >
-                                        <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-base" />
-                                        {theme === 'dark' ? 'Light' : 'Dark'}
-                                    </button>
-                                    <button
-                                        onClick={() => handleNavClick('/donate')}
-                                        className="flex-1 bg-gradient-to-r from-[#ffe088] to-[#f0c040] text-[#40000b] py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide text-center btn-primary"
-                                    >
-                                        Donate
-                                    </button>
-                                    <button
-                                        onClick={() => handleNavClick('/login')}
-                                        className="flex items-center justify-center gap-1 border border-white/30 text-white py-3 px-4 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-white/10 transition-colors"
-                                    >
-                                        <MdPerson className="text-base" />
-                                        Login
-                                    </button>
-                                </div>
-                            )}
-=======
-                        <div className="flex gap-2 mt-3">
-                            {/* Mobile Theme Toggle */}
-                            <button
-                                onClick={toggleTheme}
-                                className="flex items-center justify-center gap-2 border border-white/30 text-white py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide hover:bg-white/10 transition-colors px-4"
-                            >
-                                <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-base" />
-                                {theme === 'dark' ? 'Light' : 'Dark'}
-                            </button>
-                            <button
-                                onClick={() => handleNavClick('/donate')}
-                                className="flex-1 bg-[#ffe088] text-[#40000b] py-3 rounded-full font-oswald font-bold text-sm uppercase tracking-wide text-center btn-primary"
-                            >
-                                Donate
-                            </button>
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                        </div>
                     </nav>
+
+                    {/* Right Hand Actions */}
+                    <div className="flex items-center gap-3 lg:gap-4 shrink-0">
+                        <button
+                            onClick={toggleTheme}
+                            title="Toggle Theme"
+                            className="theme-toggle hidden md:block" // Utilizing your existing fancy css toggle
+                            aria-label="Toggle theme"
+                        />
+
+                        {/* Portal/Dashboard Auth Button */}
+                        <button
+                            onClick={() => handleNavClick(isAuthenticated ? '/dashboard' : '/login')}
+                            className={`group hidden xl:flex flex-row items-center justify-center h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 hover:border-white/40 backdrop-blur-md transition-all duration-300 shadow-sm ${isAuthenticated ? 'w-auto px-4 gap-2' : 'w-10'}`}
+                            title={isAuthenticated ? "Dashboard" : "Parishioner Portal"}
+                        >
+                            <MdPerson className="text-xl text-white/90 group-hover:text-white transition-colors" />
+                            {isAuthenticated && <span className="font-oswald text-xs uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">Dashboard</span>}
+                        </button>
+
+                        <div className="h-6 w-px bg-white/10 hidden md:block ml-1 mr-1" />
+
+                        {/* Beautiful Glow Primary Button */}
+                        <button
+                            onClick={() => handleNavClick('/donate')}
+                            className="hidden md:flex relative group items-center justify-center px-6 py-2.5 rounded-full overflow-hidden outline-none"
+                        >
+                            <span className="absolute inset-0 bg-[#ffe088]" />
+                            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] group-hover:animate-[shimmer_1.5s_infinite]" />
+                            <span className="relative z-10 font-oswald font-extrabold text-[13px] tracking-[0.1em] text-[#40000b] uppercase mt-0.5">
+                                Donate
+                            </span>
+                            <div className="absolute inset-0 rounded-full ring-2 ring-[#ffe088]/40 ring-offset-2 ring-offset-[#570013] group-hover:ring-[#ffe088] transition-all opacity-0 group-hover:opacity-100" />
+                        </button>
+
+                        {/* Mobile Menu Hamburger */}
+                        <button
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            className="lg:hidden relative w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center overflow-hidden hover:bg-white/10 transition-colors"
+                        >
+                            <div className="relative w-4 h-4 flex flex-col justify-between items-center group">
+                                <span className={`block w-full h-[1.5px] bg-white rounded-full transition-transform duration-500 ease-in-out origin-center ${menuOpen ? 'translate-y-[7.25px] rotate-45 bg-[#ffe088]' : ''}`} />
+                                <span className={`block w-full h-[1.5px] bg-white rounded-full transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`} />
+                                <span className={`block w-full h-[1.5px] bg-white rounded-full transition-transform duration-500 ease-in-out origin-center ${menuOpen ? '-translate-y-[7.25px] -rotate-45 bg-[#ffe088]' : ''}`} />
+                            </div>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </motion.div>
+
+            {/* ── Stunning Framer Motion Mobile Drawer ── */}
+            <AnimatePresence>
+                {menuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                        animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
+                        exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="fixed inset-0 top-0 left-0 w-full h-[100dvh] bg-[#3a000d]/90 z-[-1] pt-[84px] pointer-events-auto overflow-y-auto flex flex-col"
+                    >
+                        <div className="px-6 pb-20 flex-1 w-full max-w-[600px] mx-auto flex flex-col pt-8">
+                            <motion.div
+                                initial="hidden" animate="visible" exit="hidden"
+                                variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+                                className="flex flex-col gap-2"
+                            >
+                                {navLinks.map((link) => {
+                                    const isPathActive = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
+                                    const hasOpenDropdown = mobileDropdown === link.to;
+
+                                    return (
+                                        <motion.div
+                                            key={link.to}
+                                            variants={{
+                                                hidden: { opacity: 0, y: 20 },
+                                                visible: { opacity: 1, y: 0, transition: { ease: [0.16, 1, 0.3, 1], duration: 0.5 } }
+                                            }}
+                                            className="w-full flex-col flex"
+                                        >
+                                            <button
+                                                onClick={() => link.dropdown ? setMobileDropdown(hasOpenDropdown ? null : link.to) : (handleNavClick(link.to) || setMenuOpen(false))}
+                                                className={`w-full flex items-center justify-between py-4 border-b transition-colors outline-none ${isPathActive
+                                                    ? 'border-[#ffe088]/30'
+                                                    : 'border-white/10 hover:border-white/30'
+                                                    }`}
+                                            >
+                                                <span className={`font-oswald font-medium text-3xl uppercase tracking-widest ${isPathActive ? 'text-[#ffe088]' : 'text-white'}`}>
+                                                    {link.label}
+                                                </span>
+                                                {link.dropdown && (
+                                                    <MdExpandMore className={`text-3xl text-white/50 transition-transform duration-500 ${hasOpenDropdown ? 'rotate-180 text-[#ffe088]' : ''}`} />
+                                                )}
+                                            </button>
+
+                                            <AnimatePresence>
+                                                {hasOpenDropdown && link.dropdown && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                        exit={{ height: 0, opacity: 0 }}
+                                                        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="py-4 flex flex-col gap-2">
+                                                            {link.dropdown.map(sl => (
+                                                                <button
+                                                                    key={sl.to}
+                                                                    onClick={() => { handleNavClick(sl.to); setMenuOpen(false); }}
+                                                                    className="flex items-center gap-4 py-3 px-4 rounded-xl hover:bg-white/10 transition-colors text-left"
+                                                                >
+                                                                    {sl.icon && (
+                                                                        <div className="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center border border-white/5">
+                                                                            <DynamicIcon name={sl.icon} className="text-xl text-[#ffe088]" />
+                                                                        </div>
+                                                                    )}
+                                                                    <span className="font-sans font-medium text-lg text-white/90">{sl.label}</span>
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </motion.div>
+                                    );
+                                })}
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                                transition={{ delay: 0.2, duration: 0.5 }}
+                                className="mt-8 flex flex-col gap-4"
+                            >
+                                <button onClick={() => { handleNavClick('/donate'); setMenuOpen(false); }} className="w-full bg-[#ffe088] text-[#40000b] shadow-[0_0_20px_rgba(255,224,136,0.3)] min-h-[60px] rounded-2xl font-oswald font-bold text-lg uppercase tracking-widest relative overflow-hidden group">
+                                    <span className="relative z-10">Donate Now</span>
+                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                                </button>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <button onClick={() => { handleNavClick(isAuthenticated ? '/dashboard' : '/login'); setMenuOpen(false); }} className="w-full min-h-[60px] border border-white/20 rounded-2xl flex items-center justify-center gap-2 text-white font-oswald font-medium tracking-wide uppercase hover:bg-white/10 transition-colors">
+                                        <MdPerson className="text-xl text-[#ffe088]" /> {isAuthenticated ? 'Dashboard' : 'Portal'}
+                                    </button>
+                                    <button onClick={toggleTheme} className="w-full min-h-[60px] border border-white/20 rounded-2xl flex items-center justify-center gap-2 text-white font-oswald font-medium tracking-wide uppercase hover:bg-white/10 transition-colors">
+                                        <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-xl text-[#ffe088]" /> {theme === 'dark' ? 'Light' : 'Dark'}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 }

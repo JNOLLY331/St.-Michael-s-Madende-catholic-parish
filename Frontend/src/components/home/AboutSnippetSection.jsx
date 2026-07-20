@@ -17,11 +17,7 @@ export default function AboutSnippetSection({ onNavigate }) {
             />
           </div>
           <div className="absolute -bottom-8 -right-8 bg-[#ffe088] text-[#241a00] p-6 rounded-2xl shadow-xl hidden md:block max-w-[220px] border-4 border-white">
-<<<<<<< HEAD
-            <p className="font-oswald text-xl italic leading-snug">"A Sanctuary for All Souls"</p>
-=======
             <p className="font-serif text-xl italic leading-snug">"A Sanctuary for All Souls"</p>
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
           </div>
         </div>
         <div data-reveal-right data-delay="200" className="space-y-5">

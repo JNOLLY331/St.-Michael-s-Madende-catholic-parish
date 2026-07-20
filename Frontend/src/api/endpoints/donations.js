@@ -25,4 +25,10 @@ export const donationsApi = {
 
     // List donations made by the authenticated user
     listMine: () => apiClient.get(`${BASE}/`),
+
+    // Admin: list all donations (admin role required on backend)
+    listAll: (params) => {
+        const qs = params ? '?' + new URLSearchParams(params).toString() : '';
+        return apiClient.get(`${BASE}/${qs}`);
+    },
 };

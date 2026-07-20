@@ -34,7 +34,7 @@ export default function Login() {
         if (!formData.email.trim()) return setFieldError('Email is required.');
         if (!formData.password) return setFieldError('Password is required.');
 
-        const toastId = toast.loading('🕊️ Signing you in…');
+        const toastId = toast.loading('Signing you in…');
 
         const result = await login({
             email: formData.email.trim().toLowerCase(),
@@ -42,11 +42,11 @@ export default function Login() {
         });
 
         if (result.success) {
-            toast.success('🎉 Welcome back! You are now signed in.', { id: toastId, duration: 4000 });
+            toast.success('Welcome back! You are now signed in.', { id: toastId, duration: 4000 });
             // Redirect to dashboard on successful login
             navigate('/dashboard', { replace: true });
         } else {
-            toast.error(`🚫 ${result.message || 'Invalid credentials. Please try again.'}`, { id: toastId, duration: 5000 });
+            toast.error(`${result.message || 'Invalid credentials. Please try again.'}`, { id: toastId, duration: 5000 });
         }
         // If login failed, authError will be populated by the AuthContext
     };
@@ -118,11 +118,7 @@ export default function Login() {
                         <div>
                             <div className="flex justify-between items-center mb-1">
                                 <label className="block text-label-md text-[#584141]" htmlFor="password">Password</label>
-<<<<<<< HEAD
-                                <Link to="/forgot-password" className="text-caption text-[#570013] hover:underline">Forgot Password?</Link>
-=======
                                 <a href="#" className="text-caption text-[#570013] hover:underline">Forgot Password?</a>
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                             </div>
                             <div className="relative">
                                 <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#584141] opacity-60" />

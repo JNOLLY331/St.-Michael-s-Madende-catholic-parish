@@ -21,13 +21,13 @@ export default function StatCard({ value, label, suffix = '', icon, delay = 0 })
   return (
     <div
       ref={ref}
-      className="group flex flex-col items-center text-center p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#ffe088]/10"
+      className="group flex flex-col items-center text-center p-5 md:p-8 bg-white/[0.03] backdrop-blur-sm border border-white/5 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#ffe088]/10"
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="w-16 h-16 rounded-full bg-[#ffe088]/10 border border-[#ffe088]/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-        <DynamicIcon name={icon} className="text-[#ffe088] text-3xl" />
+      <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#ffe088]/10 border border-[#ffe088]/30 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+        <DynamicIcon name={icon} className="text-[#ffe088] text-2xl md:text-3xl" />
       </div>
-      <div className="text-5xl font-oswald font-bold text-white mb-1 leading-none">
+      <div className="text-4xl md:text-5xl font-oswald font-bold text-white mb-1 leading-none">
         {count.toLocaleString()}{suffix}
       </div>
       <div className="text-[#ffe088]/80 font-oswald tracking-widest uppercase text-sm font-semibold mt-2">

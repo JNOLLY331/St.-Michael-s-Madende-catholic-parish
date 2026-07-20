@@ -90,12 +90,7 @@ export function AuthProvider({ children }) {
         } catch (err) {
             const message = err.message || 'Registration failed. Please try again.';
             setAuthError(message);
-<<<<<<< HEAD
-            // Pass raw DRF field errors (err.data) back so Register.jsx can surface them per-field
-            return { success: false, message, fieldErrors: err.data || null };
-=======
             return { success: false, message };
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
         } finally {
             setAuthLoading(false);
         }
@@ -115,10 +110,7 @@ export function AuthProvider({ children }) {
         } finally {
             tokenStore.clear();
             setUser(null);
-<<<<<<< HEAD
-=======
             setUser(null);
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
             cacheUser(null);
             setAuthLoading(false);
         }

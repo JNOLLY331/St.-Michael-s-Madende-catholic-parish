@@ -4,15 +4,15 @@ import StatCard from './StatCard';
 /** "Our Parish By the Numbers" section with animated count-up stats. */
 export default function StatsSection() {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-12 md:py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#40000b] via-[#570013] to-[#800020]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#2a0008]/95 via-[#4a0010]/95 to-[#70001c]/95" />
       <div className="absolute inset-0"
         style={{
           backgroundImage: `url('${HERO_IMAGE_URL}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.08,
+          opacity: 0.25,
         }}
       />
 

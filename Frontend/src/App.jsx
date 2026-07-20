@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import { ThemeProvider } from './context/ThemeContext';
-// AuthProvider wraps the whole app so every component can call useAuth()
 import { AuthProvider } from './context/AuthContext';
 
 import ScrollToTop from './components/layout/ScrollToTop';
@@ -10,30 +10,45 @@ import ScrollReveal from './components/layout/ScrollReveal';
 import MainLayout from './components/layout/MainLayout';
 import PortalLayout from './components/layout/PortalLayout';
 
-import Home from './pages/Home';
-import About from './pages/About';
-import MassSchedule from './pages/MassSchedule';
-import Sacraments from './pages/Sacraments';
-import Ministries from './pages/Ministries';
-import Events from './pages/Events';
-import Gallery from './pages/Gallery';
-import Donate from './pages/Donate';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Register from './pages/Register';
-<<<<<<< HEAD
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import VerifyEmail from './pages/VerifyEmail';
-=======
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-import Dashboard from './pages/Dashboard';
+// ── Lazily-loaded routes (each becomes its own JS chunk) ──────────────────────
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const MassSchedule = lazy(() => import('./pages/MassSchedule'));
+const Sacraments = lazy(() => import('./pages/Sacraments'));
+const Ministries = lazy(() => import('./pages/Ministries'));
+const Events = lazy(() => import('./pages/Events'));
+const Gallery = lazy(() => import('./pages/Gallery'));
+const Donate = lazy(() => import('./pages/Donate'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+
+import { MdChurch } from 'react-icons/md';
+
+// ── Minimal page-level loading fallback ──────────────────────────────────────
+function PageLoader() {
+    return (
+        <div className="w-full h-screen flex items-center justify-center bg-[#1e1b18]">
+            <div className="flex flex-col items-center gap-4">
+                <div className="relative">
+                    <div className="w-14 h-14 rounded-full border-4 border-[#ffe088]/20 border-t-[#ffe088] animate-spin" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <MdChurch className="text-[#ffe088] text-lg" />
+                    </div>
+                </div>
+                <p className="font-oswald tracking-[0.3em] text-[#ffe088]/70 text-xs uppercase animate-pulse">Loading…</p>
+            </div>
+        </div>
+    );
+}
 
 export default function App() {
     return (
         <ThemeProvider>
-            {/* AuthProvider must be inside BrowserRouter so internal navigation
-                (e.g. redirect after login) can use React Router hooks */}
             <BrowserRouter>
                 <AuthProvider>
                     <Toaster
@@ -43,11 +58,7 @@ export default function App() {
                         toastOptions={{
                             duration: 4000,
                             style: {
-<<<<<<< HEAD
-                                fontFamily: 'var(--font-sans)',
-=======
                                 fontFamily: 'var(--font-family-sans)',
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
                                 fontWeight: '700',
                                 fontSize: '0.95rem',
                                 borderRadius: '14px',
@@ -90,29 +101,28 @@ export default function App() {
                     />
                     <ScrollToTop />
                     <ScrollReveal />
-                    <Routes>
-                        {/* ── Public pages (main nav layout) ── */}
-                        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-                        <Route path="/about" element={<MainLayout><About /></MainLayout>} />
-                        <Route path="/mass-schedule" element={<MainLayout><MassSchedule /></MainLayout>} />
-                        <Route path="/sacraments" element={<MainLayout><Sacraments /></MainLayout>} />
-                        <Route path="/ministries" element={<MainLayout><Ministries /></MainLayout>} />
-                        <Route path="/events" element={<MainLayout><Events /></MainLayout>} />
-                        <Route path="/gallery" element={<MainLayout><Gallery /></MainLayout>} />
-                        <Route path="/donate" element={<MainLayout><Donate /></MainLayout>} />
-                        <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
+                    <Suspense fallback={<PageLoader />}>
+                        <Routes>
+                            {/* ── Public pages ── */}
+                            <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+                            <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+                            <Route path="/mass-schedule" element={<MainLayout><MassSchedule /></MainLayout>} />
+                            <Route path="/sacraments" element={<MainLayout><Sacraments /></MainLayout>} />
+                            <Route path="/ministries" element={<MainLayout><Ministries /></MainLayout>} />
+                            <Route path="/events" element={<MainLayout><Events /></MainLayout>} />
+                            <Route path="/gallery" element={<MainLayout><Gallery /></MainLayout>} />
+                            <Route path="/donate" element={<MainLayout><Donate /></MainLayout>} />
+                            <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
 
-                        {/* ── Auth & dashboard (portal layout) ── */}
-                        <Route path="/login" element={<PortalLayout><Login /></PortalLayout>} />
-                        <Route path="/register" element={<PortalLayout><Register /></PortalLayout>} />
-<<<<<<< HEAD
-                        <Route path="/forgot-password" element={<PortalLayout><ForgotPassword /></PortalLayout>} />
-                        <Route path="/reset-password/:uidb64/:token" element={<PortalLayout><ResetPassword /></PortalLayout>} />
-                        <Route path="/verify-email/:uidb64/:token" element={<PortalLayout><VerifyEmail /></PortalLayout>} />
-=======
->>>>>>> b13032bcd3b4ed5f3e132a749c751798f9267ac1
-                        <Route path="/dashboard" element={<Dashboard />} />
-                    </Routes>
+                            {/* ── Auth & dashboard ── */}
+                            <Route path="/login" element={<PortalLayout><Login /></PortalLayout>} />
+                            <Route path="/register" element={<PortalLayout><Register /></PortalLayout>} />
+                            <Route path="/forgot-password" element={<PortalLayout><ForgotPassword /></PortalLayout>} />
+                            <Route path="/reset-password/:uidb64/:token" element={<PortalLayout><ResetPassword /></PortalLayout>} />
+                            <Route path="/verify-email/:uidb64/:token" element={<PortalLayout><VerifyEmail /></PortalLayout>} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                        </Routes>
+                    </Suspense>
                 </AuthProvider>
             </BrowserRouter>
         </ThemeProvider>

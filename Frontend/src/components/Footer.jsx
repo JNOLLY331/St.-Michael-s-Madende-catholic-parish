@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdChurch, MdFavorite } from 'react-icons/md';
+import { FaFacebookF, FaYoutube, FaWhatsapp, FaInstagram, FaXTwitter, FaTelegram } from 'react-icons/fa6';
 import DynamicIcon from './DynamicIcon';
 
 
 
 const socialLinks = [
-    { icon: 'fa-facebook-f', href: '#', label: 'Facebook', hoverBg: '#1877F2' },
-    { icon: 'fa-youtube', href: '#', label: 'YouTube', hoverBg: '#FF0000' },
-    { icon: 'fa-whatsapp', href: '#', label: 'WhatsApp', hoverBg: '#25D366' },
-    { icon: 'fa-instagram', href: '#', label: 'Instagram', hoverBg: '#C13584' },
-    { icon: 'fa-x-twitter', href: '#', label: 'X/Twitter', hoverBg: '#000000' },
-    { icon: 'fa-telegram', href: '#', label: 'Telegram', hoverBg: '#229ED9' },
+    { icon: FaFacebookF, href: '#', label: 'Facebook', hoverBg: '#1877F2' },
+    { icon: FaYoutube, href: '#', label: 'YouTube', hoverBg: '#FF0000' },
+    { icon: FaWhatsapp, href: '#', label: 'WhatsApp', hoverBg: '#25D366' },
+    { icon: FaInstagram, href: '#', label: 'Instagram', hoverBg: '#C13584' },
+    { icon: FaXTwitter, href: '#', label: 'X/Twitter', hoverBg: '#000000' },
+    { icon: FaTelegram, href: '#', label: 'Telegram', hoverBg: '#229ED9' },
 ];
 
 const quickLinks = [
@@ -176,7 +177,7 @@ export default function Footer() {
                                 Follow Us
                             </h3>
                             <div className="flex flex-wrap gap-3">
-                                {socialLinks.map(({ icon, href, label, hoverBg, emoji }) => (
+                                {socialLinks.map(({ icon: Icon, href, label, hoverBg }) => (
                                     <a
                                         key={label}
                                         href={href}
@@ -190,7 +191,7 @@ export default function Footer() {
                                             boxShadow: hoveredSocial === label ? `0 8px 25px ${hoverBg}55` : 'none',
                                         }}
                                     >
-                                        <i className={`fa-brands ${icon} text-sm`} />
+                                        <Icon className="text-xl" />
                                     </a>
                                 ))}
                             </div>

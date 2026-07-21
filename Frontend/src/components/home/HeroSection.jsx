@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { MdChurch, MdKeyboardArrowDown, MdMenuBook, MdLocationOn, MdSchedule, MdPeople } from 'react-icons/md';
+import { motion } from 'framer-motion';
 
 /* ─── Animated floating particle ─── */
 function Particle({ style }) {
@@ -298,7 +299,8 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
               fontWeight: 700,
               animation: 'heroTitleIn 0.8s cubic-bezier(0.22,1,0.36,1) both',
               animationDelay: '0.15s',
-              textShadow: '0 4px 30px rgba(0,0,0,0.5)',
+              color: '#ffffff',
+              textShadow: '0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbbbbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaaaaa, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15), 0 0 20px rgba(255,255,255,0.4), 0 0 45px rgba(255,224,136,0.3)',
             }}
           >
             {hero.headingLine1}
@@ -317,28 +319,37 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
                 >
                   {hero.headingLine2}
                 </span>
-                <br />
-                <span className="relative inline-block mt-3" style={{ fontFamily: 'var(--font-serif)', color: '#c5832b', textShadow: '0 4px 15px rgba(197,131,43,0.3)', verticalAlign: 'bottom' }}>
-                  {/* Invisible placeholder to establish the bounds correctly */}
-                  <span className="opacity-0 tracking-wide">Catholic Church</span>
-
-                  {/* Animated layer using Framer Motion */}
-                  <motion.span
-                    className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[4px] border-[#c5832b] tracking-wide"
-                    initial={{ width: "0%" }}
-                    animate={{ width: ["0%", "100%", "100%", "0%"] }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "linear",
-                      times: [0, 0.4, 0.6, 1]
-                    }}
-                  >
-                    Catholic Church
-                  </motion.span>
-                </span>
               </>
             )}
+            <br />
+            <span
+              className="relative inline-block mt-3"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                color: '#ffe088',
+                textShadow: '0 1px 0 #c5832b, 0 2px 0 #a3691f, 0 3px 0 #855314, 0 4px 0 #6b400d, 0 5px 10px rgba(0,0,0,0.5), 0 0 20px rgba(255, 224, 136, 0.7), 0 0 40px rgba(197, 131, 43, 0.5)',
+                verticalAlign: 'bottom'
+              }}
+            >
+              {/* Invisible placeholder to establish the bounds correctly */}
+              <span className="opacity-0 tracking-wide">Catholic Church</span>
+
+              {/* Animated layer using Framer Motion */}
+              <motion.span
+                className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[4px] border-[#ffe088] tracking-wide"
+                style={{ filter: 'drop-shadow(4px 0 8px rgba(255,224,136,0.6))' }}
+                initial={{ width: "0%" }}
+                animate={{ width: ["0%", "100%", "100%", "0%"] }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "linear",
+                  times: [0, 0.4, 0.6, 1]
+                }}
+              >
+                Catholic Church
+              </motion.span>
+            </span>
           </h1>
 
           {/* Subtext */}

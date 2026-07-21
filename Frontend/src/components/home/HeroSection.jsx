@@ -327,9 +327,9 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
               style={{
                 fontFamily: 'var(--font-serif)',
                 color: '#ffe088',
-                textShadow: '0 1px 0 #c5832b, 0 2px 0 #a3691f, 0 3px 0 #855314, 0 4px 0 #6b400d, 0 5px 10px rgba(0,0,0,0.5)',
+                textShadow: '0 1px 0 #c5832b, 0 2px 0 #a3691f, 0 3px 0 #855314, 0 4px 0 #6b400d, 0 5px 10px rgba(0,0,0,0.6), 0 0 12px rgba(255, 224, 136, 0.85), 0 0 25px rgba(255, 224, 136, 0.6), 0 0 40px rgba(255, 224, 136, 0.3)',
                 verticalAlign: 'bottom',
-                fontSize: '1.25em',
+                fontSize: '1.05em',
                 lineHeight: '1',
               }}
             >
@@ -338,7 +338,8 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
               {/* Animated layer using Framer Motion */}
               <motion.span
-                className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[4px] border-[#ffe088] tracking-wide pb-1"
+                className="absolute left-0 whitespace-nowrap overflow-hidden border-r-[3px] border-[#ffe088] tracking-wide"
+                style={{ top: '0.05em', bottom: '0.15em' }}
                 initial={{ width: "0%" }}
                 animate={{ width: ["0%", "100%", "100%", "0%"] }}
                 transition={{

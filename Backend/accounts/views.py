@@ -3,7 +3,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -21,15 +21,56 @@ password_reset_token = PasswordResetTokenGenerator()
 
 
 class UserListView(APIView):
-    permission_classes = [IsAuthenticated]
+    """Admin-only: list all registered users."""
+    permission_classes = [IsAdminUser]
 
     def get(self, request):
-        # Optional: restrict to staff/admins in a real prod env
-        # if not request.user.is_staff:
-        #     return Response(status=status.HTTP_403_FORBIDDEN)
         users = User.objects.all().order_by("-date_joined")
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+
+
+class UserDetailView(APIView):
+    """Admin-only: retrieve, update, or delete a single user."""
+    permission_classes = [IsAdminUser]
+
+    def _get_user(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return None
+
+    def get(self, request, pk):
+        target = self._get_user(pk)
+        if not target:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response(UserSerializer(target).data)
+
+    def patch(self, request, pk):
+        target = self._get_user(pk)
+        if not target:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        # Allow admins to update role, is_verified, first_name, last_name, phone_number
+        allowed_fields = {"first_name", "last_name", "phone_number", "role", "is_verified"}
+        data = {k: v for k, v in request.data.items() if k in allowed_fields}
+        serializer = UserSerializer(target, data=data, partial=True)
+        # Temporarily lift read-only for admin update
+        serializer.Meta.read_only_fields = ("id", "email", "is_staff", "is_superuser", "date_joined")
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"success": True, "user": UserSerializer(target).data})
+
+    def delete(self, request, pk):
+        target = self._get_user(pk)
+        if not target:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        if target == request.user:
+            return Response(
+                {"detail": "You cannot delete your own account."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        target.delete()
+        return Response({"success": True, "message": "User deleted."}, status=status.HTTP_200_OK)
 
 
 class RegisterView(APIView):
@@ -132,12 +173,14 @@ class ProfileView(APIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
-    def put(self, request):
+    def _update(self, request):
         serializer = UpdateProfileSerializer(
             request.user, data=request.data, partial=True
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        # Re-fetch from DB so we return the freshest data
+        request.user.refresh_from_db()
         return Response(
             {
                 "success": True,
@@ -145,6 +188,13 @@ class ProfileView(APIView):
                 "user": UserSerializer(request.user).data,
             }
         )
+
+    # Both PUT (full replace) and PATCH (partial) go through the same partial update logic
+    def put(self, request):
+        return self._update(request)
+
+    def patch(self, request):
+        return self._update(request)
 
 
 class ChangePasswordView(APIView):

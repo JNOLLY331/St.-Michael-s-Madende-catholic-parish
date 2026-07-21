@@ -55,6 +55,12 @@ export const accountsApi = {
         return apiClient.get(`${BASE}/users/${qs}`);
     },
 
-    // Admin: update a specific user record
+    // Admin: get a single user by ID
+    getUser: (id) => apiClient.get(`${BASE}/users/${id}/`),
+
+    // Admin: update a specific user record (role, is_verified, name, phone)
     updateUser: (id, data) => apiClient.patch(`${BASE}/users/${id}/`, data),
+
+    // Admin: delete a user by ID
+    deleteUser: (id) => apiClient.delete(`${BASE}/users/${id}/`),
 };

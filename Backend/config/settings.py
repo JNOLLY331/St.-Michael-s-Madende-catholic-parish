@@ -30,7 +30,14 @@ SECRET_KEY = "django-insecure-dw7m+=)ln0&@9=**1eq_zksj+%qo!!rt*wqe-a%j@bqcpno2yp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".ngrok-free.app",   # ngrok free tunnel subdomains
+    ".ngrok-free.dev",   # ngrok free tunnel subdomains (alternate TLD)
+    ".ngrok.io",         # ngrok legacy subdomains
+    ".ngrok-app.io",     # ngrok app subdomains
+]
 
 
 # Application definition
@@ -158,6 +165,17 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
 ]
+
+# Allow all ngrok tunnel origins (for local dev exposed via ngrok)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://[\w-]+\.ngrok-free\.app$",
+    r"^https://[\w-]+\.ngrok-free\.dev$",
+    r"^https://[\w-]+\.ngrok\.io$",
+    r"^https://[\w-]+\.ngrok-app\.io$",
+]
+
+# Required so cookies/auth headers pass through ngrok
+CORS_ALLOW_CREDENTIALS = True
 
 # ─── Email Configuration ──────────────────────────────────────────────────────
 # In development, print emails to the console instead of sending them.

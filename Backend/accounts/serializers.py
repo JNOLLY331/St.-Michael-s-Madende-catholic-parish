@@ -84,12 +84,16 @@ class UserSerializer(serializers.ModelSerializer):
             "profile_picture",
             "role",
             "is_verified",
+            "is_staff",
+            "is_superuser",
             "date_joined",
         )
         read_only_fields = (
             "id",
             "role",
             "is_verified",
+            "is_staff",
+            "is_superuser",
             "date_joined",
             "email",
         )
@@ -101,6 +105,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         fields = (
             "first_name",
             "last_name",
+            "username",
             "phone_number",
             "profile_picture",
         )

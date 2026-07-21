@@ -6,6 +6,7 @@ import {
     MdLogout, MdDashboard, MdChevronRight, MdSearch,
     MdTrendingUp, MdFavorite, MdStar, MdCalendarMonth,
     MdEdit, MdSave, MdClose, MdEmail, MdPhone, MdVerified, MdCheckCircle,
+    MdCameraAlt, MdLock, MdVisibility, MdVisibilityOff,
 } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
 import { useAuth } from '../context/AuthContext';
@@ -112,9 +113,17 @@ export default function ParishionerDashboard() {
     const [profileData, setProfileData] = useState(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
     const [editingProfile, setEditingProfile] = useState(false);
-    const [profileForm, setProfileForm] = useState({ first_name: '', last_name: '', email: '', phone: '' });
+    const [profileForm, setProfileForm] = useState({ first_name: '', last_name: '', username: '', phone_number: '' });
+    const [photoFile, setPhotoFile] = useState(null);
+    const [photoPreview, setPhotoPreview] = useState(null);
     const [savingProfile, setSavingProfile] = useState(false);
     const [profileMsg, setProfileMsg] = useState('');
+    // Change password state
+    const [pwForm, setPwForm] = useState({ old_password: '', new_password: '', confirm_password: '' });
+    const [savingPw, setSavingPw] = useState(false);
+    const [pwMsg, setPwMsg] = useState('');
+    const [showPw, setShowPw] = useState({ old: false, new: false, confirm: false });
+    const photoInputRef = useRef(null);
     const statsRef = useRef(null);
 
     const filteredActivity = recentActivity.filter(a =>
@@ -160,9 +169,10 @@ export default function ParishionerDashboard() {
                     setProfileForm({
                         first_name: data.first_name || '',
                         last_name: data.last_name || '',
-                        email: data.email || '',
-                        phone: data.phone || '',
+                        username: data.username || '',
+                        phone_number: data.phone_number || '',
                     });
+                    setPhotoPreview(data.profile_picture || null);
                 })
                 .catch(() => { })
                 .finally(() => setLoadingProfile(false));
@@ -174,15 +184,50 @@ export default function ParishionerDashboard() {
         setSavingProfile(true);
         setProfileMsg('');
         try {
-            await accountsApi.updateProfileData(profileForm);
-            setProfileData(d => ({ ...d, ...profileForm }));
+            let updatedUser;
+            if (photoFile) {
+                // Use multipart form data when a photo is included
+                const fd = new FormData();
+                Object.entries(profileForm).forEach(([k, v]) => fd.append(k, v));
+                fd.append('profile_picture', photoFile);
+                const res = await accountsApi.updateProfile(fd);
+                updatedUser = res.user || res;
+            } else {
+                const res = await accountsApi.updateProfileData(profileForm);
+                updatedUser = res.user || res;
+            }
+            setProfileData(d => ({ ...d, ...profileForm, ...(updatedUser || {}) }));
             setEditingProfile(false);
+            setPhotoFile(null);
             setProfileMsg('✅ Profile updated successfully!');
             setTimeout(() => setProfileMsg(''), 4000);
-        } catch {
-            setProfileMsg('❌ Failed to update profile. Please try again.');
+        } catch (err) {
+            setProfileMsg('❌ ' + (err?.message || 'Failed to update profile. Please try again.'));
         } finally {
             setSavingProfile(false);
+        }
+    };
+
+    const handlePhotoChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setPhotoFile(file);
+        setPhotoPreview(URL.createObjectURL(file));
+    };
+
+    const handleChangePassword = async (e) => {
+        e.preventDefault();
+        setSavingPw(true);
+        setPwMsg('');
+        try {
+            await accountsApi.changePassword(pwForm);
+            setPwMsg('✅ Password changed successfully!');
+            setPwForm({ old_password: '', new_password: '', confirm_password: '' });
+            setTimeout(() => setPwMsg(''), 5000);
+        } catch (err) {
+            setPwMsg('❌ ' + (err?.message || 'Failed to change password.'));
+        } finally {
+            setSavingPw(false);
         }
     };
 
@@ -474,14 +519,32 @@ export default function ParishionerDashboard() {
 
                     {/* ══ PROFILE TAB ══ */}
                     {activeTab === 'profile' && (
-                        <div className="max-w-[1500px] mx-auto">
+                        <div className="max-w-[1500px] mx-auto space-y-6">
+                            {/* ── Info Card ── */}
                             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                                 {/* Profile banner */}
                                 <div className="relative p-8 text-center"
                                     style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
-                                    <div className="w-28 h-28 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl"
-                                        style={{ background: 'rgba(255,224,136,0.2)', border: '3px solid rgba(255,224,136,0.4)' }}>
-                                        <MdPerson className="text-[#ffe088] text-6xl" />
+                                    {/* Avatar / photo */}
+                                    <div className="relative w-28 h-28 mx-auto mb-4">
+                                        <div className="w-28 h-28 rounded-3xl overflow-hidden flex items-center justify-center shadow-xl"
+                                            style={{ background: 'rgba(255,224,136,0.2)', border: '3px solid rgba(255,224,136,0.4)' }}>
+                                            {photoPreview
+                                                ? <img src={photoPreview} alt="profile" className="w-full h-full object-cover" />
+                                                : <MdPerson className="text-[#ffe088] text-6xl" />}
+                                        </div>
+                                        {editingProfile && (
+                                            <button
+                                                type="button"
+                                                onClick={() => photoInputRef.current?.click()}
+                                                className="absolute -bottom-2 -right-2 w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                                                style={{ background: '#ffe088', color: '#570013' }}
+                                                title="Change photo"
+                                            >
+                                                <MdCameraAlt className="text-lg" />
+                                            </button>
+                                        )}
+                                        <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
                                     </div>
                                     <h2 className="font-black text-white text-2xl">
                                         {profileData?.first_name || user?.first_name || ''} {profileData?.last_name || user?.last_name || ''}
@@ -509,7 +572,7 @@ export default function ParishionerDashboard() {
                                     {loadingProfile ? (
                                         <div className="text-center py-8 text-gray-400 text-sm">Loading profile...</div>
                                     ) : editingProfile ? (
-                                        // Edit form
+                                        // ── Edit form ──
                                         <form onSubmit={handleProfileSave} className="max-w-2xl mx-auto space-y-5">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div>
@@ -530,27 +593,29 @@ export default function ParishionerDashboard() {
                                                 </div>
                                             </div>
                                             <div>
-                                                <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Email Address</label>
+                                                <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Username</label>
                                                 <input
-                                                    type="email"
-                                                    value={profileForm.email}
-                                                    onChange={e => setProfileForm(f => ({ ...f, email: e.target.value }))}
+                                                    value={profileForm.username}
+                                                    onChange={e => setProfileForm(f => ({ ...f, username: e.target.value }))}
                                                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                 />
                                             </div>
                                             <div>
                                                 <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Phone Number</label>
                                                 <input
-                                                    value={profileForm.phone}
-                                                    onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))}
+                                                    value={profileForm.phone_number}
+                                                    onChange={e => setProfileForm(f => ({ ...f, phone_number: e.target.value }))}
                                                     placeholder="Optional"
                                                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                 />
                                             </div>
+                                            {photoFile && (
+                                                <p className="text-xs text-gray-500 font-medium">📷 Photo selected: {photoFile.name}</p>
+                                            )}
                                             <div className="flex gap-3 pt-2">
                                                 <button
                                                     type="button"
-                                                    onClick={() => setEditingProfile(false)}
+                                                    onClick={() => { setEditingProfile(false); setPhotoFile(null); setPhotoPreview(profileData?.profile_picture || null); }}
                                                     className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                                                 >
                                                     <MdClose className="text-base" /> Cancel
@@ -566,13 +631,13 @@ export default function ParishionerDashboard() {
                                             </div>
                                         </form>
                                     ) : (
-                                        // View mode
+                                        // ── View mode ──
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                                             {[
                                                 { label: 'First Name', value: profileData?.first_name || user?.first_name || '—', Icon: MdPerson },
                                                 { label: 'Last Name', value: profileData?.last_name || user?.last_name || '—', Icon: MdPerson },
                                                 { label: 'Email Address', value: profileData?.email || user?.email || '—', Icon: MdEmail },
-                                                { label: 'Phone', value: profileData?.phone || '—', Icon: MdPhone },
+                                                { label: 'Phone', value: profileData?.phone_number || '—', Icon: MdPhone },
                                                 { label: 'Username', value: profileData?.username || user?.username || '—', Icon: MdPerson },
                                                 { label: 'Status', value: profileData?.is_verified ? 'Verified ✓' : 'Pending Verification', Icon: MdVerified },
                                             ].map(({ label, value, Icon: FieldIcon }) => (
@@ -585,6 +650,57 @@ export default function ParishionerDashboard() {
                                             ))}
                                         </div>
                                     )}
+                                </div>
+                            </div>
+
+                            {/* ── Change Password Card ── */}
+                            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
+                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
+                                        <MdLock className="text-[#ffe088] text-lg" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-gray-900 text-[15px]">Change Password</h3>
+                                        <p className="text-gray-400 text-xs font-medium mt-0.5">Update your account password</p>
+                                    </div>
+                                </div>
+                                <div className="p-8">
+                                    {pwMsg && (
+                                        <div className={`mb-5 p-3 rounded-xl text-sm font-medium ${pwMsg.includes('✅') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
+                                            {pwMsg}
+                                        </div>
+                                    )}
+                                    <form onSubmit={handleChangePassword} className="max-w-2xl space-y-5">
+                                        {[['old_password', 'Current Password', 'old'], ['new_password', 'New Password', 'new'], ['confirm_password', 'Confirm New Password', 'confirm']].map(([field, label, key]) => (
+                                            <div key={field}>
+                                                <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">{label}</label>
+                                                <div className="relative">
+                                                    <input
+                                                        type={showPw[key] ? 'text' : 'password'}
+                                                        value={pwForm[field]}
+                                                        onChange={e => setPwForm(f => ({ ...f, [field]: e.target.value }))}
+                                                        required
+                                                        className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowPw(s => ({ ...s, [key]: !s[key] }))}
+                                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                                    >
+                                                        {showPw[key] ? <MdVisibilityOff className="text-lg" /> : <MdVisibility className="text-lg" />}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <button
+                                            type="submit"
+                                            disabled={savingPw}
+                                            className="px-8 py-3 rounded-xl font-bold text-sm text-[#ffe088] flex items-center gap-2 transition-all shadow-md disabled:opacity-60 hover:-translate-y-0.5"
+                                            style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}
+                                        >
+                                            {savingPw ? 'Updating…' : <><MdLock className="text-base" /> Update Password</>}
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

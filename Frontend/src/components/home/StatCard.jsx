@@ -30,7 +30,7 @@ export default function StatCard({ value, label, suffix = '', icon, delay = 0 })
       <div className="text-4xl md:text-5xl font-oswald font-bold text-white mb-1 leading-none">
         {count.toLocaleString()}{suffix}
       </div>
-      <div className="text-[#ffe088]/80 font-oswald tracking-widest uppercase text-sm font-semibold mt-2">
+      <div className="text-[#ffe088] font-dancing text-2xl mt-2 tracking-wide font-medium">
         {label}
       </div>
     </div>

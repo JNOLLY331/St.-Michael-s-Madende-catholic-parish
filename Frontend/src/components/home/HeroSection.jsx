@@ -327,17 +327,18 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
               style={{
                 fontFamily: 'var(--font-serif)',
                 color: '#ffe088',
-                textShadow: '0 1px 0 #c5832b, 0 2px 0 #a3691f, 0 3px 0 #855314, 0 4px 0 #6b400d, 0 5px 10px rgba(0,0,0,0.5), 0 0 20px rgba(255, 224, 136, 0.7), 0 0 40px rgba(197, 131, 43, 0.5)',
-                verticalAlign: 'bottom'
+                textShadow: '0 1px 0 #c5832b, 0 2px 0 #a3691f, 0 3px 0 #855314, 0 4px 0 #6b400d, 0 5px 10px rgba(0,0,0,0.5)',
+                verticalAlign: 'bottom',
+                fontSize: '1.25em',
+                lineHeight: '1',
               }}
             >
               {/* Invisible placeholder to establish the bounds correctly */}
-              <span className="opacity-0 tracking-wide">Catholic Church</span>
+              <span className="opacity-0 tracking-wide text-transparent select-none">Catholic Church</span>
 
               {/* Animated layer using Framer Motion */}
               <motion.span
-                className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[4px] border-[#ffe088] tracking-wide"
-                style={{ filter: 'drop-shadow(4px 0 8px rgba(255,224,136,0.6))' }}
+                className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[4px] border-[#ffe088] tracking-wide pb-1"
                 initial={{ width: "0%" }}
                 animate={{ width: ["0%", "100%", "100%", "0%"] }}
                 transition={{

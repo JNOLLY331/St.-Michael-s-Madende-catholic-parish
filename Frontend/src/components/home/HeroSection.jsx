@@ -25,7 +25,7 @@ function Particle({ style }) {
 function StatPill({ icon: Icon, value, label, delay }) {
   return (
     <div
-      className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border border-white/15"
+      className="flex items-center gap-1.5 sm:gap-2.5 px-2 sm:px-4 py-1.5 sm:py-2.5 rounded-xl sm:rounded-2xl border border-white/15 whitespace-nowrap shrink-0"
       style={{
         background: 'rgba(255,255,255,0.07)',
         backdropFilter: 'blur(12px)',
@@ -34,14 +34,14 @@ function StatPill({ icon: Icon, value, label, delay }) {
       }}
     >
       <div
-        className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+        className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0"
         style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}
       >
-        <Icon className="text-[#ffe088] text-base" />
+        <Icon className="text-[#ffe088] text-xs sm:text-base" />
       </div>
       <div>
-        <p className="font-oswald font-bold text-white text-sm leading-tight">{value}</p>
-        <p className="text-white/50 text-[10px] tracking-wider uppercase leading-tight">{label}</p>
+        <p className="font-oswald font-bold text-white text-[11px] sm:text-sm leading-tight">{value}</p>
+        <p className="text-white/50 text-[8px] sm:text-[10px] tracking-wider uppercase leading-tight">{label}</p>
       </div>
     </div>
   );
@@ -280,22 +280,22 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* Eyebrow */}
           <div
-            className="flex items-center gap-3 mb-6"
+            className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6"
             style={{ animation: 'fadeSlideUp 0.6s ease both', animationDelay: '0.05s' }}
           >
-            <div className="w-8 h-[1px]" style={{ background: 'linear-gradient(to right, rgba(255,224,136,0.6), transparent)' }} />
-            <p className="font-oswald tracking-[0.35em] text-[#ffe088] uppercase text-xs font-medium">
+            <div className="w-6 sm:w-8 h-[1px]" style={{ background: 'linear-gradient(to right, rgba(255,224,136,0.6), transparent)' }} />
+            <p className="font-oswald tracking-[0.2em] sm:tracking-[0.35em] text-[#ffe088] uppercase text-[10px] sm:text-xs font-medium">
               {hero.eyebrow}
             </p>
-            <div className="w-8 h-[1px]" style={{ background: 'linear-gradient(to left, rgba(255,224,136,0.6), transparent)' }} />
+            <div className="w-6 sm:w-8 h-[1px]" style={{ background: 'linear-gradient(to left, rgba(255,224,136,0.6), transparent)' }} />
           </div>
 
           {/* Headline — cinematic entrance */}
           <h1
-            className="mb-5 leading-[1.1] tracking-tight"
+            className="mb-3 sm:mb-5 leading-[1.1] tracking-tight"
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(2.6rem, 5.5vw, 4.8rem)',
+              fontSize: 'clamp(1.75rem, 5.5vw, 4.8rem)',
               fontWeight: 700,
               animation: 'heroTitleIn 0.8s cubic-bezier(0.22,1,0.36,1) both',
               animationDelay: '0.15s',
@@ -354,7 +354,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* Subtext */}
           <p
-            className="text-white/65 text-base md:text-lg leading-relaxed mb-8 max-w-lg"
+            className="text-white/65 text-sm md:text-lg leading-relaxed mb-6 md:mb-8 max-w-lg"
             style={{ animation: 'fadeSlideUp 0.7s ease both', animationDelay: '0.35s' }}
           >
             A community rooted in faith, nourished by the Eucharist, and called to serve.
@@ -404,7 +404,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* Stat pills */}
           <div
-            className="flex flex-wrap gap-3"
+            className="flex flex-nowrap sm:flex-wrap gap-2 sm:gap-3 overflow-x-auto pb-2 -mb-2 sm:pb-0 sm:mb-0 hide-scrollbar"
             style={{ animation: 'fadeSlideUp 0.7s ease both', animationDelay: '0.65s' }}
           >
             {stats.map((s, i) => (

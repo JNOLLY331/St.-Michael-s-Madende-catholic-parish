@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
 
 from church.models import ParishInformation
 from core.constants import EVENT_CATEGORIES, EVENT_STATUS
@@ -48,10 +49,35 @@ class Event(BaseModel):
     end_time = models.TimeField()
     registration_deadline = models.DateTimeField(null=True, blank=True)
 
-    # Media Fields
-    banner = models.ImageField(upload_to="events/banners/", blank=True, null=True)
-    thumbnail = models.ImageField(upload_to="events/thumbnails/", blank=True, null=True)
+    #image Field
+    banner = CloudinaryField(
+        "banner",
+        folder="events/banners",
+        blank=True,
+        null=True,
+        transformation={
+            "width": 1920,
+            "height": 1080,
+            "crop": "fill",
+            "quality": "auto",
+            "fetch_format": "auto"
+        }
+    )
 
+    thumbnail = CloudinaryField(
+        "thumbnail",
+        folder="events/thumbnails",
+        blank=True,
+        null=True,
+        transformation={
+            "width": 400,
+            "height": 300,
+            "crop": "fill",
+            "quality": "auto",
+            "fetch_format": "auto"
+        }
+    )
+    
     # Status & Management counters
     capacity = models.PositiveIntegerField(default=0)
     registered_count = models.PositiveIntegerField(default=0, editable=False)

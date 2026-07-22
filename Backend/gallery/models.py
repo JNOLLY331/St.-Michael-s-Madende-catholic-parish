@@ -5,6 +5,7 @@ Database models for the Gallery application.
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField   
 
 from church.models import ParishInformation
 from core.models import BaseModel
@@ -17,8 +18,9 @@ class Album(BaseModel):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField(blank=True)
-    cover_image = models.ImageField(
-        upload_to="gallery/albums/",
+    cover_image = CloudinaryField(
+        "cover_image",
+        folder="gallery/albums",      # This creates a nice folder in Cloudinary
         blank=True,
         null=True,
     )
@@ -76,10 +78,20 @@ class GalleryMedia(BaseModel):
         default="IMAGE",
     )
     file = models.FileField(upload_to="gallery/media/")
-    thumbnail = models.ImageField(
-        upload_to="gallery/thumbnails/",
+    thumbnail = CloudinaryField(
+        "thumbnail",
+        folder="gallery/thumbnails",     # Clean folder organization
         blank=True,
         null=True,
+        # Recommended: Auto-optimize on upload
+        transformation={
+            "width": 400,
+            "height": 300,
+            "crop": "fill",           # Good for thumbnails
+            "gravity": "auto",
+            "quality": "auto",
+            "fetch_format": "auto"
+        }
     )
     duration = models.DurationField(
         blank=True,

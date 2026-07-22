@@ -11,25 +11,32 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-from datetime import timedelta
 from pathlib import Path
+from datetime import timedelta
 
 from decouple import config
+import dj_database_url
+import cloudinary
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load .env file
+load_dotenv()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# ─────────────────────────────────────────────
+# CORE SECURITY
+# ─────────────────────────────────────────────
+SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-dw7m+=)ln0&@9=**1eq_zksj+%qo!!rt*wqe-a%j@bqcpno2yp"
+# FIX: default should be False, not True. Never risk DEBUG=True in production
+# just because an env var was forgotten on the server.
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+# FIX: ALLOWED_HOSTS was previously defined twice (env-driven, then
+# immediately overwritten by a hardcoded list). Keep a single source of
+# truth: hardcoded dev/ngrok hosts + anything supplied via env for prod.
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
@@ -38,26 +45,33 @@ ALLOWED_HOSTS = [
     ".ngrok.io",         # ngrok legacy subdomains
     ".ngrok-app.io",     # ngrok app subdomains
 ]
+ALLOWED_HOSTS += [
+    h for h in config('ALLOWED_HOSTS', default='').split(',') if h
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
+    'unfold.contrib.forms',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # Third-party
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
-    "cloudinary",
     "cloudinary_storage",
+    "cloudinary",
     "django_filters",
     "drf_spectacular",
+
     # Local Apps
     "core",
     "accounts",
@@ -75,6 +89,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -113,24 +128,26 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+# NOTE: dj_database_url is imported but unused — if you intended to read
+# DATABASE_URL from the environment (e.g. Postgres in production), wire it
+# up like this instead:
+#
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+#         conn_max_age=600,
+#     )
+# }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
@@ -138,26 +155,36 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# ─────────────────────────────────────────────
+# STATIC & MEDIA
+# ─────────────────────────────────────────────
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATIC_URL = "static/"
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# Use WhiteNoise for compression in production
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# NOTE: MEDIA_URL is set once here as a local default and then overridden
+# further down once Cloudinary is configured (Cloudinary CDN URL wins).
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# ─────────────────────────────────────────────
+# CORS
+# ─────────────────────────────────────────────
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
     "http://127.0.0.1:5174",
@@ -166,32 +193,45 @@ CORS_ALLOWED_ORIGINS = [
     "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
 ]
 
-# Allow all ngrok tunnel origins (for local dev exposed via ngrok)
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://[\w-]+\.ngrok-free\.app$",
-    r"^https://[\w-]+\.ngrok-free\.dev$",
-    r"^https://[\w-]+\.ngrok\.io$",
-    r"^https://[\w-]+\.ngrok-app\.io$",
-]
+# FIX: wildcard ngrok regex + CORS_ALLOW_CREDENTIALS=True means ANY ngrok
+# tunnel (not just yours) matching these patterns could make credentialed
+# requests to your API if they discovered/guessed the host. Restrict this
+# to DEBUG/local development only — never ship it enabled in production.
+if DEBUG:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^https://[\w-]+\.ngrok-free\.app$",
+        r"^https://[\w-]+\.ngrok-free\.dev$",
+        r"^https://[\w-]+\.ngrok\.io$",
+        r"^https://[\w-]+\.ngrok-app\.io$",
+    ]
+else:
+    CORS_ALLOWED_ORIGIN_REGEXES = []
 
-# Required so cookies/auth headers pass through ngrok
+# Required so cookies/auth headers pass through ngrok / cross-origin
 CORS_ALLOW_CREDENTIALS = True
 
-# ─── Email Configuration ──────────────────────────────────────────────────────
+
+# ─────────────────────────────────────────────
+# EMAIL
+# ─────────────────────────────────────────────
 # In development, print emails to the console instead of sending them.
 # Set EMAIL_BACKEND to smtp in production and fill in the SMTP settings below.
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
+    EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+
 DEFAULT_FROM_EMAIL = "St. Michael Madende <noreply@stmichaelmadende.org>"
 
-# Production SMTP settings (uncomment and set via environment variables):
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
-# EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 
-# DRF and rest_Framework
+# ─────────────────────────────────────────────
+# DJANGO REST FRAMEWORK
+# ─────────────────────────────────────────────
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -201,13 +241,19 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ),
-    "DEFAULT_PAGINATION_CLASS": ("core.pagination.StandardResultsPagination"),
+    "DEFAULT_PAGINATION_CLASS": "core.pagination.StandardResultsPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ],
 }
 
+# FIX: 6000 minutes (~100 hours / 4+ days) defeats the purpose of a
+# short-lived access token — a leaked token stays valid for days. Use a
+# short access-token window and lean on the refresh token for longevity.
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=6000),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -237,12 +283,11 @@ MINISTRY_CATEGORIES = (
     ("OTHER", "Other"),
 )
 
-REST_FRAMEWORK["DEFAULT_FILTER_BACKENDS"] = [
-    "django_filters.rest_framework.DjangoFilterBackend",
-]
 
-import os
-
+# ─────────────────────────────────────────────
+# LOGGING
+# ─────────────────────────────────────────────
+# FIX: removed duplicate `import os` that appeared here in the original file.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -263,3 +308,102 @@ LOGGING = {
         "level": "INFO",
     },
 }
+
+
+# ─────────────────────────────────────────────
+# CLOUDINARY CONFIG
+# ─────────────────────────────────────────────
+CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
+
+if CLOUDINARY_URL:
+    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+else:
+    cloudinary.config(
+        cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+        api_key=os.getenv('CLOUDINARY_API_KEY'),
+        api_secret=os.getenv('CLOUDINARY_API_SECRET'),
+        secure=True,
+    )
+
+# FIX: STORAGES (Django 4.2+ storage API) takes precedence over the legacy
+# STATICFILES_STORAGE setting, so the old code's whitenoise compression was
+# silently never applied. Whitenoise now lives correctly inside STORAGES.
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            if not DEBUG
+            else "django.contrib.staticfiles.storage.StaticFilesStorage"
+        ),
+    },
+}
+
+# Media URL (Cloudinary CDN) — overrides the local /media/ default above.
+MEDIA_URL = f"https://res.cloudinary.com/{cloudinary.config().cloud_name}/"
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': cloudinary.config().cloud_name,
+    'API_KEY': cloudinary.config().api_key,
+    'API_SECRET': cloudinary.config().api_secret,
+}
+
+
+# ─────────────────────────────────────────────
+# DJANGO UNFOLD CONFIG
+# ─────────────────────────────────────────────
+UNFOLD = {
+    "SITE_TITLE": "St. Michael Madende Catholic parish",
+    "SITE_HEADER": "St. Michael Madende Catholic parish",
+    "SITE_SUBHEADER": "Manage your platform",
+
+    "DARK_MODE": True,  # Enable dark mode by default
+
+    # Optional: Add your logo (recommended)
+    # "SITE_LOGO": {
+    #     "light": "/static/logo-light.png",
+    #     "dark": "/static/logo-dark.png",
+    # },
+
+    "SHOW_SIDEBAR": True,
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "Core",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Dashboard",
+                        "icon": "dashboard",
+                        "link": "/admin/",
+                    },
+                ],
+            },
+        ],
+    },
+}
+
+
+# ─────────────────────────────────────────────
+# PRODUCTION HARDENING (new — only active when DEBUG is False)
+# ─────────────────────────────────────────────
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    # If your frontend (Vercel) or any browser-based client sends
+    # cookies/CSRF tokens, list the exact origins here.
+    CSRF_TRUSTED_ORIGINS = [
+        "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
+    ]

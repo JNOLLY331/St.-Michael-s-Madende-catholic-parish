@@ -8,6 +8,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
 from core.models import BaseModel
 from sacraments.managers import (
     SacramentManager,
@@ -65,7 +66,20 @@ class Sacrament(BaseModel):
     short_description   = models.CharField(max_length=255, blank=True)
     description         = models.TextField(blank=True)
     icon                = models.CharField(max_length=100, blank=True)
-    banner              = models.ImageField(upload_to="sacraments/banners/", blank=True, null=True)
+    banner = CloudinaryField(
+        "banner",
+        folder="sacraments/banners",
+        blank=True,
+        null=True,
+        transformation={
+            "width": 1200,
+            "height": 400,
+            "crop": "fill",
+            "gravity": "auto",
+            "quality": "auto",
+            "fetch_format": "auto"
+        }
+    )
     preparation_duration = models.CharField(max_length=100, blank=True)
     minimum_age         = models.PositiveIntegerField(default=0)
     requires_booking    = models.BooleanField(default=True)

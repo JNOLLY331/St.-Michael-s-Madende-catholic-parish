@@ -13,6 +13,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
 
 from core.models import BaseModel
 from contact.managers import ContactDepartmentManager, ContactMessageManager, FAQManager
@@ -98,12 +99,16 @@ class ContactMessage(BaseModel):
     message = models.TextField(
         validators=[validate_message, MinLengthValidator(10), MaxLengthValidator(5000)]
     )
-    attachment = models.FileField(
-        upload_to="contact/attachments/%Y/%m/",
+    attachment = CloudinaryField(
+        'attachment',
+        folder="contact/attachments",           # organizes files nicely
+        resource_type="auto",                   # allows images, pdfs, docs etc.
         blank=True,
         null=True,
         validators=[validate_attachment],
+
     )
+  
     status = models.CharField(
         max_length=20, choices=MessageStatus.choices, default=MessageStatus.NEW, db_index=True
     )

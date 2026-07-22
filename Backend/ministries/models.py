@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from cloudinary.models import CloudinaryField   
 from core.models import BaseModel
 
 
@@ -39,8 +39,20 @@ class Ministry(BaseModel):
     meeting_location = models.CharField(max_length=200)
 
     # Visual Elements
-    logo = models.ImageField(upload_to="ministries/logos/", blank=True, null=True)
-    banner = models.ImageField(upload_to="ministries/banners/", blank=True, null=True)
+    banner = CloudinaryField(
+        "banner",
+        folder="ministries/banners",   # plural is better
+        blank=True,
+        null=True,
+        transformation={
+            "width": 1200,
+            "height": 400,
+            "crop": "fill",
+            "gravity": "auto",
+            "quality": "auto",
+            "fetch_format": "auto"
+        }
+    )
     color = models.CharField(max_length=20, default="#0B5ED7")
     is_featured = models.BooleanField(default=False)
 

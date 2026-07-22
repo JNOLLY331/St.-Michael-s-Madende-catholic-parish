@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class ParishInformation(models.Model):
@@ -16,8 +17,11 @@ class ParishInformation(models.Model):
     youtube = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
-    logo = models.ImageField(upload_to="church/logo/")
-    about_image = models.ImageField(upload_to="church/about/")
+    
+    # ✅ Converted to Cloudinary
+    logo = CloudinaryField("logo", folder="church/logo", blank=True, null=True)
+    about_image = CloudinaryField("about_image", folder="church/about", blank=True, null=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -32,7 +36,8 @@ class ParishInformation(models.Model):
 class HeroSection(models.Model):
     title = models.CharField(max_length=255)
     subtitle = models.TextField()
-    background_image = models.ImageField(upload_to="church/hero/")
+    background_image = CloudinaryField("background_image", folder="church/hero", blank=True, null=True)
+
     primary_button_text = models.CharField(max_length=100)
     primary_button_link = models.CharField(max_length=200)
     secondary_button_text = models.CharField(max_length=100)
@@ -46,7 +51,9 @@ class HeroSection(models.Model):
 class Leadership(models.Model):
     name = models.CharField(max_length=150)
     position = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to="church/leadership/")
+   
+    photo = CloudinaryField("photo", folder="church/leadership", blank=True, null=True)
+    
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=30, blank=True)
     message = models.TextField(blank=True)
@@ -94,10 +101,9 @@ class Statistic(models.Model):
 class Saint(models.Model):
     name = models.CharField(max_length=100)
     feast_day = models.DateField()
-    image = models.ImageField(upload_to="church/saints/")
+    image = CloudinaryField("image", folder="church/saints", blank=True, null=True)    
     quote = models.TextField(blank=True)
     display_order = models.PositiveIntegerField(default=1)
     is_active = models.BooleanField(default=True)
-
     def __str__(self):
         return self.name

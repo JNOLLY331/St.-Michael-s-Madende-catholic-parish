@@ -163,19 +163,37 @@ USE_TZ = True
 # ─────────────────────────────────────────────
 # STATIC & MEDIA
 # ─────────────────────────────────────────────
+
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Use WhiteNoise for compression in production
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-# NOTE: MEDIA_URL is set once here as a local default and then overridden
-# further down once Cloudinary is configured (Cloudinary CDN URL wins).
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
+
+if CLOUDINARY_URL:
+    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+else:
+    cloudinary.config(
+        cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+        api_key=os.getenv('CLOUDINARY_API_KEY'),
+        api_secret=os.getenv('CLOUDINARY_API_SECRET'),
+        secure=True,
+    )
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": STATICFILES_STORAGE,
+    },
+}
+
+MEDIA_URL = f"https://res.cloudinary.com/{cloudinary.config().cloud_name}/image/upload/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

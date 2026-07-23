@@ -207,14 +207,17 @@ CORS_ALLOW_CREDENTIALS = True
 # ─────────────────────────────────────────────
 # In development, print emails to the console instead of sending them.
 # Set EMAIL_BACKEND to smtp in production and fill in the SMTP settings below.
-if DEBUG:
+_email_user = config("EMAIL_HOST_USER", default="")
+
+if DEBUG or not _email_user:
+    # If debug is true, OR if no email user is configured on Render, use console safely
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
     EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+    EMAIL_HOST_USER = _email_user
     EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 
 DEFAULT_FROM_EMAIL = "St. Michael Madende <noreply@stmichaelmadende.org>"

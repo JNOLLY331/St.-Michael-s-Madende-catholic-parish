@@ -314,10 +314,17 @@ LOGGING = {
 # ─────────────────────────────────────────────
 # CLOUDINARY CONFIG
 # ─────────────────────────────────────────────
+import urllib.parse
 CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
 
-if CLOUDINARY_URL:
-    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+if CLOUDINARY_URL and CLOUDINARY_URL.startswith("cloudinary://"):
+    parsed = urllib.parse.urlparse(CLOUDINARY_URL)
+    cloudinary.config(
+        cloud_name=parsed.hostname,
+        api_key=parsed.username,
+        api_secret=parsed.password,
+        secure=True
+    )
 else:
     cloudinary.config(
         cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),

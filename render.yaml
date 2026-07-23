@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: st-michael-s-madende-catholic-parish
+    runtime: python
+    rootDir: Backend
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "st-michael-s-madende-catholic-parish.onrender.com"
+      - key: CLOUDINARY_URL
+        sync: false   # Set this in the Render dashboard from your Cloudinary account
+      - key: DATABASE_URL
+        fromDatabase:
+          name: madende-parish-db
+          property: connectionString
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: main@gmail.com
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: Japheth
+      - key: DJANGO_SUPERUSER_FIRST_NAME
+        value: Japheth
+      - key: DJANGO_SUPERUSER_LAST_NAME
+        value: Arnold
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false   # Set this in the Render dashboard
+
+databases:
+  - name: madende-parish-db
+    plan: free
+    databaseName: madende_parish
+    user: madende_parish_user

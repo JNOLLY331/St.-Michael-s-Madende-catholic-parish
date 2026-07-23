@@ -2,10 +2,22 @@
 Serializers for the GalleryMedia model within the Gallery application.
 """
 
+import cloudinary
+import cloudinary.utils
 from rest_framework import serializers
 
 from gallery.models import GalleryMedia
 from gallery.validators import validate_media_file
+
+
+def _cloudinary_url(field_value):
+    if not field_value:
+        return None
+    val = str(field_value)
+    if val.startswith('http://') or val.startswith('https://'):
+        return val
+    url, _ = cloudinary.utils.cloudinary_url(val, secure=True)
+    return url
 
 
 class GalleryMediaListSerializer(serializers.ModelSerializer):
@@ -13,6 +25,8 @@ class GalleryMediaListSerializer(serializers.ModelSerializer):
 
     album = serializers.StringRelatedField()
     uploaded_by = serializers.StringRelatedField()
+    file = serializers.SerializerMethodField()
+    thumbnail = serializers.SerializerMethodField()
 
     class Meta:
         model = GalleryMedia
@@ -28,16 +42,30 @@ class GalleryMediaListSerializer(serializers.ModelSerializer):
             "uploaded_by",
         )
 
+    def get_file(self, obj):
+        return _cloudinary_url(obj.file)
+
+    def get_thumbnail(self, obj):
+        return _cloudinary_url(obj.thumbnail)
+
 
 class GalleryMediaDetailSerializer(serializers.ModelSerializer):
     """Comprehensive details block exposing deep meta tags and metrics like video duration."""
 
     album = serializers.StringRelatedField()
     uploaded_by = serializers.StringRelatedField()
+    file = serializers.SerializerMethodField()
+    thumbnail = serializers.SerializerMethodField()
 
     class Meta:
         model = GalleryMedia
         fields = "__all__"
+
+    def get_file(self, obj):
+        return _cloudinary_url(obj.file)
+
+    def get_thumbnail(self, obj):
+        return _cloudinary_url(obj.thumbnail)
 
 
 class GalleryMediaCreateUpdateSerializer(serializers.ModelSerializer):

@@ -1,8 +1,20 @@
 """Serializers handling data representations for Sacraments and their prerequisites."""
 
+import cloudinary
+import cloudinary.utils
 from rest_framework import serializers
 
 from sacraments.models import Sacrament, SacramentRequirement
+
+
+def _cloudinary_url(field_value):
+    if not field_value:
+        return None
+    val = str(field_value)
+    if val.startswith('http://') or val.startswith('https://'):
+        return val
+    url, _ = cloudinary.utils.cloudinary_url(val, secure=True)
+    return url
 
 
 class SacramentRequirementNestedSerializer(serializers.ModelSerializer):
@@ -32,6 +44,7 @@ class SacramentSerializer(serializers.ModelSerializer):
         source="get_sacrament_type_display",
         read_only=True,
     )
+    banner = serializers.SerializerMethodField()
 
     class Meta:
         model = Sacrament
@@ -62,3 +75,6 @@ class SacramentSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         )
+
+    def get_banner(self, obj):
+        return _cloudinary_url(obj.banner)

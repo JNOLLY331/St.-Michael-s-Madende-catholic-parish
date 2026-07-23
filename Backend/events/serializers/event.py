@@ -1,6 +1,18 @@
+import cloudinary
+import cloudinary.utils
 from rest_framework import serializers
 
 from events.models import Event
+
+
+def _cloudinary_url(field_value):
+    if not field_value:
+        return None
+    val = str(field_value)
+    if val.startswith('http://') or val.startswith('https://'):
+        return val
+    url, _ = cloudinary.utils.cloudinary_url(val, secure=True)
+    return url
 
 
 class EventListSerializer(serializers.ModelSerializer):
@@ -9,6 +21,8 @@ class EventListSerializer(serializers.ModelSerializer):
     ministry = serializers.StringRelatedField()
     organizer = serializers.StringRelatedField()
     available_slots = serializers.SerializerMethodField()
+    banner = serializers.SerializerMethodField()
+    thumbnail = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
@@ -37,6 +51,12 @@ class EventListSerializer(serializers.ModelSerializer):
     def get_available_slots(self, obj):
         return max(obj.capacity - obj.registered_count, 0)
 
+    def get_banner(self, obj):
+        return _cloudinary_url(obj.banner)
+
+    def get_thumbnail(self, obj):
+        return _cloudinary_url(obj.thumbnail)
+
 
 class EventDetailSerializer(serializers.ModelSerializer):
     """Serializer for retrieving full details of a single event."""
@@ -44,6 +64,8 @@ class EventDetailSerializer(serializers.ModelSerializer):
     ministry = serializers.StringRelatedField()
     organizer = serializers.StringRelatedField()
     available_slots = serializers.SerializerMethodField()
+    banner = serializers.SerializerMethodField()
+    thumbnail = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
@@ -51,6 +73,12 @@ class EventDetailSerializer(serializers.ModelSerializer):
 
     def get_available_slots(self, obj):
         return max(obj.capacity - obj.registered_count, 0)
+
+    def get_banner(self, obj):
+        return _cloudinary_url(obj.banner)
+
+    def get_thumbnail(self, obj):
+        return _cloudinary_url(obj.thumbnail)
 
 
 class EventCreateUpdateSerializer(serializers.ModelSerializer):

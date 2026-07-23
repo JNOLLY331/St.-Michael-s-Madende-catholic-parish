@@ -77,7 +77,13 @@ class GalleryMedia(BaseModel):
         choices=MEDIA_TYPES,
         default="IMAGE",
     )
-    file = models.FileField(upload_to="gallery/media/")
+    file = CloudinaryField(
+        "file",
+        folder="gallery/media",
+        blank=True,
+        null=True,
+        resource_type="auto",   # Allows both images AND videos
+    )
     thumbnail = CloudinaryField(
         "thumbnail",
         folder="gallery/thumbnails",     # Clean folder organization

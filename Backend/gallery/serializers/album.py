@@ -2,8 +2,20 @@
 Serializers for the Album model within the Gallery application.
 """
 
+import cloudinary
+import cloudinary.utils
 from rest_framework import serializers
 from gallery.models import Album
+
+
+def _cloudinary_url(field_value):
+    if not field_value:
+        return None
+    val = str(field_value)
+    if val.startswith('http://') or val.startswith('https://'):
+        return val
+    url, _ = cloudinary.utils.cloudinary_url(val, secure=True)
+    return url
 
 
 class AlbumListSerializer(serializers.ModelSerializer):
@@ -12,6 +24,7 @@ class AlbumListSerializer(serializers.ModelSerializer):
     created_by = serializers.StringRelatedField()
     # Expects an annotated 'media_count' from the viewset QuerySet for optimal performance
     media_count = serializers.IntegerField(read_only=True)
+    cover_image = serializers.SerializerMethodField()
 
     class Meta:
         model = Album
@@ -26,16 +39,23 @@ class AlbumListSerializer(serializers.ModelSerializer):
             "created_at",
         )
 
+    def get_cover_image(self, obj):
+        return _cloudinary_url(obj.cover_image)
+
 
 class AlbumDetailSerializer(serializers.ModelSerializer):
     """Comprehensive blueprint exposing full relation paths and properties for individual folders."""
 
     created_by = serializers.StringRelatedField()
     media_count = serializers.IntegerField(read_only=True)
+    cover_image = serializers.SerializerMethodField()
 
     class Meta:
         model = Album
         fields = "__all__"
+
+    def get_cover_image(self, obj):
+        return _cloudinary_url(obj.cover_image)
 
 
 class AlbumCreateUpdateSerializer(serializers.ModelSerializer):

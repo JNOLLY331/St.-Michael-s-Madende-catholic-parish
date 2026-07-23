@@ -1,8 +1,21 @@
+import cloudinary
+import cloudinary.utils
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 User = get_user_model()
+
+
+def _cloudinary_url(field_value):
+    if not field_value:
+        return None
+    val = str(field_value)
+    if val.startswith('http://') or val.startswith('https://'):
+        return val
+    url, _ = cloudinary.utils.cloudinary_url(val, secure=True)
+    return url
+
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -72,6 +85,8 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = (
@@ -97,6 +112,9 @@ class UserSerializer(serializers.ModelSerializer):
             "date_joined",
             "email",
         )
+
+    def get_profile_picture(self, obj):
+        return _cloudinary_url(obj.profile_picture)
 
 
 class UpdateProfileSerializer(serializers.ModelSerializer):

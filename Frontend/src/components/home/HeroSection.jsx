@@ -25,23 +25,36 @@ function Particle({ style }) {
 function StatPill({ icon: Icon, value, label, delay }) {
   return (
     <div
-      className="flex items-center gap-1.5 sm:gap-2.5 px-2 sm:px-4 py-1.5 sm:py-2.5 rounded-xl sm:rounded-2xl border border-white/15 whitespace-nowrap shrink-0"
+      className="group relative overflow-hidden flex items-center gap-3 sm:gap-4 px-5 sm:px-8 py-3 sm:py-4 rounded-none border border-white/15 whitespace-nowrap shrink-0 flex-1 sm:flex-none min-w-[140px] sm:min-w-[180px] justify-start transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_30px_-5px_rgba(255,224,136,0.25)] hover:border-[#ffe088]/50 cursor-pointer"
       style={{
-        background: 'rgba(255,255,255,0.07)',
+        background: 'rgba(255,255,255,0.06)',
         backdropFilter: 'blur(12px)',
         animation: `fadeSlideUp 0.7s ease both`,
         animationDelay: delay,
       }}
     >
+      {/* Floating ambient glow in background on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#ffe088]/0 via-[#ffe088]/5 to-[#ffe088]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      {/* Metallic shine sweeping across the pill */}
+      <div className="absolute top-0 -left-[100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-25deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out pointer-events-none" />
+
+      {/* Icon Box */}
       <div
-        className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0"
-        style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}
+        className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center flex-shrink-0 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6"
+        style={{
+          background: 'linear-gradient(135deg, #570013 0%, #800020 100%)',
+          boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.1)'
+        }}
       >
-        <Icon className="text-[#ffe088] text-xs sm:text-base" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#ffe088]/0 to-[#ffe088]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <Icon className="relative z-10 text-[#ffe088] text-lg sm:text-xl transition-colors duration-300 group-hover:text-white drop-shadow-md" />
       </div>
-      <div>
-        <p className="font-oswald font-bold text-white text-[11px] sm:text-sm leading-tight">{value}</p>
-        <p className="text-white/50 text-[8px] sm:text-[10px] tracking-wider uppercase leading-tight">{label}</p>
+
+      {/* Text Content */}
+      <div className="text-left relative z-10 pointer-events-none">
+        <p className="font-oswald font-bold text-white text-[13px] sm:text-lg leading-tight transition-colors duration-500 group-hover:text-[#ffe088] drop-shadow-sm">{value}</p>
+        <p className="text-white/50 text-[10px] sm:text-xs tracking-widest uppercase leading-tight mt-1 transition-colors duration-500 group-hover:text-white/90">{label}</p>
       </div>
     </div>
   );
@@ -276,7 +289,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
       <div className="relative z-10 w-full px-6 md:px-16 max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
 
         {/* ── Left: Text content ── */}
-        <div className="max-w-2xl text-white flex flex-col items-center text-center lg:items-start lg:text-left mt-10 md:mt-0">
+        <div className="max-w-2xl text-white flex flex-col items-center text-center lg:items-start lg:text-left mt-2 lg:mt-0">
 
           {/* Eyebrow */}
           <div
@@ -327,19 +340,28 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
               style={{
                 fontFamily: 'var(--font-serif)',
                 color: '#ffe088',
-                textShadow: '0 1px 0 #c5832b, 0 2px 0 #ab6e1b, 0 3px 0 #915a13, 0 4px 0 #78470a, 0 5px 0 #603604, 0 10px 15px rgba(0,0,0,0.6), 0 0 20px rgba(255, 224, 136, 0.8)',
                 verticalAlign: 'bottom',
                 fontSize: '1.05em',
                 lineHeight: '1',
+                paddingBottom: '0.6em', // Reserve space for the 3D shadow 
+                paddingRight: '6px'     // Space for cursor
               }}
             >
               {/* Invisible placeholder to establish the bounds correctly */}
-              <span className="opacity-0 tracking-wide text-transparent select-none">Catholic Church</span>
+              <span className="opacity-0 tracking-wide select-none">Catholic Church</span>
 
               {/* Animated layer using Framer Motion */}
               <motion.span
-                className="absolute left-0 whitespace-nowrap overflow-hidden border-r-[3px] border-[#ffe088] tracking-wide"
-                style={{ top: '0.05em', bottom: '0.15em' }}
+                className="absolute left-0 top-0 whitespace-nowrap overflow-hidden tracking-wide"
+                style={{
+                  paddingBottom: '0.6em',
+                  paddingRight: '6px',
+                  textShadow: '0 1px 0 #c5832b, 0 2px 0 #ab6e1b, 0 3px 0 #915a13, 0 4px 0 #78470a, 0 5px 0 #603604, 0 10px 15px rgba(0,0,0,0.6), 0 0 20px rgba(255, 224, 136, 0.8)',
+                  backgroundImage: 'linear-gradient(#ffe088, #ffe088)',
+                  backgroundSize: '3px 1em',
+                  backgroundPosition: 'right 0.05em',
+                  backgroundRepeat: 'no-repeat',
+                }}
                 initial={{ width: "0%" }}
                 animate={{ width: ["0%", "100%", "100%", "0%"] }}
                 transition={{
@@ -365,13 +387,13 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* CTA Buttons */}
           <div
-            className="flex flex-col sm:flex-row gap-4 mb-10 w-full sm:w-auto items-center justify-center lg:justify-start"
+            className="flex flex-row gap-3 sm:gap-6 mb-10 w-full sm:w-auto items-center justify-center lg:justify-start"
             style={{ animation: 'fadeSlideUp 0.7s ease both', animationDelay: '0.5s' }}
           >
             {hero.primaryButtonText && (
               <button
                 onClick={() => handleButtonClick(hero.primaryButtonLink)}
-                className="group relative overflow-hidden px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide flex items-center justify-center gap-2 shadow-2xl transition-transform hover:scale-105 active:scale-100"
+                className="group relative overflow-hidden px-8 py-4 sm:px-14 sm:py-5 rounded-none font-oswald font-bold text-[15px] sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2 sm:gap-3 shadow-2xl transition-transform hover:scale-105 active:scale-100 shrink-0 min-w-[160px] sm:min-w-[220px]"
                 style={{
                   background: 'linear-gradient(135deg, #ffe088 0%, #f5c842 100%)',
                   color: '#40000b',
@@ -382,14 +404,14 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{ background: 'linear-gradient(135deg, #fff3b0 0%, #ffe088 100%)' }}
                 />
-                <MdMenuBook className="relative z-10 text-xl flex-shrink-0" />
+                <MdMenuBook className="relative z-10 text-xl sm:text-2xl flex-shrink-0" />
                 <span className="relative z-10">{hero.primaryButtonText}</span>
               </button>
             )}
             {hero.secondaryButtonText && (
               <button
                 onClick={() => handleButtonClick(hero.secondaryButtonLink)}
-                className="px-8 py-4 rounded-full font-oswald font-bold text-base uppercase tracking-wide transition-all hover:scale-105 active:scale-100"
+                className="px-8 py-4 sm:px-14 sm:py-5 rounded-none font-oswald font-bold text-[15px] sm:text-lg uppercase tracking-wide transition-all hover:scale-105 active:scale-100 shrink-0 min-w-[160px] sm:min-w-[220px]"
                 style={{
                   border: '2px solid rgba(255,255,255,0.25)',
                   color: 'white',

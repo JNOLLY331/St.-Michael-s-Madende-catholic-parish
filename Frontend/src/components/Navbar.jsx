@@ -296,17 +296,26 @@ export default function Navbar() {
             <AnimatePresence>
                 {menuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
-                        exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="fixed inset-0 top-0 left-0 w-full h-[100dvh] bg-[#3a000d]/90 z-[-1] pt-[84px] pointer-events-auto overflow-y-auto flex flex-col"
+                        initial={{ opacity: 0, y: '-15%', filter: 'blur(15px)' }}
+                        animate={{ opacity: 1, y: '0%', filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: '-10%', filter: 'blur(15px)' }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="fixed inset-0 top-0 left-0 w-full h-[100dvh] z-[-1] pt-[90px] pointer-events-auto overflow-y-auto flex flex-col hide-scrollbar"
+                        style={{
+                            background: 'linear-gradient(160deg, rgba(40,0,10,0.95) 0%, rgba(10,0,0,0.98) 100%)',
+                            backdropFilter: 'blur(50px)',
+                            WebkitBackdropFilter: 'blur(50px)',
+                        }}
                     >
-                        <div className="px-6 pb-20 flex-1 w-full max-w-[600px] mx-auto flex flex-col pt-8">
+                        {/* Decorative background glow */}
+                        <div className="absolute top-[-20%] left-[-20%] w-[80%] h-[50%] bg-[#ffe088] opacity-[0.03] blur-[120px] rounded-full pointer-events-none" />
+                        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[40%] bg-[#ff6b35] opacity-[0.03] blur-[100px] rounded-full pointer-events-none" />
+
+                        <div className="relative z-10 px-6 pb-24 flex-1 w-full max-w-[600px] mx-auto flex flex-col pt-6">
                             <motion.div
                                 initial="hidden" animate="visible" exit="hidden"
-                                variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
-                                className="flex flex-col gap-2"
+                                variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
+                                className="flex flex-col gap-1"
                             >
                                 {navLinks.map((link) => {
                                     const isPathActive = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
@@ -316,48 +325,56 @@ export default function Navbar() {
                                         <motion.div
                                             key={link.to}
                                             variants={{
-                                                hidden: { opacity: 0, y: 20 },
-                                                visible: { opacity: 1, y: 0, transition: { ease: [0.16, 1, 0.3, 1], duration: 0.5 } }
+                                                hidden: { opacity: 0, x: -30, rotateX: 30 },
+                                                visible: { opacity: 1, x: 0, rotateX: 0, transition: { ease: [0.22, 1, 0.36, 1], duration: 0.6 } }
                                             }}
+                                            style={{ transformPerspective: 800 }}
                                             className="w-full flex-col flex"
                                         >
                                             <button
                                                 onClick={() => link.dropdown ? setMobileDropdown(hasOpenDropdown ? null : link.to) : (handleNavClick(link.to) || setMenuOpen(false))}
-                                                className={`w-full flex items-center justify-between py-4 border-b transition-colors outline-none ${isPathActive
-                                                    ? 'border-[#ffe088]/30'
-                                                    : 'border-white/10 hover:border-white/30'
-                                                    }`}
+                                                className="w-full flex items-center justify-between py-3 sm:py-4 border-b border-white/5 hover:border-white/20 transition-all outline-none"
                                             >
-                                                <span className={`font-oswald font-medium text-3xl uppercase tracking-widest ${isPathActive ? 'text-[#ffe088]' : 'text-white'}`}>
-                                                    {link.label}
-                                                </span>
+                                                <div className="flex items-center gap-3">
+                                                    <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${isPathActive ? 'bg-[#ffe088] shadow-[0_0_10px_#ffe088]' : 'bg-transparent'}`} />
+                                                    <span
+                                                        className={`font-oswald font-medium text-2xl sm:text-3xl uppercase tracking-wider transition-colors duration-300 ${isPathActive ? 'text-[#ffe088] drop-shadow-md' : 'text-white/80'}`}
+                                                    >
+                                                        {link.label}
+                                                    </span>
+                                                </div>
                                                 {link.dropdown && (
-                                                    <MdExpandMore className={`text-3xl text-white/50 transition-transform duration-500 ${hasOpenDropdown ? 'rotate-180 text-[#ffe088]' : ''}`} />
+                                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-white/5 border transition-all duration-500 ${hasOpenDropdown ? 'border-[#ffe088]/40 bg-[#ffe088]/10 text-[#ffe088] rotate-180' : 'border-white/10 text-white/50'}`}>
+                                                        <MdExpandMore className="text-2xl" />
+                                                    </div>
                                                 )}
                                             </button>
 
                                             <AnimatePresence>
                                                 {hasOpenDropdown && link.dropdown && (
                                                     <motion.div
-                                                        initial={{ height: 0, opacity: 0 }}
-                                                        animate={{ height: 'auto', opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                                                        className="overflow-hidden"
+                                                        initial={{ height: 0, opacity: 0, scale: 0.98 }}
+                                                        animate={{ height: 'auto', opacity: 1, scale: 1 }}
+                                                        exit={{ height: 0, opacity: 0, scale: 0.98 }}
+                                                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                                        className="overflow-hidden origin-top"
                                                     >
-                                                        <div className="py-4 flex flex-col gap-2">
+                                                        <div className="pt-3 pb-2 pl-6 pr-2 flex flex-col gap-2">
                                                             {link.dropdown.map(sl => (
                                                                 <button
                                                                     key={sl.to}
                                                                     onClick={() => { handleNavClick(sl.to); setMenuOpen(false); }}
-                                                                    className="flex items-center gap-4 py-3 px-4 rounded-xl hover:bg-white/10 transition-colors text-left"
+                                                                    className="group flex items-center justify-between py-2 px-4 rounded-xl hover:bg-white/5 transition-colors text-left outline-none border border-transparent hover:border-white/10"
                                                                 >
-                                                                    {sl.icon && (
-                                                                        <div className="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center border border-white/5">
-                                                                            <DynamicIcon name={sl.icon} className="text-xl text-[#ffe088]" />
-                                                                        </div>
-                                                                    )}
-                                                                    <span className="font-sans font-medium text-lg text-white/90">{sl.label}</span>
+                                                                    <div className="flex items-center gap-3">
+                                                                        {sl.icon && (
+                                                                            <div className="w-8 h-8 rounded-lg bg-black/30 flex items-center justify-center border border-white/5 group-hover:border-[#ffe088]/30 group-hover:bg-[#ffe088]/10 transition-colors">
+                                                                                <DynamicIcon name={sl.icon} className="text-[18px] text-white/50 group-hover:text-[#ffe088] transition-colors" />
+                                                                            </div>
+                                                                        )}
+                                                                        <span className="font-sans font-semibold text-[15px] text-white/70 group-hover:text-white transition-colors">{sl.label}</span>
+                                                                    </div>
+                                                                    <MdArrowForward className="text-[#ffe088] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-sm" />
                                                                 </button>
                                                             ))}
                                                         </div>
@@ -370,20 +387,23 @@ export default function Navbar() {
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-                                transition={{ delay: 0.2, duration: 0.5 }}
-                                className="mt-8 flex flex-col gap-4"
+                                initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
+                                transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                className="mt-6 flex flex-col gap-4"
                             >
-                                <button onClick={() => { handleNavClick('/donate'); setMenuOpen(false); }} className="w-full bg-[#ffe088] text-[#40000b] shadow-[0_0_20px_rgba(255,224,136,0.3)] min-h-[60px] rounded-2xl font-oswald font-bold text-lg uppercase tracking-widest relative overflow-hidden group">
-                                    <span className="relative z-10">Donate Now</span>
+                                <button onClick={() => { handleNavClick('/donate'); setMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#f5c842] to-[#ffe088] text-[#40000b] shadow-[0_10px_30px_rgba(255,224,136,0.25)] min-h-[64px] rounded-full font-oswald font-extrabold text-[17px] uppercase tracking-[0.15em] relative overflow-hidden group hover:scale-[1.02] transition-transform">
+                                    <span className="relative z-10 flex items-center justify-center gap-3">
+                                        Donate Now <MdArrowForward className="text-xl" />
+                                    </span>
                                     <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                                 </button>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <button onClick={() => { handleNavClick(isAuthenticated ? '/dashboard' : '/login'); setMenuOpen(false); }} className="w-full min-h-[60px] border border-white/20 rounded-2xl flex items-center justify-center gap-2 text-white font-oswald font-medium tracking-wide uppercase hover:bg-white/10 transition-colors">
-                                        <MdPerson className="text-xl text-[#ffe088]" /> {isAuthenticated ? 'Dashboard' : 'Portal'}
+
+                                <div className="grid grid-cols-2 gap-4 mt-2">
+                                    <button onClick={() => { handleNavClick(isAuthenticated ? '/dashboard' : '/login'); setMenuOpen(false); }} className="w-full min-h-[56px] border border-white/15 rounded-full flex items-center justify-center gap-3 text-white/90 font-oswald font-medium tracking-wide uppercase hover:bg-white/10 hover:border-white/30 transition-colors">
+                                        <MdPerson className="text-2xl text-[#ffe088]" /> {isAuthenticated ? 'Dashboard' : 'Portal'}
                                     </button>
-                                    <button onClick={toggleTheme} className="w-full min-h-[60px] border border-white/20 rounded-2xl flex items-center justify-center gap-2 text-white font-oswald font-medium tracking-wide uppercase hover:bg-white/10 transition-colors">
-                                        <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-xl text-[#ffe088]" /> {theme === 'dark' ? 'Light' : 'Dark'}
+                                    <button onClick={toggleTheme} className="w-full min-h-[56px] border border-white/15 rounded-full flex items-center justify-center gap-3 text-white/90 font-oswald font-medium tracking-wide uppercase hover:bg-white/10 hover:border-white/30 transition-colors">
+                                        <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-2xl text-[#ffe088]" /> {theme === 'dark' ? 'Light' : 'Dark'}
                                     </button>
                                 </div>
                             </motion.div>

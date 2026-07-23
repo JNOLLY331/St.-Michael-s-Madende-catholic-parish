@@ -81,12 +81,12 @@ export default function Events() {
     return (
         <>
             {/* Hero */}
-            <section className="py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
-                <div data-reveal>
+            <section className="py-4 md:py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
+                <div>
                     <h1 className="text-display-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>
                         Parish Calendar
                     </h1>
-                    <p data-reveal-text className="text-body-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                    <p  className="text-body-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                         Stay connected with parish life. Come as you are, and leave enriched by faith,
                         fellowship, and the love of community.
                     </p>
@@ -234,12 +234,12 @@ export default function Events() {
             </section>
 
             {/* CTA */}
-            <section className="py-20" style={{ background: 'var(--section-alt)' }}>
+            <section className="py-10 md:py-20" style={{ background: 'var(--section-alt)' }}>
                 <div className="max-w-[1200px] mx-auto px-5 md:px-16 text-center" data-reveal-zoom>
                     <h2 className="text-headline-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>
                         Submit Your Event
                     </h2>
-                    <p data-reveal-text className="text-body-lg max-w-xl mx-auto mb-8" style={{ color: 'var(--text-secondary)' }}>
+                    <p  className="text-body-lg max-w-xl mx-auto mb-8" style={{ color: 'var(--text-secondary)' }}>
                         Ministry leaders and parishioners can submit parish events for review.
                     </p>
                     <Link

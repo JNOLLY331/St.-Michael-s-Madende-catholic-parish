@@ -26,7 +26,7 @@ export default function Ministries() {
     return (
         <>
             {/* Hero Section */}
-            <section className="py-20 text-center max-w-[1200px] mx-auto px-5 md:px-16">
+            <section className="py-7 md:py-20 text-center max-w-[1200px] mx-auto px-5 md:px-16">
                 <h1 className="text-display-lg text-[#570013] mb-4">Parish Ministries</h1>
                 <p className="text-body-lg text-[#584141] max-w-3xl mx-auto italic">
                     "For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many." — Mark 10:45

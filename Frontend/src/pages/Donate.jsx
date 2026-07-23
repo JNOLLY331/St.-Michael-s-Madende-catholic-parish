@@ -80,8 +80,8 @@ export default function Donate() {
     return (
         <>
             {/* Hero Section */}
-            <section className="py-20 text-center max-w-[1200px] mx-auto px-5 md:px-16">
-                <div data-reveal>
+            <section className="py-4 md:py-20 text-center max-w-[1200px] mx-auto px-5 md:px-16">
+                <div>
                     <div className="w-16 h-16 bg-[#ffdada] text-[#570013] rounded-full flex items-center justify-center mx-auto mb-6">
                         <MdVolunteerActivism className="text-3xl" />
                     </div>

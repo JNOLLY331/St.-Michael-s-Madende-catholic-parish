@@ -49,6 +49,18 @@ const navLinks = [
     { label: 'Contact', to: '/contact' },
 ];
 
+const sortedNavLinks = [...navLinks]
+    .map((link) => {
+        if (link.dropdown) {
+            return {
+                ...link,
+                dropdown: [...link.dropdown].sort((a, b) => a.label.length - b.label.length),
+            };
+        }
+        return link;
+    })
+    .sort((a, b) => a.label.length - b.label.length);
+
 export default function Navbar() {
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -317,7 +329,7 @@ export default function Navbar() {
                                 variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
                                 className="flex flex-col gap-1"
                             >
-                                {navLinks.map((link) => {
+                                {sortedNavLinks.map((link) => {
                                     const isPathActive = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
                                     const hasOpenDropdown = mobileDropdown === link.to;
 
@@ -338,7 +350,7 @@ export default function Navbar() {
                                                 <div className="flex items-center gap-3">
                                                     <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${isPathActive ? 'bg-[#ffe088] shadow-[0_0_10px_#ffe088]' : 'bg-transparent'}`} />
                                                     <span
-                                                        className={`font-oswald font-medium text-2xl sm:text-3xl uppercase tracking-wider transition-colors duration-300 ${isPathActive ? 'text-[#ffe088] drop-shadow-md' : 'text-white/80'}`}
+                                                        className={`font-oswald font-medium text-lg sm:text-2xl uppercase tracking-wider transition-colors duration-300 ${isPathActive ? 'text-[#ffe088] drop-shadow-md' : 'text-white/80'}`}
                                                     >
                                                         {link.label}
                                                     </span>
@@ -372,7 +384,7 @@ export default function Navbar() {
                                                                                 <DynamicIcon name={sl.icon} className="text-[18px] text-white/50 group-hover:text-[#ffe088] transition-colors" />
                                                                             </div>
                                                                         )}
-                                                                        <span className="font-sans font-semibold text-[15px] text-white/70 group-hover:text-white transition-colors">{sl.label}</span>
+                                                                        <span className="font-sans font-semibold text-[14px] text-white/70 group-hover:text-white transition-colors">{sl.label}</span>
                                                                     </div>
                                                                     <MdArrowForward className="text-[#ffe088] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-sm" />
                                                                 </button>

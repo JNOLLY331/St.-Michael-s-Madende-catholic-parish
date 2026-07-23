@@ -32,8 +32,8 @@ export default function MassSchedule() {
     return (
         <>
             {/* Hero */}
-            <section className="py-16 md:py-20 text-center max-w-[1200px] mx-auto px-5 md:px-16">
-                <div data-reveal>
+            <section className="py-4 md:py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
+                <div>
                     <h1 className="text-display-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>Sacred Times</h1>
                     <p className="text-body-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                         Join our community in prayer and worship. Whether you are a regular parishioner or visiting for the first time, you are welcome at the Lord's table.

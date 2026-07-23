@@ -34,7 +34,7 @@ export default function About() {
       </section>
 
       {/* ── Mission & Vision ── */}
-      <section className="reveal max-w-[1200px] mx-auto px-5 md:px-16 py-20">
+      <section className=" max-w-[1200px] mx-auto px-5 md:px-16 py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           <div className="md:col-span-5 space-y-6">
             <div className="inline-flex items-center gap-2 text-[#735c00]">
@@ -68,7 +68,7 @@ export default function About() {
       </section>
 
       {/* ── Parish History ── */}
-      <section className="reveal bg-[#f5ece7] py-20">
+      <section className=" bg-[#f5ece7] py-20">
         <div className="max-w-[1200px] mx-auto px-5 md:px-16">
           <div className="text-center mb-20">
             <h2 className="text-headline-lg text-[#570013] mb-4">Our Sacred History</h2>
@@ -132,7 +132,7 @@ export default function About() {
       </section>
 
       {/* ── Clergy ── */}
-      <section className="reveal max-w-[1200px] mx-auto px-5 md:px-16 py-20">
+      <section className=" max-w-[1200px] mx-auto px-5 md:px-16 py-20">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-4">
           <div className="max-w-xl">
             <h2 className="text-headline-lg text-[#570013] mb-4">Our Clergy</h2>
@@ -177,7 +177,7 @@ export default function About() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="reveal max-w-[1200px] mx-auto px-5 mb-20">
+      <section className=" max-w-[1200px] mx-auto px-5 mb-20">
         <div className="bg-[#413d33] text-white rounded-xl p-6 md:p-16 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#570013] rounded-full blur-[100px]" />

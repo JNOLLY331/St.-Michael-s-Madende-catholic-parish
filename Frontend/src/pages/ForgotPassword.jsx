@@ -56,7 +56,7 @@ export default function ForgotPassword() {
                     </div>
 
                     {error && (
-                        <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+                        <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-none px-4 py-3 text-sm">
                             <MdWarning className="shrink-0 text-lg" />
                             <span>{error}</span>
                         </div>
@@ -81,7 +81,7 @@ export default function ForgotPassword() {
                                         value={email}
                                         onChange={(e) => { setError(''); setEmail(e.target.value); }}
                                         autoComplete="email"
-                                        className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
+                                        className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
                                     />
                                 </div>
                             </div>
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                                className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-none shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                             >
                                 {loading ? 'Sending...' : <><MdSend /> Send Reset Link</>}
                             </button>

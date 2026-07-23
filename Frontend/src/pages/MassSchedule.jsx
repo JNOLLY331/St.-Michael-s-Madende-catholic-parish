@@ -32,7 +32,7 @@ export default function MassSchedule() {
     return (
         <>
             {/* Hero */}
-            <section className="py-4 md:py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
+            <section className="pt-24 md:py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
                 <div>
                     <h1 className="text-display-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>Sacred Times</h1>
                     <p className="text-body-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
@@ -209,7 +209,7 @@ export default function MassSchedule() {
                     </div>
                     <div
                         className="min-h-[300px] bg-cover bg-center"
-                        style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7cxZKDrRbPgouyinwftnZyfvn74qplFJBAgVzrueekgxMQOiAHnniVKHx4C4t3HRjqkAkUmP7qj5jxPDsk_6tRBrMUzzJQ6Ojb5I3XqSAwY3lPK8jHpLzSN9AJfIkJ3f6XVOQwVZ_qxDUmE0TRBUXqtjjBHFOoaiu7Qj-HvMGlaX6i1TgSQKSEZ04c09I1Horuz_AmFGT_bqWO8ZFTE3qIHq8ErlgTS-Ltt7FaQV9qOVnjY8whzNYGnJCeLZpMthLdN7rBAF2Zclc')` }}
+                        style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7cxZKDrRbPgouyinwftnZyfvn74qplFJBAgVzrueekgxMQOiAHnniVKHx4C4t3HRjqkAkUmP7qj5jxPDsk_6tRBrMUzzJQ6Ojb5I3XqSAwY3lPK8jHpLzSN9AJfIkJ3f6XVOQwVZ_qxDUmE0TRBUXqtjjBHFOoaiu7Qj-HvMGlaX6i1TgSQKSEZ04c09I1Horuz_AmFGT_bqWO8ZFTE3qIHq8ErlgTS-Ltt7FaQV9qOVnjY8whzNYGnJCeLZpMthLdN7rBAF2Zclc')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                     />
                 </div>
             </section>

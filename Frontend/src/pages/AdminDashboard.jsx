@@ -292,7 +292,7 @@ export default function AdminDashboard() {
                 .finally(() => setLoadingParishioners(false));
         });
     }, [isAuthenticated]);
-    // ── Initial fetch + real-time polling every 10 seconds ──
+    // ── Initial fetch + real-time polling every 30 seconds ──
     useEffect(() => {
         if (!isAuthenticated) return;
         fetchStats();
@@ -303,8 +303,9 @@ export default function AdminDashboard() {
             fetchStats();
             fetchDonations();
             fetchMessages();
+            fetchParishioners();
             setLastRefresh(new Date());
-        }, 10000);
+        }, 30000);
         return () => clearInterval(interval);
     }, [isAuthenticated, fetchStats, fetchDonations, fetchMessages, fetchParishioners]);
 
@@ -432,8 +433,9 @@ export default function AdminDashboard() {
                             title="Refresh data"
                         >
                             <MdRefresh className="text-base" />
-                            <span className="hidden lg:inline">
-                                {lastRefresh.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                            <span className="hidden lg:flex items-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
+                                Live · {lastRefresh.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                             </span>
                         </button>
 

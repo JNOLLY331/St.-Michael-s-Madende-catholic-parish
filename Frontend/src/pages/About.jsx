@@ -13,7 +13,7 @@ export default function About() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative h-[530px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[530px] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <div
             className="w-full h-full bg-cover bg-center"
@@ -46,14 +46,14 @@ export default function About() {
               {parish.mission || "At St. Michael Madende, we strive to create a vibrant liturgical community where every individual feels the warmth of Christ's love. Our mission is to nourish the spiritual lives of our parishioners through the Sacraments, education, and acts of charity that extend beyond our church walls."}
             </p>
             <div className="pt-4">
-              <button className="border border-[#8c7071] text-[#570013] px-8 py-3 rounded-full text-label-md hover:bg-[#e9e1dc] transition-colors">
+              <button className="border border-[#8c7071] text-[#570013] px-8 py-3 rounded-none text-label-md hover:bg-[#e9e1dc] transition-colors">
                 Read our Pastoral Plan
               </button>
             </div>
           </div>
           <div className="md:col-span-6 md:col-start-7 relative">
             <div className="aspect-[4/5] rounded-xl overflow-hidden shadow-xl">
-              <img
+              <img loading="lazy" decoding="async"
                 className="w-full h-full object-cover"
                 alt="Parish community gathering"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYm5Urp1fukVfl-u-D8canOcBRVcAlSeb7oraAW8r5BClZ5VPjdsA1VAJlJfbpDomXbbgz8N3kEFx6oPLnsBmncGG-VCwiUm2FTQQBYiHNPQoObCPsTSUBPDN6zeH_SEURa0AgremE_nlpV_5yaNKiVk5fCABQZyF1Q1VFjK2przqEC2B1LGZ4EWboXOBA0dARClO6eJAwXJNu5_rYOpvNubv11o8GrMqtCd5Vo0ouBcshQbiBcFcGjYeJBqKaxvNPTcPyRZ3mmWEE"
@@ -88,7 +88,7 @@ export default function About() {
             {/* Card 2 – Tall */}
             <div className="md:row-span-2 bg-[#800020] p-6 rounded-xl flex flex-col justify-end text-white shadow-lg overflow-hidden relative group">
               <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
-                <img
+                <img loading="lazy" decoding="async"
                   className="w-full h-full object-cover grayscale"
                   alt="Archival church history"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgT_hg800pBQY1Wa1JmYdY_rC4nav0fj2sAMadsEoaz35wr6L9DmPoADB0ZomxPHIQGoq6CN7yJk8Mtvwt7qVi9wsd-7qBCbspEP-djYMZSSEoWYTF-x2yIHfFlg-NHF7TPmLnbfyEEMwWXDVJ5QJprlVk2nCb0lr7TlVCxw6e3ZKk8leD7_HwHr3bG2M3i6odbXn0f1Wy1SsXrS-zACfLyt3-9dLxlHxUdVo4t-GfYCAOa0moBxlkfFWufsrvYTSvqdD8SgRTYGFs"
@@ -113,7 +113,7 @@ export default function About() {
             {/* Card 4 – Wide */}
             <div className="md:col-span-2 bg-[#fff8f5] p-6 rounded-xl border border-[#e0bfbf] flex flex-col md:flex-row gap-6 items-center shadow-sm">
               <div className="w-full md:w-1/3 aspect-video rounded-lg overflow-hidden">
-                <img
+                <img loading="lazy" decoding="async"
                   className="w-full h-full object-cover"
                   alt="Architectural detail"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqwoNCZ5B9gnFNMxeJ61wBSO3gAJf1zYeAHckAx7XAC05N7VyIVaJt4D_p5wVUcTLDtxRdpQMlQ2MqHoZ3KqKfL28FQmlGa7feOLIYgvfsiu8hMPEkoieNpJEyBaHCBBZWRnxJ7levB5Nr6LJ-uuO21wyTMXBxa1skep9rPCcl6-uiSqjFQlQ28bdAUkJYXrhdMsnKHWIvO3tKdsaEe41CRMPmLzz40JsMRmw55BjluxTqHxXuhC_n5tZ6nJgcPkszScOYcS29n8F-"
@@ -142,7 +142,7 @@ export default function About() {
           </div>
           <Link
             to="/sacraments"
-            className="bg-[#570013] text-white px-8 py-3 rounded-full text-label-md flex items-center gap-2 group transition-all hover:pr-10 whitespace-nowrap"
+            className="bg-[#570013] text-white px-8 py-3 rounded-none text-label-md flex items-center gap-2 group transition-all hover:pr-10 whitespace-nowrap"
           >
             Sacramental Care
             <MdArrowForward className="group-hover:translate-x-1 transition-transform" />
@@ -156,17 +156,17 @@ export default function About() {
               className="bg-[#fff8f5] border border-[#e0bfbf] rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group"
             >
               <div className="aspect-[3/4] relative overflow-hidden">
-                <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={name} src={img} />
+                <img loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={name} src={img} />
               </div>
               <div className="p-6">
                 <span className="text-[#735c00] text-label-md uppercase mb-1 block">{role}</span>
                 <h3 className="font-serif text-2xl text-[#570013] mb-2">{name}</h3>
                 <p className="text-body-md text-[#584141] mb-4">{bio}</p>
                 <div className="flex gap-2">
-                  <a href={`mailto:${email}`} className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
+                  <a href={`mailto:${email}`} className="p-2 rounded-none border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
                     <MdMail className="text-xl" />
                   </a>
-                  <button className="p-2 rounded-full border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
+                  <button className="p-2 rounded-none border border-[#e0bfbf] text-[#570013] hover:bg-[#800020] hover:text-white hover:border-[#800020] transition-colors">
                     <DynamicIcon name={action} className="text-xl" />
                   </button>
                 </div>
@@ -180,8 +180,8 @@ export default function About() {
       <section className=" max-w-[1200px] mx-auto px-5 mb-20">
         <div className="bg-[#413d33] text-white rounded-xl p-6 md:p-16 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#570013] rounded-full blur-[100px]" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#735c00] rounded-full blur-[100px]" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#570013] rounded-none blur-[100px]" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#735c00] rounded-none blur-[100px]" />
           </div>
           <div className="relative z-10 text-center max-w-2xl mx-auto">
             <h2 className="font-serif text-4xl text-[#ffdada] mb-4">Join Our Parish Family</h2>
@@ -192,13 +192,13 @@ export default function About() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/dashboard"
-                className="bg-[#fed65b] text-[#241a00] px-10 py-4 rounded-full text-label-md font-bold hover:scale-105 transition-transform"
+                className="bg-[#fed65b] text-[#241a00] px-10 py-4 rounded-none text-label-md font-bold hover:scale-105 transition-transform"
               >
                 Register as a Parishioner
               </Link>
               <Link
                 to="/contact"
-                className="bg-transparent border border-[#e0bfbf] text-white px-10 py-4 rounded-full text-label-md hover:bg-white/10 transition-colors"
+                className="bg-transparent border border-[#e0bfbf] text-white px-10 py-4 rounded-none text-label-md hover:bg-white/10 transition-colors"
               >
                 Contact Office
               </Link>

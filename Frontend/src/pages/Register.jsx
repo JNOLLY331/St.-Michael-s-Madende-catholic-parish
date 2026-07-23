@@ -93,7 +93,7 @@ export default function Register() {
                     <MdChurch className="text-[#570013] text-3xl" />
                     <h1 className="font-serif text-2xl font-medium text-[#570013] tracking-tight">St. Michael Madende</h1>
                 </Link>
-                <Link to="/login" className="md:hidden text-caption text-[#570013] border border-[#570013] px-3 py-1 rounded-full">Login</Link>
+                <Link to="/login" className="md:hidden text-caption text-[#570013] border border-[#570013] px-3 py-1 rounded-none">Login</Link>
             </header>
 
             {/* Register canvas */}
@@ -120,7 +120,7 @@ export default function Register() {
 
                     {/* ── Integration: success banner shown after successful registration ── */}
                     {successMessage && (
-                        <div className="mb-4 flex items-start gap-2 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 text-sm">
+                        <div className="mb-4 flex items-start gap-2 bg-green-50 border border-green-200 text-green-800 rounded-none px-4 py-3 text-sm">
                             <MdCheckCircle className="shrink-0 text-xl text-green-600 mt-0.5" />
                             <span>{successMessage}</span>
                         </div>
@@ -128,7 +128,7 @@ export default function Register() {
 
                     {/* ── Integration: server error banner ─────────────────────────────── */}
                     {authError && !successMessage && (
-                        <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+                        <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-none px-4 py-3 text-sm">
                             <MdWarning className="shrink-0 text-lg" />
                             <span>{authError}</span>
                         </div>
@@ -149,7 +149,7 @@ export default function Register() {
                                         placeholder="John"
                                         value={formData.first_name}
                                         onChange={handleChange}
-                                        className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.first_name ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                        className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.first_name ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                         onFocus={() => setFocused(true)}
                                         onBlur={() => setFocused(false)}
                                     />
@@ -169,7 +169,7 @@ export default function Register() {
                                         placeholder="Doe"
                                         value={formData.last_name}
                                         onChange={handleChange}
-                                        className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.last_name ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                        className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.last_name ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                         onFocus={() => setFocused(true)}
                                         onBlur={() => setFocused(false)}
                                     />
@@ -190,7 +190,7 @@ export default function Register() {
                                     placeholder="john.doe"
                                     value={formData.username}
                                     onChange={handleChange}
-                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.username ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.username ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -211,7 +211,7 @@ export default function Register() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     autoComplete="email"
-                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.email ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.email ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -231,7 +231,7 @@ export default function Register() {
                                     placeholder="+254 700 000 000"
                                     value={formData.phone_number}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
+                                    className="w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border border-[#e0bfbf] rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md"
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -251,7 +251,7 @@ export default function Register() {
                                     value={formData.password}
                                     onChange={handleChange}
                                     autoComplete="new-password"
-                                    className={`w-full pl-10 pr-10 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.password ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                    className={`w-full pl-10 pr-10 py-3 bg-[#fbf2ed] border rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.password ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -279,7 +279,7 @@ export default function Register() {
                                     value={formData.password2}
                                     onChange={handleChange}
                                     autoComplete="new-password"
-                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-lg focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.password2 ? 'border-red-400' : 'border-[#e0bfbf]'}`}
+                                    className={`w-full pl-10 pr-4 py-3 bg-[#fbf2ed] border rounded-none focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all text-body-md ${fieldErrors.password2 ? 'border-red-400' : 'border-[#e0bfbf]'}`}
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -304,7 +304,7 @@ export default function Register() {
                         <button
                             type="submit"
                             disabled={authLoading || !!successMessage}
-                            className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-full shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                            className="w-full mt-4 py-4 bg-[#800020] text-white text-label-md rounded-none shadow-lg hover:bg-[#570013] transition-all active:scale-[0.98] flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                             {authLoading ? (
                                 <span className="flex items-center gap-2">

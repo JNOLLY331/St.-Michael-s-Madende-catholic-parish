@@ -82,7 +82,7 @@ export default function Donate() {
             {/* Hero Section */}
             <section className="py-4 md:py-20 text-center max-w-[1200px] mx-auto px-5 md:px-16">
                 <div>
-                    <div className="w-16 h-16 bg-[#ffdada] text-[#570013] rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-[#ffdada] text-[#570013] rounded-none flex items-center justify-center mx-auto mb-6">
                         <MdVolunteerActivism className="text-3xl" />
                     </div>
                     <h1 className="text-display-lg text-[#570013] mb-4">Support Our Mission</h1>
@@ -98,13 +98,13 @@ export default function Donate() {
 
                     {/* Feedback Messages */}
                     {submitError && (
-                        <div className="mb-6 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+                        <div className="mb-6 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-none px-4 py-3 text-sm">
                             <MdWarning className="shrink-0 text-lg" />
                             <span>{submitError}</span>
                         </div>
                     )}
                     {successMessage && (
-                        <div className="mb-6 flex items-start gap-2 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-4 text-sm font-medium shadow-sm">
+                        <div className="mb-6 flex items-start gap-2 bg-green-50 border border-green-200 text-green-800 rounded-none px-4 py-4 text-sm font-medium shadow-sm">
                             <MdFavorite className="shrink-0 text-xl text-green-600 mt-0.5" />
                             <span>{successMessage}</span>
                         </div>
@@ -135,7 +135,7 @@ export default function Donate() {
                                         key={val}
                                         type="button"
                                         onClick={() => setAmount(val)}
-                                        className={`py-3 rounded-lg border font-bold transition-colors ${amount === val ? 'bg-[#570013] border-[#570013] text-white' : 'border-[#e0bfbf] text-[#413d33] hover:border-[#570013] hover:text-[#570013]'}`}
+                                        className={`py-3 rounded-none border font-bold transition-colors ${amount === val ? 'bg-[#570013] border-[#570013] text-white' : 'border-[#e0bfbf] text-[#413d33] hover:border-[#570013] hover:text-[#570013]'}`}
                                     >
                                         KES {Number(val).toLocaleString()}
                                     </button>
@@ -247,8 +247,8 @@ export default function Donate() {
                         
                         {loading ? (
                             <div className="space-y-4">
-                                <div className="h-20 bg-gray-200 animate-pulse rounded-lg" />
-                                <div className="h-20 bg-gray-200 animate-pulse rounded-lg" />
+                                <div className="h-20 bg-gray-200 animate-pulse rounded-none" />
+                                <div className="h-20 bg-gray-200 animate-pulse rounded-none" />
                             </div>
                         ) : campaigns.length > 0 ? (
                             <div className="space-y-5">
@@ -258,8 +258,8 @@ export default function Donate() {
                                             <h4 className="font-bold text-[#570013]">{c.title}</h4>
                                             <span className="text-caption font-bold bg-[#fed65b] text-[#745c00] px-2 py-0.5 rounded">{c.progress}%</span>
                                         </div>
-                                        <div className="w-full bg-[#e0bfbf] rounded-full h-1.5 mb-2 overflow-hidden">
-                                            <div className="bg-[#570013] h-1.5 rounded-full" style={{ width: `${c.progress}%` }}></div>
+                                        <div className="w-full bg-[#e0bfbf] rounded-none h-1.5 mb-2 overflow-hidden">
+                                            <div className="bg-[#570013] h-1.5 rounded-none" style={{ width: `${c.progress}%` }}></div>
                                         </div>
                                         <div className="flex justify-between text-[11px] uppercase tracking-wider text-[#584141]">
                                             <span>Raised: KES {c.amountRaised?.toLocaleString()}</span>

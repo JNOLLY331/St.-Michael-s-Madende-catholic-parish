@@ -82,7 +82,7 @@ export default function Contact() {
                 <p className="text-body-lg text-[#584141] max-w-2xl mx-auto">
                     Whether you have questions about the Sacraments, want to join a ministry, or simply need spiritual guidance, our doors and hearts are always open.
                 </p>
-                <div className="w-12 h-1 bg-[#735c00] mx-auto mt-4 rounded-full" />
+                <div className="w-12 h-1 bg-[#735c00] mx-auto mt-4 rounded-none" />
             </section>
 
             {/* Main Grid */}
@@ -104,7 +104,7 @@ export default function Contact() {
                                     required
                                     value={formData.full_name}
                                     onChange={handleChange}
-                                    className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                                    className="bg-white border border-[#e0bfbf] rounded-none p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                                 />
                             </div>
                             <div className="flex flex-col gap-2">
@@ -117,7 +117,7 @@ export default function Contact() {
                                     required
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                                    className="bg-white border border-[#e0bfbf] rounded-none p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                                 />
                             </div>
                         </div>
@@ -131,7 +131,7 @@ export default function Contact() {
                                 placeholder="+254 700 000 000"
                                 value={formData.phone}
                                 onChange={handleChange}
-                                className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                                className="bg-white border border-[#e0bfbf] rounded-none p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                             />
                         </div>
 
@@ -144,7 +144,7 @@ export default function Contact() {
                                     name="department"
                                     value={formData.department}
                                     onChange={handleChange}
-                                    className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                                    className="bg-white border border-[#e0bfbf] rounded-none p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                                 >
                                     <option value="">— Select a department (optional) —</option>
                                     {departments.map((dept) => (
@@ -165,7 +165,7 @@ export default function Contact() {
                                 minLength={5}
                                 value={formData.subject}
                                 onChange={handleChange}
-                                className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
+                                className="bg-white border border-[#e0bfbf] rounded-none p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all"
                             />
                         </div>
 
@@ -181,14 +181,14 @@ export default function Contact() {
                                 maxLength={5000}
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="bg-white border border-[#e0bfbf] rounded-lg p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all resize-none"
+                                className="bg-white border border-[#e0bfbf] rounded-none p-3 text-body-md focus:outline-none focus:border-[#570013] focus:ring-1 focus:ring-[#570013] transition-all resize-none"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={sending}
-                            className={`w-full py-4 rounded-lg text-label-md text-white flex items-center justify-center gap-2 group transition-all bg-[#800020] hover:bg-[#570013] disabled:opacity-60`}
+                            className={`w-full py-4 rounded-none text-label-md text-white flex items-center justify-center gap-2 group transition-all bg-[#800020] hover:bg-[#570013] disabled:opacity-60`}
                         >
                             {sending ? (
                                 <><FaSync size={20} className="animate-spin" /> Sending…</>
@@ -224,7 +224,7 @@ export default function Contact() {
                         },
                     ].map(({ icon, title, content, hours }) => (
                         <div key={title} className="bg-white border border-[#e0bfbf] p-6 rounded-xl flex items-start gap-4 hover:shadow-md transition-shadow">
-                            <div className="bg-[#fed65b] text-[#745c00] p-3 rounded-full shrink-0 flex items-center justify-center">
+                            <div className="bg-[#fed65b] text-[#745c00] p-3 rounded-none shrink-0 flex items-center justify-center">
                                 {icon}
                             </div>
                             <div className="w-full">
@@ -250,16 +250,16 @@ export default function Contact() {
                         <h4 className="text-label-md text-[#4b463c] uppercase tracking-widest mb-4">Join our Digital Community</h4>
                         <div className="flex gap-4">
                             {parish.facebook && (
-                                <a href={parish.facebook} title="Facebook" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                                <a href={parish.facebook} title="Facebook" className="w-12 h-12 bg-white rounded-none flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
                                     <FaFacebookF size={20} />
                                 </a>
                             )}
                             {parish.youtube && (
-                                <a href={parish.youtube} title="YouTube" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                                <a href={parish.youtube} title="YouTube" className="w-12 h-12 bg-white rounded-none flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
                                     <FaYoutube size={20} />
                                 </a>
                             )}
-                            <a href={parish.website ? parish.website : '#'} title="Website" className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
+                            <a href={parish.website ? parish.website : '#'} title="Website" className="w-12 h-12 bg-white rounded-none flex items-center justify-center text-[#570013] border border-[#e0bfbf] hover:bg-[#570013] hover:text-white transition-all shadow-sm">
                                 <FaRss size={20} />
                             </a>
                         </div>

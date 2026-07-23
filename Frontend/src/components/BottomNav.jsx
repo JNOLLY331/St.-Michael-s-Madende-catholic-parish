@@ -6,7 +6,7 @@ const tabs = [
     { label: 'Mass', to: '/mass-schedule', icon: 'church' },
     { label: 'Events', to: '/events', icon: 'calendar_month' },
     { label: 'Donate', to: '/donate', icon: 'favorite' },
-    { label: 'More', to: '/about', icon: 'menu' },
+    { label: 'Account', to: '/login', icon: 'person' },
 ];
 
 export default function BottomNav() {
@@ -19,7 +19,7 @@ export default function BottomNav() {
     };
 
     return (
-        <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#570013]/95 backdrop-blur-md border-t border-[#800020] shadow-[0_-4px_12px_rgba(0,0,0,0.3)] h-16 flex justify-around items-center px-5">
+        <nav className="md:hidden fixed bottom-0 left-0 w-full z-[100] bg-[#570013]/95 backdrop-blur-md border-t border-[#800020] shadow-[0_-4px_12px_rgba(0,0,0,0.3)] h-16 flex justify-around items-center px-5">
             {tabs.map(({ label, to, icon }) => {
                 const active = pathname === to || (to !== '/' && pathname.startsWith(to));
                 return (

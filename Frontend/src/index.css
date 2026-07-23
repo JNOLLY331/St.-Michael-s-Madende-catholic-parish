@@ -309,7 +309,7 @@ body {
   position: relative;
   width: 52px;
   height: 26px;
-  border-radius: 9999px;
+  border-radius: 9999px !important;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
@@ -324,7 +324,7 @@ body {
   left: 3px;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: 50% !important;
   background: #ffe088;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
     background 0.3s ease, box-shadow 0.3s ease;

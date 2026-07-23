@@ -137,8 +137,8 @@ export default function Navbar() {
                             <div className="absolute inset-0 bg-gradient-to-tr from-[#ffae00] to-[#ffe088] opacity-80" />
                             <MdChurch className="text-[#570013] text-2xl relative z-10 drop-shadow-sm" />
                         </div>
-                        <div className="text-left flex flex-col justify-center">
-                            <span className="font-oswald font-black text-white text-[20px] leading-tight tracking-[0.03em] drop-shadow-md">
+                        <div className="text-left hidden sm:flex flex-col justify-center">
+                            <span className="font-oswald font-black text-white text-[18px] xl:text-[20px] leading-tight tracking-[0.03em] drop-shadow-md">
                                 ST. MICHAEL'S
                             </span>
                             <span className="relative inline-block text-[10.5px] font-oswald tracking-[0.25em] font-medium uppercase mt-0.5" style={{ color: '#c5832b', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
@@ -182,7 +182,7 @@ export default function Navbar() {
                                 >
                                     <button
                                         onClick={() => handleNavClick(link.to)}
-                                        className="relative flex items-center whitespace-nowrap gap-1.5 px-3 py-1.5 outline-none font-sans font-bold text-[16px] transition-colors duration-200"
+                                        className="relative flex items-center whitespace-nowrap gap-1 px-1.5 xl:gap-1.5 xl:px-3 py-1.5 outline-none font-sans font-bold text-[14px] xl:text-[16px] uppercase tracking-wide transition-colors duration-200"
                                         style={{ color: isPathActive || isHovered ? '#fff' : 'rgba(255,255,255,0.75)' }}
                                     >
                                         {link.label}
@@ -190,11 +190,11 @@ export default function Navbar() {
                                             <MdExpandMore className={`text-lg transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMegaMenuOpen ? '-rotate-180 text-[#ffe088]' : ''}`} />
                                         )}
 
-                                        {/* Hover Indicator Background (Mac OS style pill) */}
+                                        {/* Hover Indicator Background */}
                                         {isHovered && (
                                             <motion.div
                                                 layoutId="desktopNavHoverIndicator"
-                                                className="absolute inset-0 bg-white/10 rounded-full border border-white/5"
+                                                className="absolute inset-0 bg-white/10 rounded-none border border-white/5"
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 exit={{ opacity: 0 }}
@@ -267,7 +267,7 @@ export default function Navbar() {
                         {/* Portal/Dashboard Auth Button */}
                         <button
                             onClick={() => handleNavClick(isAuthenticated ? '/dashboard' : '/login')}
-                            className={`group hidden xl:flex flex-row items-center justify-center h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 hover:border-white/40 backdrop-blur-md transition-all duration-300 shadow-sm ${isAuthenticated ? 'w-auto px-4 gap-2' : 'w-10'}`}
+                            className={`group hidden xl:flex flex-row items-center justify-center h-10 rounded-none border border-white/20 bg-white/5 hover:bg-white/15 hover:border-white/40 backdrop-blur-md transition-all duration-300 shadow-sm ${isAuthenticated ? 'w-auto px-4 gap-2' : 'w-10'}`}
                             title={isAuthenticated ? "Dashboard" : "Parishioner Portal"}
                         >
                             <MdPerson className="text-xl text-white/90 group-hover:text-white transition-colors" />
@@ -279,20 +279,20 @@ export default function Navbar() {
                         {/* Beautiful Glow Primary Button */}
                         <button
                             onClick={() => handleNavClick('/donate')}
-                            className="hidden md:flex relative group items-center justify-center px-6 py-2.5 rounded-full overflow-hidden outline-none"
+                            className="hidden md:flex relative group items-center justify-center px-6 py-2.5 rounded-none overflow-hidden outline-none"
                         >
                             <span className="absolute inset-0 bg-[#ffe088]" />
                             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] group-hover:animate-[shimmer_1.5s_infinite]" />
                             <span className="relative z-10 font-oswald font-extrabold text-[13px] tracking-[0.1em] text-[#40000b] uppercase mt-0.5">
                                 Donate
                             </span>
-                            <div className="absolute inset-0 rounded-full ring-2 ring-[#ffe088]/40 ring-offset-2 ring-offset-[#570013] group-hover:ring-[#ffe088] transition-all opacity-0 group-hover:opacity-100" />
+                            <div className="absolute inset-0 rounded-none ring-2 ring-[#ffe088]/40 ring-offset-2 ring-offset-[#570013] group-hover:ring-[#ffe088] transition-all opacity-0 group-hover:opacity-100" />
                         </button>
 
                         {/* Mobile Menu Hamburger */}
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
-                            className="lg:hidden relative w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center overflow-hidden hover:bg-white/10 transition-colors"
+                            className="lg:hidden relative w-10 h-10 rounded-none border border-white/20 bg-white/5 flex items-center justify-center overflow-hidden hover:bg-white/10 transition-colors"
                         >
                             <div className="relative w-4 h-4 flex flex-col justify-between items-center group">
                                 <span className={`block w-full h-[1.5px] bg-white rounded-full transition-transform duration-500 ease-in-out origin-center ${menuOpen ? 'translate-y-[7.25px] rotate-45 bg-[#ffe088]' : ''}`} />
@@ -314,7 +314,7 @@ export default function Navbar() {
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                         className="fixed inset-0 top-0 left-0 w-full h-[100dvh] z-[-1] pt-[90px] pointer-events-auto overflow-y-auto flex flex-col hide-scrollbar"
                         style={{
-                            background: 'linear-gradient(160deg, rgba(40,0,10,0.95) 0%, rgba(10,0,0,0.98) 100%)',
+                            background: 'linear-gradient(160deg, rgba(121, 2, 31, 0.95) 0%, rgba(143, 0, 0, 0.98) 100%)',
                             backdropFilter: 'blur(50px)',
                             WebkitBackdropFilter: 'blur(50px)',
                         }}
@@ -350,7 +350,7 @@ export default function Navbar() {
                                                 <div className="flex items-center gap-3">
                                                     <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${isPathActive ? 'bg-[#ffe088] shadow-[0_0_10px_#ffe088]' : 'bg-transparent'}`} />
                                                     <span
-                                                        className={`font-oswald font-medium text-lg sm:text-2xl uppercase tracking-wider transition-colors duration-300 ${isPathActive ? 'text-[#ffe088] drop-shadow-md' : 'text-white/80'}`}
+                                                        className={`font-oswald font-medium text-sm sm:text-base uppercase tracking-wider transition-colors duration-300 ${isPathActive ? 'text-[#ffe088] drop-shadow-md' : 'text-white/80'}`}
                                                     >
                                                         {link.label}
                                                     </span>
@@ -403,7 +403,7 @@ export default function Navbar() {
                                 transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                                 className="mt-6 flex flex-col gap-4"
                             >
-                                <button onClick={() => { handleNavClick('/donate'); setMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#f5c842] to-[#ffe088] text-[#40000b] shadow-[0_10px_30px_rgba(255,224,136,0.25)] min-h-[64px] rounded-full font-oswald font-extrabold text-[17px] uppercase tracking-[0.15em] relative overflow-hidden group hover:scale-[1.02] transition-transform">
+                                <button onClick={() => { handleNavClick('/donate'); setMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#f5c842] to-[#ffe088] text-[#40000b] shadow-[0_10px_30px_rgba(255,224,136,0.25)] min-h-[64px] rounded-none font-oswald font-extrabold text-[17px] uppercase tracking-[0.15em] relative overflow-hidden group hover:scale-[1.02] transition-transform">
                                     <span className="relative z-10 flex items-center justify-center gap-3">
                                         Donate Now <MdArrowForward className="text-xl" />
                                     </span>
@@ -411,10 +411,10 @@ export default function Navbar() {
                                 </button>
 
                                 <div className="grid grid-cols-2 gap-4 mt-2">
-                                    <button onClick={() => { handleNavClick(isAuthenticated ? '/dashboard' : '/login'); setMenuOpen(false); }} className="w-full min-h-[56px] border border-white/15 rounded-full flex items-center justify-center gap-3 text-white/90 font-oswald font-medium tracking-wide uppercase hover:bg-white/10 hover:border-white/30 transition-colors">
+                                    <button onClick={() => { handleNavClick(isAuthenticated ? '/dashboard' : '/login'); setMenuOpen(false); }} className="w-full min-h-[56px] border border-white/15 rounded-none flex items-center justify-center gap-3 text-white/90 font-oswald font-medium tracking-wide uppercase hover:bg-white/10 hover:border-white/30 transition-colors">
                                         <MdPerson className="text-2xl text-[#ffe088]" /> {isAuthenticated ? 'Dashboard' : 'Portal'}
                                     </button>
-                                    <button onClick={toggleTheme} className="w-full min-h-[56px] border border-white/15 rounded-full flex items-center justify-center gap-3 text-white/90 font-oswald font-medium tracking-wide uppercase hover:bg-white/10 hover:border-white/30 transition-colors">
+                                    <button onClick={toggleTheme} className="w-full min-h-[56px] border border-white/15 rounded-none flex items-center justify-center gap-3 text-white/90 font-oswald font-medium tracking-wide uppercase hover:bg-white/10 hover:border-white/30 transition-colors">
                                         <DynamicIcon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} className="text-2xl text-[#ffe088]" /> {theme === 'dark' ? 'Light' : 'Dark'}
                                     </button>
                                 </div>

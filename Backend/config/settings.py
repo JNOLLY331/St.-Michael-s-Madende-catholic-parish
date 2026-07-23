@@ -44,6 +44,8 @@ ALLOWED_HOSTS = [
     ".ngrok-free.dev",   # ngrok free tunnel subdomains (alternate TLD)
     ".ngrok.io",         # ngrok legacy subdomains
     ".ngrok-app.io",     # ngrok app subdomains
+    ".onrender.com",
+    ".vercel.app",
 ]
 ALLOWED_HOSTS += [
     h for h in config('ALLOWED_HOSTS', default='').split(',') if h
@@ -194,9 +196,14 @@ if DEBUG:
         r"^https://[\w-]+\.ngrok-free\.dev$",
         r"^https://[\w-]+\.ngrok\.io$",
         r"^https://[\w-]+\.ngrok-app\.io$",
+        r"^https://.*\.vercel\.app$",
+        r"^https://.*\.onrender\.com$",
     ]
 else:
-    CORS_ALLOWED_ORIGIN_REGEXES = []
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^https://.*\.vercel\.app$",
+        r"^https://.*\.onrender\.com$",
+    ]
 
 # Required so cookies/auth headers pass through ngrok / cross-origin
 CORS_ALLOW_CREDENTIALS = True
@@ -400,6 +407,19 @@ if not DEBUG:
     # If your frontend (Vercel) or any browser-based client sends
     # cookies/CSRF tokens, list the exact origins here.
     CSRF_TRUSTED_ORIGINS = [
+        "https://*.vercel.app",
+        "https://*.onrender.com",
         "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
         "https://st-michael-s-madende-catholic-parish.onrender.com",
+    ]
+else:
+    CSRF_TRUSTED_ORIGINS = [
+        "https://*.vercel.app",
+        "https://*.onrender.com",
+        "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
+        "https://st-michael-s-madende-catholic-parish.onrender.com",
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
     ]

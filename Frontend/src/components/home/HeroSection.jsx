@@ -125,12 +125,12 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
     { icon: MdPeople, value: '3,200+', label: 'Parishioners' },
     { icon: MdLocationOn, value: 'Madende', label: 'Location' },
   ];
-  
+
   // Format the heading so it's not gigantic or overly redundant
   let rawHeading = (hero.headingLine1 + ' ' + (hero.headingLine2 || '')).trim();
   // if backend sent identical lines or something redundant:
   if (rawHeading.toLowerCase().includes('catholic church') && rawHeading.length > 25) {
-     rawHeading = rawHeading.replace(/Catholic Church/i, '').trim();
+    rawHeading = rawHeading.replace(/Catholic Church/i, '').trim();
   }
 
   return (
@@ -271,7 +271,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
             }}
           >
             {rawHeading}
-            
+
             <br />
             <span
               className="relative inline-block mt-1 sm:mt-2"
@@ -370,7 +370,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
         </div>
 
         {/* Right side reading card... */}
-        <div className="hidden lg:block w-full max-w-[420px] shrink-0" style={{ animation: 'readingCardIn 0.9s cubic-bezier(0.22,1,0.36,1) both', animationDelay: '0.3s' }}>
+        <div className="hidden lg:block w-full max-w-[420px] shrink-0 -mt-10" style={{ animation: 'readingCardIn 0.9s cubic-bezier(0.22,1,0.36,1) both', animationDelay: '0.3s' }}>
           <div
             className="relative rounded-[2rem] text-center text-white overflow-hidden"
             style={{

@@ -129,19 +129,19 @@ export default function Navbar() {
                 {/* Animated colored glow bar */}
                 <div className="w-full h-[1px] opacity-60" style={{ background: 'linear-gradient(90deg, transparent, #ffe088, #ff6b35, #ffe088, transparent)', backgroundSize: '200% 100%', animation: 'footerGlowSweep 4s linear infinite' }} />
 
-                <div className={`w-full max-w-[1440px] px-4 lg:px-8 transition-all duration-700 ease-out flex items-center justify-between ${getPadding()}`}>
+                <div className={`w-full px-4 lg:px-6 transition-all duration-700 ease-out flex items-center gap-4 ${getPadding()}`}>
 
-                    {/* Brand / Logo Area */}
-                    <button onClick={() => handleNavClick('/')} className="flex items-center gap-4 cursor-pointer group shrink-0 outline-none">
-                        <div className="w-11 h-11 rounded-2xl bg-[#ffe088] flex items-center justify-center shadow-lg shadow-[#ffe088]/20 group-hover:scale-105 group-hover:rotate-[8deg] transition-all duration-500 overflow-hidden relative">
+                    {/* Brand / Logo — pinned far left, never grows */}
+                    <button onClick={() => handleNavClick('/')} className="flex items-center gap-3 cursor-pointer group shrink-0 outline-none mr-4">
+                        <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-2xl bg-[#ffe088] flex items-center justify-center shadow-lg shadow-[#ffe088]/20 group-hover:scale-105 group-hover:rotate-[8deg] transition-all duration-500 overflow-hidden relative">
                             <div className="absolute inset-0 bg-gradient-to-tr from-[#ffae00] to-[#ffe088] opacity-80" />
-                            <MdChurch className="text-[#570013] text-2xl relative z-10 drop-shadow-sm" />
+                            <MdChurch className="text-[#570013] text-xl lg:text-2xl relative z-10 drop-shadow-sm" />
                         </div>
-                        <div className="text-left hidden sm:flex flex-col justify-center">
-                            <span className="font-oswald font-black text-white text-[18px] xl:text-[20px] leading-tight tracking-[0.03em] drop-shadow-md">
+                        <div className="text-left hidden lg:flex flex-col justify-center">
+                            <span className="font-oswald font-black text-white text-[16px] xl:text-[18px] leading-tight tracking-[0.04em] drop-shadow-md">
                                 ST. MICHAEL'S
                             </span>
-                            <span className="relative inline-block text-[10.5px] font-oswald tracking-[0.25em] font-medium uppercase mt-0.5" style={{ color: '#c5832b', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                            <span className="relative inline-block text-[9px] font-oswald tracking-[0.25em] font-medium uppercase mt-0.5" style={{ color: '#c5832b', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                                 <span className="opacity-0">Catholic Church</span>
                                 <motion.span
                                     className="absolute left-0 top-0 bottom-0 whitespace-nowrap overflow-hidden border-r-[2px] border-[#c5832b]"
@@ -160,8 +160,8 @@ export default function Navbar() {
                         </div>
                     </button>
 
-                    {/* Desktop Navigation Links */}
-                    <nav className="hidden lg:flex items-center gap-1.5 relative h-full">
+                    {/* Desktop Navigation Links — flex-1 so it fills remaining space */}
+                    <nav className="hidden lg:flex flex-1 items-center justify-center gap-0 relative h-full overflow-hidden">
                         {navLinks.map((link) => {
                             const isPathActive = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
                             const isHovered = hoveredLink === link.label;
@@ -170,7 +170,7 @@ export default function Navbar() {
                             return (
                                 <div
                                     key={link.to}
-                                    className="relative px-2 py-2"
+                                    className="relative px-1 py-2"
                                     onMouseEnter={() => {
                                         setHoveredLink(link.label);
                                         if (link.dropdown) setIsDropdownOpen(link.label);
@@ -182,27 +182,27 @@ export default function Navbar() {
                                 >
                                     <button
                                         onClick={() => handleNavClick(link.to)}
-                                        className="relative flex items-center whitespace-nowrap gap-1 px-1.5 xl:gap-1.5 xl:px-3 py-1.5 outline-none font-sans font-bold text-[14px] xl:text-[16px] uppercase tracking-wide transition-colors duration-200"
-                                        style={{ color: isPathActive || isHovered ? '#fff' : 'rgba(255,255,255,0.75)' }}
+                                        className="relative flex items-center whitespace-nowrap gap-0.5 px-2 py-1.5 outline-none font-sans font-light text-[13px] xl:text-[14px] uppercase tracking-widest transition-colors duration-200"
+                                        style={{ color: isPathActive || isHovered ? '#fff' : 'rgba(255,255,255,0.65)' }}
                                     >
                                         {link.label}
                                         {link.dropdown && (
-                                            <MdExpandMore className={`text-lg transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMegaMenuOpen ? '-rotate-180 text-[#ffe088]' : ''}`} />
+                                            <MdExpandMore className={`text-base transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMegaMenuOpen ? '-rotate-180 text-[#ffe088]' : ''}`} />
                                         )}
 
                                         {/* Hover Indicator Background */}
                                         {isHovered && (
                                             <motion.div
                                                 layoutId="desktopNavHoverIndicator"
-                                                className="absolute inset-0 bg-white/10 rounded-none border border-white/5"
+                                                className="absolute inset-0 bg-white/8 rounded-none border-b border-[#ffe088]/60"
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 exit={{ opacity: 0 }}
-                                                transition={{ duration: 0.25, ease: 'easeOut' }}
+                                                transition={{ duration: 0.2, ease: 'easeOut' }}
                                             />
                                         )}
 
-                                        {/* Active page indicator dot */}
+                                        {/* Active page indicator */}
                                         {isPathActive && !isHovered && (
                                             <motion.div layoutId="desktopNavActiveIndicator" className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#ffe088] shadow-[0_0_8px_#ffe088]" />
                                         )}

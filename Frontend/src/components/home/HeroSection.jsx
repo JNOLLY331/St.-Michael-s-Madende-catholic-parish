@@ -273,14 +273,14 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
       </div>
 
       {/* ── Main content ── */}
-      <div className="relative z-10 w-full px-6 md:px-16 max-w-[1400px] mx-auto flex items-center justify-between gap-10">
+      <div className="relative z-10 w-full px-6 md:px-16 max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
 
         {/* ── Left: Text content ── */}
-        <div className="max-w-2xl text-white">
+        <div className="max-w-2xl text-white flex flex-col items-center text-center lg:items-start lg:text-left mt-10 md:mt-0">
 
           {/* Eyebrow */}
           <div
-            className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6"
+            className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 justify-center lg:justify-start"
             style={{ animation: 'fadeSlideUp 0.6s ease both', animationDelay: '0.05s' }}
           >
             <div className="w-6 sm:w-8 h-[1px]" style={{ background: 'linear-gradient(to right, rgba(255,224,136,0.6), transparent)' }} />
@@ -295,12 +295,12 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
             className="mb-3 sm:mb-5 leading-[1.1] tracking-tight"
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.75rem, 5.5vw, 4.8rem)',
+              fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
               fontWeight: 700,
               animation: 'heroTitleIn 0.8s cubic-bezier(0.22,1,0.36,1) both',
               animationDelay: '0.15s',
               color: '#ffffff',
-              textShadow: '0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbbbbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaaaaa, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15), 0 0 20px rgba(255,255,255,0.4), 0 0 45px rgba(255,224,136,0.3)',
+              textShadow: '0 1px 0px #e0e0e0, 0 2px 0px #cccccc, 0 3px 0px #b8b8b8, 0 4px 0px #a3a3a3, 0 5px 0px #8f8f8f, 0 6px 0px #7a7a7a, 0 12px 20px rgba(0,0,0, 0.4), 0 20px 40px rgba(255, 224, 136, 0.25)',
             }}
           >
             {hero.headingLine1}
@@ -327,7 +327,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
               style={{
                 fontFamily: 'var(--font-serif)',
                 color: '#ffe088',
-                textShadow: '0 1px 0 #c5832b, 0 2px 0 #a3691f, 0 3px 0 #855314, 0 4px 0 #6b400d, 0 5px 10px rgba(0,0,0,0.6), 0 0 12px rgba(255, 224, 136, 0.85), 0 0 25px rgba(255, 224, 136, 0.6), 0 0 40px rgba(255, 224, 136, 0.3)',
+                textShadow: '0 1px 0 #c5832b, 0 2px 0 #ab6e1b, 0 3px 0 #915a13, 0 4px 0 #78470a, 0 5px 0 #603604, 0 10px 15px rgba(0,0,0,0.6), 0 0 20px rgba(255, 224, 136, 0.8)',
                 verticalAlign: 'bottom',
                 fontSize: '1.05em',
                 lineHeight: '1',
@@ -356,7 +356,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* Subtext */}
           <p
-            className="text-white/65 text-sm md:text-lg leading-relaxed mb-6 md:mb-8 max-w-lg"
+            className="text-white/65 text-sm md:text-lg leading-relaxed mb-6 md:mb-8 max-w-lg mx-auto lg:mx-0"
             style={{ animation: 'fadeSlideUp 0.7s ease both', animationDelay: '0.35s' }}
           >
             A community rooted in faith, nourished by the Eucharist, and called to serve.
@@ -365,7 +365,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* CTA Buttons */}
           <div
-            className="flex flex-col sm:flex-row gap-4 mb-10"
+            className="flex flex-col sm:flex-row gap-4 mb-10 w-full sm:w-auto items-center justify-center lg:justify-start"
             style={{ animation: 'fadeSlideUp 0.7s ease both', animationDelay: '0.5s' }}
           >
             {hero.primaryButtonText && (
@@ -406,7 +406,7 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
 
           {/* Stat pills */}
           <div
-            className="flex flex-nowrap sm:flex-wrap gap-2 sm:gap-3 overflow-x-auto pb-2 -mb-2 sm:pb-0 sm:mb-0 hide-scrollbar"
+            className="flex flex-wrap gap-2 sm:gap-3 pb-2 -mb-2 sm:pb-0 sm:mb-0 hide-scrollbar justify-center lg:justify-start"
             style={{ animation: 'fadeSlideUp 0.7s ease both', animationDelay: '0.65s' }}
           >
             {stats.map((s, i) => (

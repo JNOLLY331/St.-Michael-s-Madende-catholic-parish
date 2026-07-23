@@ -122,22 +122,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Uses PostgreSQL via DATABASE_URL if available (e.g. on Render), 
+# otherwise falls back seamlessly to local SQLite.
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
-# NOTE: dj_database_url is imported but unused — if you intended to read
-# DATABASE_URL from the environment (e.g. Postgres in production), wire it
-# up like this instead:
-#
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-#         conn_max_age=600,
-#     )
-# }
 
 
 # Password validation

@@ -23,6 +23,8 @@ export const contactApi = {
         return apiClient.get(`${BASE}/messages/${qs}`);
     },
 
+    deleteMessage: (id) => apiClient.delete(`${BASE}/messages/${id}/`),
+
     // List published FAQs — pass { category: 'General', is_featured: true } to filter
     listFAQs: (params) => {
         const qs = params ? '?' + new URLSearchParams(params).toString() : '';

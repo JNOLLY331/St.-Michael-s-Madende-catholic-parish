@@ -109,4 +109,5 @@ export const apiClient = {
   /** Use this for file-upload payloads (passes raw FormData, skips JSON serialisation) */
   postForm: (path, formData, options) => request(path, { ...options, method: 'POST', body: formData, isFormData: true }),
   putForm: (path, formData, options) => request(path, { ...options, method: 'PUT', body: formData, isFormData: true }),
+  patchForm: (path, formData, options) => request(path, { ...options, method: 'PATCH', body: formData, isFormData: true }),
 };

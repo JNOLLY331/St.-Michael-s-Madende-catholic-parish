@@ -10,15 +10,17 @@ const BASE = '/gallery';
  *   GET /api/gallery/media/?album=<id>  filter by album
  */
 export const galleryApi = {
-    // List photo albums
-    listAlbums: () => apiClient.get(`${BASE}/albums/`),
-
-    // Get a specific album with its media
+    list: () => apiClient.get(`${BASE}/albums/`),
     getAlbum: (id) => apiClient.get(`${BASE}/albums/${id}/`),
-
-    // List all media items (optionally filtered by album id)
     listMedia: (params) => {
         const qs = params ? '?' + new URLSearchParams(params).toString() : '';
         return apiClient.get(`${BASE}/media/${qs}`);
     },
+    // Admin CRUD (auto-switches to FormData if attachments exist)
+    createAlbum: (data) => data instanceof FormData ? apiClient.postForm(`${BASE}/albums/`, data) : apiClient.post(`${BASE}/albums/`, data),
+    updateAlbum: (id, data) => data instanceof FormData ? apiClient.patchForm(`${BASE}/albums/${id}/`, data) : apiClient.patch(`${BASE}/albums/${id}/`, data),
+    deleteAlbum: (id) => apiClient.delete(`${BASE}/albums/${id}/`),
+    uploadMedia: (data) => data instanceof FormData ? apiClient.postForm(`${BASE}/media/`, data) : apiClient.post(`${BASE}/media/`, data),
+    updateMedia: (id, data) => data instanceof FormData ? apiClient.patchForm(`${BASE}/media/${id}/`, data) : apiClient.patch(`${BASE}/media/${id}/`, data),
+    deleteMedia: (id) => apiClient.delete(`${BASE}/media/${id}/`),
 };

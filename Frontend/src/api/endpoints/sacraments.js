@@ -29,4 +29,9 @@ export const sacramentsApi = {
 
     // List the authenticated user's own applications
     listMyApplications: () => apiClient.get(`${BASE}/applications/`),
+
+    // Admin CRUD for Applications
+    listAllApplications: () => apiClient.get(`${BASE}/applications/all/`),
+    updateApplication: (id, data) => apiClient.patch(`${BASE}/applications/${id}/`, data),
+    deleteApplication: (id) => apiClient.delete(`${BASE}/applications/${id}/`),
 };

@@ -31,4 +31,9 @@ export const donationsApi = {
         const qs = params ? '?' + new URLSearchParams(params).toString() : '';
         return apiClient.get(`${BASE}/${qs}`);
     },
+
+    // Admin CRUD for Donations
+    createDonation: (data) => apiClient.post(`${BASE}/`, data),
+    updateDonation: (id, data) => apiClient.patch(`${BASE}/${id}/`, data),
+    deleteDonation: (id) => apiClient.delete(`${BASE}/${id}/`),
 };

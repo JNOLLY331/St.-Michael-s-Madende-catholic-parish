@@ -30,7 +30,12 @@ export const eventsApi = {
     // Register the authenticated user for an event
     register: (eventId) => apiClient.post(`${BASE}/registrations/`, { event: eventId }),
 
-    // Cancel a registration by registration id
-    cancelRegistration: (registrationId) =>
-        apiClient.delete(`${BASE}/registrations/${registrationId}/`),
+    // Admin: create a new event (auto-switches to FormData if attachments exist)
+    create: (data) => data instanceof FormData ? apiClient.postForm(`${BASE}/`, data) : apiClient.post(`${BASE}/`, data),
+
+    // Admin: update an event by id
+    update: (id, data) => data instanceof FormData ? apiClient.patchForm(`${BASE}/${id}/`, data) : apiClient.patch(`${BASE}/${id}/`, data),
+
+    // Admin: delete an event by id
+    delete: (id) => apiClient.delete(`${BASE}/${id}/`),
 };

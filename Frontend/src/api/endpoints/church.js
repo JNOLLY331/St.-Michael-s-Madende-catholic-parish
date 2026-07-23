@@ -18,4 +18,9 @@ export const churchApi = {
   getMassSchedule: (options) => apiClient.get(`${BASE}/mass-schedule/`, options),
   getStatistics: (options) => apiClient.get(`${BASE}/statistics/`, options),
   getSaints: (options) => apiClient.get(`${BASE}/saints/`, options),
+
+  // Admin CRUD for Mass Schedule
+  createMassSchedule: (data) => apiClient.post(`${BASE}/mass-schedule/`, data),
+  updateMassSchedule: (id, data) => apiClient.patch(`${BASE}/mass-schedule/${id}/`, data),
+  deleteMassSchedule: (id) => apiClient.delete(`${BASE}/mass-schedule/${id}/`),
 };

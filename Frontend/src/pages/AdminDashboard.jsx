@@ -5,12 +5,13 @@ import {
     MdPersonAdd, MdSearch, MdCheckCircle, MdCancel, MdTrendingUp,
     MdDashboard, MdGroup, MdEvent, MdCampaign, MdVolunteerActivism,
     MdPhotoLibrary, MdSettings, MdLogout, MdChevronRight, MdMessage,
-    MdEmail, MdPhone, MdSave, MdClose, MdRefresh, MdWaterDrop, MdVerified,
+    MdEmail, MdPhone, MdSave, MdClose, MdRefresh, MdWaterDrop, MdVerified, MdOpenInNew
 } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
 import { useAuth } from '../context/AuthContext';
 import Settings from '../components/dashboard/Settings';
 import GenericDataView from '../components/dashboard/GenericDataView';
+import ModuleManager from '../components/dashboard/ModuleManager';
 
 /* ─── CountUp Hook ─── */
 function useCountUp(target, start = false) {
@@ -40,10 +41,12 @@ const sidebarItems = [
     { Icon: MdChurch, icon: 'church', label: 'Mass Schedule', id: 'mass' },
     { Icon: MdEvent, icon: 'event', label: 'Events', id: 'events' },
     { Icon: MdCampaign, icon: 'campaign', label: 'Announcements', id: 'announcements' },
+    { Icon: MdVolunteerActivism, icon: 'diversity_3', label: 'Ministries', id: 'ministries' },
     { Icon: MdVolunteerActivism, icon: 'volunteer_activism', label: 'Donations', id: 'donations' },
+    { Icon: MdWaterDrop, icon: 'water_drop', label: 'Sacraments', id: 'sacraments' },
     { Icon: MdPhotoLibrary, icon: 'photo_library', label: 'Gallery', id: 'gallery' },
+    { Icon: MdSettings, icon: 'settings', label: 'Settings', id: 'django_admin', isExternal: true },
     { Icon: MdPerson, icon: 'person', label: 'Admin Profile', id: 'profile' },
-    { Icon: MdSettings, icon: 'settings', label: 'Settings', id: 'settings' },
     { Icon: MdLogout, icon: 'logout', label: 'Logout', id: 'logout' },
 ];
 
@@ -354,8 +357,8 @@ export default function AdminDashboard() {
 
                 <nav className="flex-1 py-4 overflow-y-auto">
                     <div className={`space-y-1 ${sidebarOpen ? 'px-3' : 'px-2'}`}>
-                        {sidebarItems.map(({ Icon, label, id }) => {
-                            const isActive = activeTab === id;
+                        {sidebarItems.map(({ Icon, label, id, isExternal }) => {
+                            const isActive = activeTab === id && !isExternal;
                             const isLogout = id === 'logout';
                             return (
                                 <button
@@ -363,19 +366,27 @@ export default function AdminDashboard() {
                                     title={!sidebarOpen ? label : undefined}
                                     onClick={() => {
                                         if (isLogout) { logout(); navigate('/login'); }
+                                        else if (isExternal && id === 'django_admin') {
+                                            window.open(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/admin`, '_blank');
+                                        }
                                         else setActiveTab(id);
                                     }}
                                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left group border border-transparent ${isActive
                                         ? 'bg-gradient-to-r from-[#570013] to-[#800020] text-white shadow-md'
                                         : isLogout
                                             ? 'text-red-500 hover:bg-red-50 hover:text-red-600 hover:border-red-100'
-                                            : 'text-gray-600 hover:text-[#570013] hover:bg-[#570013]/5 hover:border-[#570013]/10'
+                                            : isExternal
+                                                ? 'bg-[#ffe088] text-[#570013] font-bold shadow-md hover:bg-[#ffae00]'
+                                                : 'text-gray-600 hover:text-[#570013] hover:bg-[#570013]/5 hover:border-[#570013]/10'
                                         }`}
                                 >
-                                    <Icon className={`text-[20px] flex-shrink-0 ${isActive ? 'text-[#ffe088]' : ''}`} />
+                                    <Icon className={`text-[20px] flex-shrink-0 ${isActive ? 'text-[#ffe088]' : isExternal ? 'text-[#570013]' : ''}`} />
                                     {sidebarOpen && (
-                                        <span className="text-[13px] font-bold whitespace-nowrap flex-1 tracking-wide">{label}</span>
+                                        <span className={`text-[13px] whitespace-nowrap flex-1 tracking-wide ${isExternal ? 'font-black uppercase tracking-widest' : 'font-bold'}`}>
+                                            {isExternal ? 'Root DB Access' : label}
+                                        </span>
                                     )}
+                                    {isExternal && sidebarOpen && <MdOpenInNew className="text-[#570013] text-sm" />}
                                     {sidebarOpen && isActive && (
                                         <MdChevronRight className="text-gray-400 text-sm ml-auto opacity-90" />
                                     )}
@@ -388,6 +399,7 @@ export default function AdminDashboard() {
                                 </button>
                             );
                         })}
+
                     </div>
                 </nav>
 
@@ -560,196 +572,10 @@ export default function AdminDashboard() {
                         </div>
                     )}
 
-                    {/* ══ PARISHIONERS TAB ══ */}
-                    {activeTab === 'parishioners' && (
-                        <div className="space-y-6 max-w-[1500px] mx-auto">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                <div>
-                                    <h2 className="font-black text-gray-900 text-2xl">Parishioners</h2>
-                                    <p className="text-gray-500 text-sm font-medium mt-1">Manage parish members, contacts, and sacramental status</p>
-                                </div>
-                                <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-md hover:-translate-y-0.5"
-                                    style={{ background: '#570013', color: '#ffe088' }}>
-                                    <MdPersonAdd className="text-base" />
-                                    Add Member
-                                </button>
-                            </div>
-
-                            {/* Search */}
-                            <div className="flex items-center gap-3 rounded-xl px-4 py-3.5 bg-white border border-gray-200 shadow-sm focus-within:border-[#570013]/50 focus-within:ring-2 focus-within:ring-[#570013]/10 transition-all">
-                                <MdSearch className="text-gray-400 text-[20px]" />
-                                <input
-                                    type="text"
-                                    placeholder="Search by name, email, or role..."
-                                    value={searchQuery}
-                                    onChange={e => setSearchQuery(e.target.value)}
-                                    className="bg-transparent text-gray-900 placeholder-gray-400 text-sm font-medium focus:outline-none flex-1"
-                                />
-                                {searchQuery && (
-                                    <button onClick={() => setSearchQuery('')} className="text-gray-400 hover:text-gray-600">
-                                        <MdClose className="text-base" />
-                                    </button>
-                                )}
-                            </div>
-
-                            {/* Table */}
-                            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                                <div className="overflow-x-auto">
-                                    <table className="w-full">
-                                        <thead>
-                                            <tr className="bg-gray-50/80 border-b border-gray-200">
-                                                {['Name', 'Email', 'Role', 'Status', 'Joined', 'Actions'].map(h => (
-                                                    <th key={h} className="text-left px-6 py-4 text-[11px] uppercase tracking-widest font-bold text-gray-500">{h}</th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {loadingParishioners ? (
-                                                <tr><td colSpan={6} className="text-center py-16 text-gray-500 text-sm font-semibold">Loading membership records...</td></tr>
-                                            ) : filteredParishioners.length === 0 ? (
-                                                <tr><td colSpan={6} className="text-center py-16 text-gray-500 text-sm font-semibold">No parishioners found matching your query.</td></tr>
-                                            ) : filteredParishioners.map(({ name, email, role, status, joined }) => (
-                                                <tr key={name} className="transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-none">
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className="w-9 h-9 rounded-full flex items-center justify-center text-[#ffe088] font-black text-sm flex-shrink-0 shadow-inner"
-                                                                style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
-                                                                {name[0]}
-                                                            </div>
-                                                            <span className="text-gray-900 font-bold text-[14px]">{name}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-gray-600 font-medium text-[13px]">{email}</td>
-                                                    <td className="px-6 py-4">
-                                                        <span className={`text-[11px] font-bold px-3 py-1 rounded-md border ${role === 'Clergy' ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-blue-100 text-blue-800 border-blue-200'}`}>
-                                                            {role}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-1.5">
-                                                            <span className={`w-2 h-2 rounded-full ${status === 'Active' ? 'bg-emerald-500' : 'bg-amber-400'}`} />
-                                                            <span className={`text-[13px] font-bold ${status === 'Active' ? 'text-emerald-700' : 'text-amber-600'}`}>{status}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-gray-500 font-medium text-[13px]">{joined}</td>
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex gap-1.5">
-                                                            <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                                                                <MdEdit className="text-[18px]" />
-                                                            </button>
-                                                            <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                                                <MdDelete className="text-[18px]" />
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* ══ MESSAGES TAB ══ */}
-                    {activeTab === 'messages' && (
-                        <div className="space-y-6 max-w-[1500px] mx-auto">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                <div>
-                                    <h2 className="font-black text-gray-900 text-2xl flex items-center gap-2">
-                                        <MdMessage className="text-[#570013]" /> User Messages
-                                    </h2>
-                                    <p className="text-gray-500 text-sm font-medium mt-1">
-                                        {messagesData.length} contact message{messagesData.length !== 1 ? 's' : ''} received
-                                    </p>
-                                </div>
-                                <button
-                                    onClick={() => { fetchMessages(); setLastRefresh(new Date()); }}
-                                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold border border-gray-200 hover:bg-gray-50 transition-colors text-gray-600"
-                                >
-                                    <MdRefresh className="text-base" /> Refresh
-                                </button>
-                            </div>
-
-                            {/* Search */}
-                            <div className="flex items-center gap-3 rounded-xl px-4 py-3.5 bg-white border border-gray-200 shadow-sm focus-within:border-[#570013]/50 focus-within:ring-2 focus-within:ring-[#570013]/10 transition-all">
-                                <MdSearch className="text-gray-400 text-[20px]" />
-                                <input
-                                    type="text"
-                                    placeholder="Search by name, subject, or email..."
-                                    value={searchQuery}
-                                    onChange={e => setSearchQuery(e.target.value)}
-                                    className="bg-transparent text-gray-900 placeholder-gray-400 text-sm font-medium focus:outline-none flex-1"
-                                />
-                                {searchQuery && (
-                                    <button onClick={() => setSearchQuery('')} className="text-gray-400 hover:text-gray-600">
-                                        <MdClose className="text-base" />
-                                    </button>
-                                )}
-                            </div>
-
-                            {/* Messages grid */}
-                            {loadingMessages ? (
-                                <div className="text-center py-16 text-gray-400 text-sm font-medium">Loading messages...</div>
-                            ) : filteredMessages.length === 0 ? (
-                                <div className="text-center py-20 text-gray-400">
-                                    <MdMessage className="text-5xl mx-auto mb-3 opacity-30" />
-                                    <p className="font-medium text-sm">No messages found.</p>
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                                    {filteredMessages.map((msg, i) => (
-                                        <div key={i} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 hover:shadow-md transition-shadow relative overflow-hidden group">
-                                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#570013] to-[#ffe088] opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <div className="flex items-start justify-between mb-3">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm flex-shrink-0"
-                                                        style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
-                                                        {(msg.full_name || msg.email || 'A')[0].toUpperCase()}
-                                                    </div>
-                                                    <div>
-                                                        <p className="font-bold text-gray-900 text-[14px]">{msg.full_name || 'Anonymous'}</p>
-                                                        <p className="text-gray-400 text-[11px] font-medium">{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : '—'}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p className="font-bold text-gray-700 text-[13px] mb-2">{msg.subject || 'No Subject'}</p>
-                                            <p className="text-gray-500 text-[12px] leading-relaxed line-clamp-3">{msg.message || '—'}</p>
-                                            <div className="flex items-center gap-3 mt-3 pt-3 border-t border-gray-100">
-                                                {msg.email && (
-                                                    <a href={`mailto:${msg.email}`} className="flex items-center gap-1 text-[11px] text-[#570013] hover:underline font-bold">
-                                                        <MdEmail className="text-sm" /> {msg.email}
-                                                    </a>
-                                                )}
-                                                {msg.phone && (
-                                                    <a href={`tel:${msg.phone}`} className="flex items-center gap-1 text-[11px] text-gray-500 hover:underline">
-                                                        <MdPhone className="text-sm" /> {msg.phone}
-                                                    </a>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    {/* ══ SETTINGS TAB ══ */}
-                    {activeTab === 'settings' && (
-                        <div className="animate-fade-in-up max-w-[1500px] mx-auto">
-                            <Settings />
-                        </div>
-                    )}
-
-                    {/* ══ GENERIC DATA TABS ══ */}
-                    {!['dashboard', 'parishioners', 'messages', 'settings', 'profile'].includes(activeTab) && (
-                        <div className="max-w-[1500px] mx-auto">
-                            <GenericDataView
-                                type={activeTab}
-                                title={sidebarItems.find(s => s.id === activeTab)?.label}
-                                subtitle={`Manage ${sidebarItems.find(s => s.id === activeTab)?.label?.toLowerCase()} entries`}
-                                icon={sidebarItems.find(s => s.id === activeTab)?.icon || 'list'}
-                            />
+                    {/* ══ MODULE MANAGER TABS (Includes Parishioners & Messages now!) ══ */}
+                    {['events', 'announcements', 'ministries', 'gallery', 'mass', 'donations', 'sacraments', 'parishioners', 'messages'].includes(activeTab) && (
+                        <div className="max-w-[1500px] mx-auto animate-fade-in-up">
+                            <ModuleManager moduleKey={activeTab} key={activeTab} />
                         </div>
                     )}
 

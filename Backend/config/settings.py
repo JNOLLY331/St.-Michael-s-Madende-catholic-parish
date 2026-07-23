@@ -172,28 +172,7 @@ if not DEBUG:
 else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
-
-if CLOUDINARY_URL:
-    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
-else:
-    cloudinary.config(
-        cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
-        api_key=os.getenv('CLOUDINARY_API_KEY'),
-        api_secret=os.getenv('CLOUDINARY_API_SECRET'),
-        secure=True,
-    )
-
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": STATICFILES_STORAGE,
-    },
-}
-
-MEDIA_URL = f"https://res.cloudinary.com/{cloudinary.config().cloud_name}/image/upload/"
+# (Cloudinary settings consolidated further down the file)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -209,6 +188,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
+    "https://st-michael-s-madende-catholic-parish.onrender.com",
 ]
 
 # FIX: wildcard ngrok regex + CORS_ALLOW_CREDENTIALS=True means ANY ngrok
@@ -359,11 +339,12 @@ STORAGES = {
     },
 }
 
-# Media URL (Cloudinary CDN) — overrides the local /media/ default above.
-MEDIA_URL = f"https://res.cloudinary.com/{cloudinary.config().cloud_name}/"
+# Safely compute Media URL (Cloudinary CDN)
+_cloud_name = cloudinary.config().cloud_name or ""
+MEDIA_URL = f"https://res.cloudinary.com/{_cloud_name}/" if _cloud_name else "/media/"
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': cloudinary.config().cloud_name,
+    'CLOUD_NAME': _cloud_name,
     'API_KEY': cloudinary.config().api_key,
     'API_SECRET': cloudinary.config().api_secret,
 }
@@ -424,4 +405,5 @@ if not DEBUG:
     # cookies/CSRF tokens, list the exact origins here.
     CSRF_TRUSTED_ORIGINS = [
         "https://st-michael-s-madende-catholic-paris-gilt.vercel.app",
+        "https://st-michael-s-madende-catholic-parish.onrender.com",
     ]

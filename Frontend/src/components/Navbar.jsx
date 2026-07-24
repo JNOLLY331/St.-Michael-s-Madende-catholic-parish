@@ -137,7 +137,8 @@ export default function Navbar() {
                             <div className="absolute inset-0 bg-gradient-to-tr from-[#ffae00] to-[#ffe088] opacity-80" />
                             <MdChurch className="text-[#570013] text-xl lg:text-2xl relative z-10 drop-shadow-sm" />
                         </div>
-                        <div className="text-left hidden lg:flex flex-col justify-center">
+                        
+                        <div className="text-left lg:flex flex flex-col justify-center">
                             <span className="font-oswald font-black text-white text-[16px] xl:text-[18px] leading-tight tracking-[0.04em] drop-shadow-md">
                                 ST. MICHAEL'S
                             </span>

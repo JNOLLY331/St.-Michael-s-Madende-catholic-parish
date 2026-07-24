@@ -108,7 +108,7 @@ export default function Navbar() {
                     y: 0,
                     width: '100%',
                 }}
-                className={`w-full relative pointer-events-auto transition-all duration-700 flex justify-between items-center ease-out flex flex-col justify-center items-center ${scrolled ? 'backdrop-blur-xl border-b border-white/5 shadow-2xl' : 'shadow-none'
+                className={`w-full relative pointer-events-auto transition-all duration-700 ease-out flex flex-col justify-center items-center ${scrolled ? 'backdrop-blur-xl border-b border-white/5 shadow-2xl' : 'shadow-none'
                     }`}
             >
                 {/* Slim info top bar - fade out nicely when scrolling */}
@@ -129,7 +129,7 @@ export default function Navbar() {
                 {/* Animated colored glow bar */}
                 <div className="w-full h-[1px] opacity-60" style={{ background: 'linear-gradient(90deg, transparent, #ffe088, #ff6b35, #ffe088, transparent)', backgroundSize: '200% 100%', animation: 'footerGlowSweep 4s linear infinite' }} />
 
-                <div className={`w-full px-4 lg:px-6 transition-all duration-700 ease-out flex items-center gap-4 ${getPadding()}`}>
+                <div className={`w-full px-4 lg:px-6 transition-all duration-700 flex justify-between items-center ease-out flex items-center gap-4 ${getPadding()}`}>
 
                     {/* Brand / Logo — pinned far left, never grows */}
                     <button onClick={() => handleNavClick('/')} className="flex items-center gap-3 cursor-pointer group shrink-0 outline-none mr-4">

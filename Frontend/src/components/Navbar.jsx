@@ -108,7 +108,7 @@ export default function Navbar() {
                     y: 0,
                     width: '100%',
                 }}
-                className={`w-full relative pointer-events-auto transition-all duration-700 ease-out flex flex-col justify-center items-center ${scrolled ? 'backdrop-blur-xl border-b border-white/5 shadow-2xl' : 'shadow-none'
+                className={`w-full relative pointer-events-auto transition-all duration-700 flex justify-between items-center ease-out flex flex-col justify-center items-center ${scrolled ? 'backdrop-blur-xl border-b border-white/5 shadow-2xl' : 'shadow-none'
                     }`}
             >
                 {/* Slim info top bar - fade out nicely when scrolling */}

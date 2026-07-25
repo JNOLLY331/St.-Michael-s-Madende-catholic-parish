@@ -21,7 +21,7 @@ export function useGalleryData() {
             try {
                 // Fetch albums and flat media list in parallel
                 const [albumData, mediaData] = await Promise.all([
-                    galleryApi.listAlbums(),
+                    galleryApi.list(),
                     galleryApi.listMedia(),
                 ]);
 

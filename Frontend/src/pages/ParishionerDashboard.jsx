@@ -6,7 +6,7 @@ import {
     MdLogout, MdDashboard, MdChevronRight, MdSearch,
     MdTrendingUp, MdFavorite, MdStar, MdCalendarMonth,
     MdEdit, MdSave, MdClose, MdEmail, MdPhone, MdVerified, MdCheckCircle,
-    MdCameraAlt, MdLock, MdVisibility, MdVisibilityOff,
+    MdCameraAlt, MdLock, MdVisibility, MdVisibilityOff, MdMenu,
 } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
 import { useAuth } from '../context/AuthContext';
@@ -52,14 +52,15 @@ function StatCard({ gradient, Icon, label, value, unit = '', change, started }) 
     const num = typeof value === 'number' ? Math.round(value) : 0;
     const count = useCountUp(num, started);
     return (
-        <div className={`relative rounded-2xl p-5 overflow-hidden cursor-default group hover:-translate-y-1 hover:shadow-lg transition-all duration-300 ${gradient} shadow-md`}
-            style={{ minHeight: 130 }}>
+        <div className={`relative p-5 overflow-hidden cursor-default group hover:-translate-y-1 hover:shadow-lg transition-all duration-300 ${gradient} shadow-md`}
+            style={{ minHeight: 120 }}>
             <div className="absolute -right-5 -bottom-5 w-24 h-24 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-500" />
-            <div className="absolute right-4 top-4 w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
+            {/* Circular icon container */}
+            <div className="absolute right-4 top-4 w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                 <Icon className="text-white text-[18px]" />
             </div>
             <p className="text-white/90 text-[11px] font-sans font-bold tracking-widest uppercase mb-1 drop-shadow-sm">{label}</p>
-            <p className="text-white font-black text-4xl font-mono tracking-tight drop-shadow-sm">{unit}{count.toLocaleString()}</p>
+            <p className="text-white font-black text-3xl font-mono tracking-tight drop-shadow-sm">{unit}{count.toLocaleString()}</p>
             {change !== undefined && (
                 <div className="flex items-center gap-1 mt-2">
                     <MdTrendingUp className="text-white/90 text-sm drop-shadow-sm" />
@@ -73,7 +74,7 @@ function StatCard({ gradient, Icon, label, value, unit = '', change, started }) 
 /* ─── Summary List Card ─── */
 function SummaryList({ title, items }) {
     return (
-        <div className="bg-white rounded-2xl py-2 px-5 border border-gray-200 shadow-sm transition-shadow hover:shadow-md">
+        <div className="bg-white py-2 px-5 border border-gray-200 shadow-sm transition-shadow hover:shadow-md">
             <div className="flex items-center justify-between py-3 mb-2 border-b border-gray-100">
                 <h3 className="font-bold text-gray-900 text-[15px]">{title}</h3>
                 <button className="text-[11px] font-bold uppercase tracking-wide text-[#570013] hover:underline">View All</button>
@@ -85,7 +86,7 @@ function SummaryList({ title, items }) {
                             <span className="w-2 h-2 rounded-full flex-shrink-0 bg-[#570013]/20" />
                             <span className="text-gray-700 text-[13px] font-bold">{item.name}</span>
                         </div>
-                        <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-md border ${item.badgeColor}`}>
+                        <span className={`text-[11px] font-bold px-2.5 py-0.5 border ${item.badgeColor}`}>
                             {item.badge}
                         </span>
                     </div>
@@ -106,7 +107,8 @@ export default function ParishionerDashboard() {
     const navigate = useNavigate();
     const { user, isAuthenticated, logout } = useAuth();
     const [activeTab, setActiveTab] = useState('dashboard');
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false); // default closed on mobile
+    const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
     const [started, setStarted] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [userStats, setUserStats] = useState({ donated: 0, events: 0, sacraments: 0 });
@@ -118,13 +120,21 @@ export default function ParishionerDashboard() {
     const [photoPreview, setPhotoPreview] = useState(null);
     const [savingProfile, setSavingProfile] = useState(false);
     const [profileMsg, setProfileMsg] = useState('');
-    // Change password state
     const [pwForm, setPwForm] = useState({ old_password: '', new_password: '', confirm_password: '' });
     const [savingPw, setSavingPw] = useState(false);
     const [pwMsg, setPwMsg] = useState('');
     const [showPw, setShowPw] = useState({ old: false, new: false, confirm: false });
     const photoInputRef = useRef(null);
     const statsRef = useRef(null);
+
+    // Set sidebar open by default on desktop
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 1024px)');
+        setSidebarOpen(mq.matches);
+        const handler = (e) => setSidebarOpen(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
 
     const filteredActivity = recentActivity.filter(a =>
         a.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -159,7 +169,6 @@ export default function ParishionerDashboard() {
         return () => io.disconnect();
     }, []);
 
-    // Fetch user profile on profile tab
     useEffect(() => {
         if (activeTab === 'profile' && isAuthenticated && !profileData) {
             setLoadingProfile(true);
@@ -179,6 +188,13 @@ export default function ParishionerDashboard() {
         }
     }, [activeTab, isAuthenticated, profileData]);
 
+    // Close mobile sidebar on nav tab change
+    const handleTabChange = (id) => {
+        if (id === 'logout') { logout(); navigate('/login'); return; }
+        setActiveTab(id);
+        setMobileSidebarOpen(false);
+    };
+
     const handleProfileSave = async (e) => {
         e.preventDefault();
         setSavingProfile(true);
@@ -186,7 +202,6 @@ export default function ParishionerDashboard() {
         try {
             let updatedUser;
             if (photoFile) {
-                // Use multipart form data when a photo is included
                 const fd = new FormData();
                 Object.entries(profileForm).forEach(([k, v]) => fd.append(k, v));
                 fd.append('profile_picture', photoFile);
@@ -234,81 +249,81 @@ export default function ParishionerDashboard() {
     if (!isAuthenticated) return <Navigate to="/login" replace />;
 
     const stats = [
-        {
-            gradient: 'bg-gradient-to-br from-[#570013] to-[#990022]',
-            Icon: MdVolunteerActivism,
-            label: 'Total Donated',
-            value: userStats.donated,
-            unit: 'KES ',
-            change: 'Track generosity'
-        },
-        {
-            gradient: 'bg-gradient-to-br from-violet-600 to-violet-800',
-            Icon: MdCalendarMonth,
-            label: 'Events Joined',
-            value: userStats.events,
-            change: 'Parish events'
-        },
-        {
-            gradient: 'bg-gradient-to-br from-blue-600 to-blue-800',
-            Icon: MdMenuBook,
-            label: 'Sacrament Applications',
-            value: userStats.sacraments,
-            change: 'Spiritual journey'
-        },
-        {
-            gradient: 'bg-gradient-to-br from-emerald-600 to-emerald-800',
-            Icon: MdFavorite,
-            label: 'Faith Commitment',
-            value: 100,
-            unit: '',
-            change: 'Stay blessed'
-        },
+        { gradient: 'bg-gradient-to-br from-[#570013] to-[#990022]', Icon: MdVolunteerActivism, label: 'Total Donated', value: userStats.donated, unit: 'KES ', change: 'Track generosity' },
+        { gradient: 'bg-gradient-to-br from-violet-600 to-violet-800', Icon: MdCalendarMonth, label: 'Events Joined', value: userStats.events, change: 'Parish events' },
+        { gradient: 'bg-gradient-to-br from-blue-600 to-blue-800', Icon: MdMenuBook, label: 'Sacrament Applications', value: userStats.sacraments, change: 'Spiritual journey' },
+        { gradient: 'bg-gradient-to-br from-emerald-600 to-emerald-800', Icon: MdFavorite, label: 'Faith Commitment', value: 100, unit: '', change: 'Stay blessed' },
     ];
 
     return (
-        /* ─── Layout Wrapper ─── */
         <div className="flex bg-gray-50 text-gray-800 font-sans min-h-screen relative w-full">
-            {/* Sidebar */}
-            <aside className={`${sidebarOpen ? 'w-[260px]' : 'w-[80px]'} bg-white border-r border-gray-100 flex flex-col transition-all duration-300 z-50 shadow-sm shrink-0 fixed top-0 left-0 h-screen pointer-events-auto`}>
-                <div className={`flex items-center gap-3 px-4 py-5 border-b border-gray-100 ${sidebarOpen ? '' : 'justify-center'}`}>
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm"
+
+            {/* ── Mobile backdrop ── */}
+            {mobileSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/40 z-40 lg:hidden backdrop-blur-sm"
+                    onClick={() => setMobileSidebarOpen(false)}
+                />
+            )}
+
+            {/* ── Sidebar ── */}
+            <aside className={`
+                bg-white border-r border-gray-100 flex flex-col transition-all duration-300 z-50 shadow-sm shrink-0
+                fixed top-0 left-0 h-screen pointer-events-auto
+                ${/* Mobile: slide in/out */ ''}
+                ${mobileSidebarOpen
+                    ? 'translate-x-0 w-[260px]'
+                    : '-translate-x-full w-[260px] lg:translate-x-0'
+                }
+                ${/* Desktop: expand/collapse */ ''}
+                lg:relative lg:h-auto lg:shadow-none lg:min-h-screen
+                ${sidebarOpen ? 'lg:w-[260px]' : 'lg:w-[72px]'}
+            `}>
+                <div className={`flex items-center gap-3 px-4 py-5 border-b border-gray-100 ${(sidebarOpen || mobileSidebarOpen) ? '' : 'lg:justify-center'}`}>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
                         style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
                         <MdChurch className="text-[#ffe088] text-xl" />
                     </div>
-                    {sidebarOpen && (
+                    {(sidebarOpen || mobileSidebarOpen) && (
                         <div>
                             <p className="font-black text-gray-900 text-[14px] leading-tight tracking-wide">ST. MICHAEL</p>
                             <p className="text-[10px] tracking-widest uppercase text-gray-400 font-bold">My Portal</p>
                         </div>
                     )}
+                    {/* Mobile close button */}
+                    <button
+                        className="ml-auto lg:hidden text-gray-400 hover:text-gray-600 p-1"
+                        onClick={() => setMobileSidebarOpen(false)}
+                    >
+                        <MdClose className="text-xl" />
+                    </button>
                 </div>
 
                 <nav className="flex-1 py-4 overflow-y-auto">
-                    <div className={`space-y-1 ${sidebarOpen ? 'px-3' : 'px-2'}`}>
+                    <div className={`space-y-1 ${(sidebarOpen || mobileSidebarOpen) ? 'px-3' : 'lg:px-2 px-3'}`}>
                         {sidebarItems.map(({ Icon, label, id }) => {
                             const isActive = activeTab === id;
                             const isLogout = id === 'logout';
                             return (
                                 <button
                                     key={id}
-                                    title={!sidebarOpen ? label : undefined}
-                                    onClick={() => {
-                                        if (isLogout) { logout(); navigate('/login'); }
-                                        else setActiveTab(id);
-                                    }}
-                                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left group border border-transparent ${isActive
+                                    title={!sidebarOpen && !mobileSidebarOpen ? label : undefined}
+                                    onClick={() => handleTabChange(id)}
+                                    className={`w-full flex items-center gap-3 px-3 py-2.5 transition-all duration-200 text-left group border border-transparent ${isActive
                                         ? 'bg-gradient-to-r from-[#570013] to-[#800020] text-white shadow-md'
                                         : isLogout
                                             ? 'text-red-500 hover:bg-red-50 hover:text-red-600 hover:border-red-100'
                                             : 'text-gray-600 hover:text-[#570013] hover:bg-[#570013]/5 hover:border-[#570013]/10'
-                                        }`}
+                                        } ${!(sidebarOpen || mobileSidebarOpen) ? 'lg:justify-center' : ''}`}
                                 >
-                                    <Icon className={`text-[20px] flex-shrink-0 ${isActive ? 'text-[#ffe088]' : ''}`} />
-                                    {sidebarOpen && (
+                                    <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                                        style={isActive ? { background: 'rgba(255,255,255,0.15)' } : {}}>
+                                        <Icon className={`text-[20px] ${isActive ? 'text-[#ffe088]' : ''}`} />
+                                    </div>
+                                    {(sidebarOpen || mobileSidebarOpen) && (
                                         <span className="text-[13px] font-bold whitespace-nowrap flex-1 tracking-wide">{label}</span>
                                     )}
-                                    {sidebarOpen && isActive && (
+                                    {(sidebarOpen || mobileSidebarOpen) && isActive && (
                                         <MdChevronRight className="text-[#ffe088] text-sm ml-auto opacity-90" />
                                     )}
                                 </button>
@@ -317,50 +332,63 @@ export default function ParishionerDashboard() {
                     </div>
                 </nav>
 
-                <div className={`p-4 border-t border-gray-100`}>
+                <div className="p-4 border-t border-gray-100">
                     <Link
                         to="/"
-                        title={!sidebarOpen ? 'Back to Site' : undefined}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors group ${sidebarOpen ? 'bg-gray-50 hover:bg-gray-100 text-gray-600' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-800'}`}
+                        title={!(sidebarOpen || mobileSidebarOpen) ? 'Back to Site' : undefined}
+                        className={`flex items-center gap-3 px-3 py-2.5 transition-colors group ${(sidebarOpen || mobileSidebarOpen) ? 'bg-gray-50 hover:bg-gray-100 text-gray-600' : 'text-gray-500 lg:justify-center hover:bg-gray-100 hover:text-gray-800'}`}
                     >
-                        <MdArrowBack className="text-[20px] flex-shrink-0 group-hover:-translate-x-1 transition-transform" />
-                        {sidebarOpen && <span className="text-[13px] font-bold tracking-wide">Back to Site</span>}
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                            <MdArrowBack className="text-[18px] group-hover:-translate-x-1 transition-transform" />
+                        </div>
+                        {(sidebarOpen || mobileSidebarOpen) && <span className="text-[13px] font-bold tracking-wide">Back to Site</span>}
                     </Link>
                 </div>
             </aside>
 
             {/* ══════════ MAIN CONTENT ══════════ */}
-            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${sidebarOpen ? 'ml-[260px]' : 'ml-[80px]'}`}>
+            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 lg:${sidebarOpen ? 'ml-0' : 'ml-0'} w-full min-w-0`}>
 
                 {/* Top Bar */}
-                <header className="flex items-center justify-between px-6 md:px-8 py-5 flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200 z-40 sticky top-0">
-                    <div className="flex items-center gap-4">
+                <header className="flex items-center justify-between px-4 md:px-6 lg:px-8 py-4 flex-shrink-0 bg-white/90 backdrop-blur-md border-b border-gray-200 z-30 sticky top-0">
+                    <div className="flex items-center gap-3 md:gap-4">
+                        {/* Mobile hamburger */}
+                        <button
+                            onClick={() => setMobileSidebarOpen(v => !v)}
+                            className="lg:hidden text-gray-500 hover:text-[#570013] transition-colors p-1.5"
+                            aria-label="Open menu"
+                        >
+                            <MdMenu className="text-[24px]" />
+                        </button>
+
+                        {/* Desktop sidebar toggle */}
                         <button
                             onClick={() => setSidebarOpen(v => !v)}
-                            className="text-gray-400 hover:text-[#570013] transition-colors p-1.5 rounded-lg hover:bg-gray-100/50"
+                            className="hidden lg:flex text-gray-400 hover:text-[#570013] transition-colors p-1.5 hover:bg-gray-100/50"
                         >
                             <DynamicIcon name={sidebarOpen ? 'menu_open' : 'menu'} className="text-[24px]" />
                         </button>
+
                         <div>
-                            <h1 className="font-bold text-gray-900 text-[18px] leading-tight flex items-center gap-2">
+                            <h1 className="font-bold text-gray-900 text-[16px] md:text-[18px] leading-tight">
                                 {sidebarItems.find(s => s.id === activeTab)?.label || 'Dashboard'}
                             </h1>
-                            <p className="text-gray-400 text-[11.5px] font-semibold tracking-wider uppercase mt-0.5">
+                            <p className="text-gray-400 text-[10px] md:text-[11.5px] font-semibold tracking-wider uppercase mt-0.5 hidden sm:block">
                                 {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        {/* Search */}
-                        <div className="hidden md:flex items-center gap-2 rounded-xl px-4 py-2 bg-gray-50 border border-gray-200 focus-within:ring-2 focus-within:ring-[#570013]/20 focus-within:border-[#570013]/30 transition-all">
+                    <div className="flex items-center gap-2 md:gap-4">
+                        {/* Search — hidden on smallest screens */}
+                        <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-200 focus-within:ring-2 focus-within:ring-[#570013]/20 focus-within:border-[#570013]/30 transition-all">
                             <MdSearch className="text-gray-400 text-[18px]" />
                             <input
                                 type="text"
                                 placeholder="Search activity..."
                                 value={searchQuery}
                                 onChange={e => setSearchQuery(e.target.value)}
-                                className="bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none w-40"
+                                className="bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none w-36 lg:w-44"
                             />
                             {searchQuery && (
                                 <button onClick={() => setSearchQuery('')} className="text-gray-400 hover:text-gray-600">
@@ -370,18 +398,23 @@ export default function ParishionerDashboard() {
                         </div>
 
                         {/* Bell */}
-                        <button className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors text-gray-400 hover:text-[#570013]">
-                            <MdNotifications className="text-[24px]" />
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#570013] border-2 border-white box-content" />
+                        <button className="relative p-2 hover:bg-gray-100 transition-colors text-gray-400 hover:text-[#570013]">
+                            <MdNotifications className="text-[22px] md:text-[24px]" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#570013] border-2 border-white" />
                         </button>
 
                         {/* User Avatar */}
-                        <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
+                        <div className="flex items-center gap-2 md:gap-3 pl-2 md:pl-4 border-l border-gray-200">
                             <button
                                 onClick={() => setActiveTab('profile')}
-                                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm hover:ring-2 hover:ring-[#570013]/40 transition-all"
-                                style={{ background: 'linear-gradient(135deg, #570013, #800020)', border: '2px solid rgba(255,224,136,0.5)' }}>
-                                <MdPerson className="text-white text-sm" />
+                                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm hover:ring-2 hover:ring-[#570013]/40 transition-all overflow-hidden"
+                                style={{ background: 'linear-gradient(135deg, #570013, #800020)', border: '2px solid rgba(255,224,136,0.5)' }}
+                                title="My Profile"
+                            >
+                                {photoPreview
+                                    ? <img src={photoPreview} alt="avatar" className="w-full h-full object-cover" />
+                                    : <MdPerson className="text-white text-sm" />
+                                }
                             </button>
                             <div className="hidden md:block">
                                 <p className="text-gray-900 font-bold text-[13px] leading-tight">{user?.first_name || user?.username}</p>
@@ -392,19 +425,19 @@ export default function ParishionerDashboard() {
                 </header>
 
                 {/* ── Page Content ── */}
-                <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-50/50">
+                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-gray-50/50">
 
                     {/* ══ DASHBOARD TAB ══ */}
                     {activeTab === 'dashboard' && (
-                        <div className="space-y-6 max-w-[1500px] mx-auto">
+                        <div className="space-y-6 max-w-[1500px] mx-auto animate-fade-in-up">
 
                             {/* Welcome Banner */}
-                            <div className="flex items-center justify-between flex-wrap gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-5 md:p-6 border border-gray-200 shadow-sm relative overflow-hidden">
                                 <div className="absolute right-0 top-0 w-32 h-32 bg-[#570013]/5 rounded-full transform translate-x-10 -translate-y-10" />
                                 <div className="absolute right-20 bottom-0 w-16 h-16 bg-[#ffe088]/20 rounded-full transform translate-y-8" />
 
                                 <div className="z-10">
-                                    <h2 className="font-black text-gray-900 text-3xl leading-tight">
+                                    <h2 className="font-black text-gray-900 text-2xl md:text-3xl leading-tight">
                                         Welcome, <span className="text-[#570013]">{user?.first_name || 'Parishioner'}</span>
                                     </h2>
                                     <p className="text-gray-500 font-medium text-sm mt-1">
@@ -414,14 +447,14 @@ export default function ParishionerDashboard() {
                                 <div className="flex gap-2 flex-wrap z-10">
                                     <button
                                         onClick={() => setActiveTab('donations')}
-                                        className="px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all"
+                                        className="px-5 py-2.5 text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all"
                                         style={{ background: 'linear-gradient(135deg, #570013, #800020)', color: '#ffe088' }}
                                     >
                                         + Donate
                                     </button>
                                     <button
                                         onClick={() => setActiveTab('sacraments')}
-                                        className="px-5 py-2.5 rounded-xl text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition-all shadow-sm"
+                                        className="px-5 py-2.5 text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition-all shadow-sm"
                                     >
                                         Sacraments
                                     </button>
@@ -429,12 +462,12 @@ export default function ParishionerDashboard() {
                             </div>
 
                             {/* Stat Cards */}
-                            <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                            <div ref={statsRef} className="grid grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4">
                                 {stats.map(s => <StatCard key={s.label} {...s} started={started} />)}
                             </div>
 
-                            {/* Middle row: recent summary lists */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {/* Summary lists */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                 <SummaryList
                                     title="Recent Donations"
                                     items={[
@@ -461,15 +494,15 @@ export default function ParishionerDashboard() {
                                 />
                             </div>
 
-                            {/* Activity Table with search */}
-                            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                                <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+                            {/* Activity Table */}
+                            <div className="bg-white border border-gray-200 shadow-sm overflow-hidden">
+                                <div className="flex items-center justify-between px-4 md:px-6 py-5 border-b border-gray-100">
                                     <h3 className="font-bold text-gray-900 text-[16px]">Activity History</h3>
                                     <span className="text-gray-500 font-bold text-[12px]">{filteredActivity.length} records</span>
                                 </div>
-                                {/* Mobile search inside activity */}
-                                <div className="md:hidden px-6 py-3 border-b border-gray-100">
-                                    <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2 border border-gray-200">
+                                {/* Mobile search */}
+                                <div className="md:hidden px-4 py-3 border-b border-gray-100">
+                                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 border border-gray-200">
                                         <MdSearch className="text-gray-400 text-base" />
                                         <input
                                             type="text"
@@ -485,25 +518,21 @@ export default function ParishionerDashboard() {
                                         <thead>
                                             <tr className="bg-gray-50/50 border-b border-gray-100">
                                                 {['Type', 'Detail', 'Date', 'Status', 'Action'].map(h => (
-                                                    <th key={h} className="text-left px-6 py-3.5 text-[11px] uppercase tracking-widest font-bold text-gray-500">{h}</th>
+                                                    <th key={h} className="text-left px-4 md:px-6 py-3.5 text-[11px] uppercase tracking-widest font-bold text-gray-500">{h}</th>
                                                 ))}
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {filteredActivity.map((row, i) => (
                                                 <tr key={i} className="transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-none group">
-                                                    <td className="px-6 py-4 text-gray-900 font-bold text-[13px]">{row.type}</td>
-                                                    <td className="px-6 py-4 text-gray-600 font-medium text-[13px]">{row.detail}</td>
-                                                    <td className="px-6 py-4 text-gray-400 font-medium text-[13px]">{row.date}</td>
-                                                    <td className="px-6 py-4">
-                                                        <span className={`px-2.5 py-1 rounded-md text-[11px] font-bold border ${row.statusColor}`}>
-                                                            {row.status}
-                                                        </span>
+                                                    <td className="px-4 md:px-6 py-4 text-gray-900 font-bold text-[13px]">{row.type}</td>
+                                                    <td className="px-4 md:px-6 py-4 text-gray-600 font-medium text-[13px]">{row.detail}</td>
+                                                    <td className="px-4 md:px-6 py-4 text-gray-400 font-medium text-[13px] hidden sm:table-cell">{row.date}</td>
+                                                    <td className="px-4 md:px-6 py-4">
+                                                        <span className={`px-2.5 py-1 text-[11px] font-bold border ${row.statusColor}`}>{row.status}</span>
                                                     </td>
-                                                    <td className="px-6 py-4">
-                                                        <button className="text-gray-400 hover:text-[#570013] transition-colors text-lg opacity-0 group-hover:opacity-100">
-                                                            ···
-                                                        </button>
+                                                    <td className="px-4 md:px-6 py-4">
+                                                        <button className="text-gray-400 hover:text-[#570013] transition-colors text-lg opacity-0 group-hover:opacity-100">···</button>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -519,15 +548,14 @@ export default function ParishionerDashboard() {
 
                     {/* ══ PROFILE TAB ══ */}
                     {activeTab === 'profile' && (
-                        <div className="max-w-[1500px] mx-auto space-y-6">
-                            {/* ── Info Card ── */}
-                            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                        <div className="max-w-[1500px] mx-auto space-y-6 animate-fade-in-up">
+                            <div className="bg-white border border-gray-200 shadow-sm overflow-hidden">
                                 {/* Profile banner */}
                                 <div className="relative p-8 text-center"
                                     style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
-                                    {/* Avatar / photo */}
                                     <div className="relative w-28 h-28 mx-auto mb-4">
-                                        <div className="w-28 h-28 rounded-3xl overflow-hidden flex items-center justify-center shadow-xl"
+                                        {/* Circular avatar */}
+                                        <div className="w-28 h-28 rounded-full overflow-hidden flex items-center justify-center shadow-xl"
                                             style={{ background: 'rgba(255,224,136,0.2)', border: '3px solid rgba(255,224,136,0.4)' }}>
                                             {photoPreview
                                                 ? <img src={photoPreview} alt="profile" className="w-full h-full object-cover" />
@@ -562,17 +590,19 @@ export default function ParishionerDashboard() {
                                 </div>
 
                                 {profileMsg && (
-                                    <div className={`mx-6 mt-4 p-3 rounded-xl text-sm font-medium ${profileMsg.includes('✅') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
+                                    <div className={`mx-6 mt-4 p-3 text-sm font-medium ${profileMsg.includes('✅') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
                                         {profileMsg}
                                     </div>
                                 )}
 
-                                {/* Profile content */}
-                                <div className="p-8">
+                                <div className="p-6 md:p-8">
                                     {loadingProfile ? (
-                                        <div className="text-center py-8 text-gray-400 text-sm">Loading profile...</div>
+                                        <div className="space-y-3 max-w-2xl mx-auto">
+                                            {[1, 2, 3, 4].map(n => (
+                                                <div key={n} className="h-16 bg-gray-100 animate-pulse" />
+                                            ))}
+                                        </div>
                                     ) : editingProfile ? (
-                                        // ── Edit form ──
                                         <form onSubmit={handleProfileSave} className="max-w-2xl mx-auto space-y-5">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div>
@@ -580,7 +610,7 @@ export default function ParishionerDashboard() {
                                                     <input
                                                         value={profileForm.first_name}
                                                         onChange={e => setProfileForm(f => ({ ...f, first_name: e.target.value }))}
-                                                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
+                                                        className="w-full border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                     />
                                                 </div>
                                                 <div>
@@ -588,7 +618,7 @@ export default function ParishionerDashboard() {
                                                     <input
                                                         value={profileForm.last_name}
                                                         onChange={e => setProfileForm(f => ({ ...f, last_name: e.target.value }))}
-                                                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
+                                                        className="w-full border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                     />
                                                 </div>
                                             </div>
@@ -597,7 +627,7 @@ export default function ParishionerDashboard() {
                                                 <input
                                                     value={profileForm.username}
                                                     onChange={e => setProfileForm(f => ({ ...f, username: e.target.value }))}
-                                                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
+                                                    className="w-full border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                 />
                                             </div>
                                             <div>
@@ -606,24 +636,22 @@ export default function ParishionerDashboard() {
                                                     value={profileForm.phone_number}
                                                     onChange={e => setProfileForm(f => ({ ...f, phone_number: e.target.value }))}
                                                     placeholder="Optional"
-                                                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
+                                                    className="w-full border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                 />
                                             </div>
-                                            {photoFile && (
-                                                <p className="text-xs text-gray-500 font-medium">📷 Photo selected: {photoFile.name}</p>
-                                            )}
+                                            {photoFile && <p className="text-xs text-gray-500 font-medium">📷 Photo selected: {photoFile.name}</p>}
                                             <div className="flex gap-3 pt-2">
                                                 <button
                                                     type="button"
                                                     onClick={() => { setEditingProfile(false); setPhotoFile(null); setPhotoPreview(profileData?.profile_picture || null); }}
-                                                    className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                                                    className="flex-1 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                                                 >
                                                     <MdClose className="text-base" /> Cancel
                                                 </button>
                                                 <button
                                                     type="submit"
                                                     disabled={savingProfile}
-                                                    className="flex-1 py-3 rounded-xl font-bold text-sm text-[#ffe088] flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-60 hover:-translate-y-0.5"
+                                                    className="flex-1 py-3 font-bold text-sm text-[#ffe088] flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-60 hover:-translate-y-0.5"
                                                     style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}
                                                 >
                                                     {savingProfile ? 'Saving…' : <><MdSave className="text-base" /> Save Changes</>}
@@ -631,8 +659,7 @@ export default function ParishionerDashboard() {
                                             </div>
                                         </form>
                                     ) : (
-                                        // ── View mode ──
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
                                             {[
                                                 { label: 'First Name', value: profileData?.first_name || user?.first_name || '—', Icon: MdPerson },
                                                 { label: 'Last Name', value: profileData?.last_name || user?.last_name || '—', Icon: MdPerson },
@@ -641,11 +668,14 @@ export default function ParishionerDashboard() {
                                                 { label: 'Username', value: profileData?.username || user?.username || '—', Icon: MdPerson },
                                                 { label: 'Status', value: profileData?.is_verified ? 'Verified ✓' : 'Pending Verification', Icon: MdVerified },
                                             ].map(({ label, value, Icon: FieldIcon }) => (
-                                                <div key={label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                                    <p className="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1 flex items-center gap-1">
-                                                        <FieldIcon className="text-[#570013] text-sm" /> {label}
+                                                <div key={label} className="bg-gray-50 p-4 border border-gray-100">
+                                                    <p className="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1 flex items-center gap-2">
+                                                        <span className="w-5 h-5 rounded-full bg-[#570013]/10 flex items-center justify-center flex-shrink-0">
+                                                            <FieldIcon className="text-[#570013] text-xs" />
+                                                        </span>
+                                                        {label}
                                                     </p>
-                                                    <p className="text-gray-900 text-[15px] font-bold">{value}</p>
+                                                    <p className="text-gray-900 text-[15px] font-bold pl-7">{value}</p>
                                                 </div>
                                             ))}
                                         </div>
@@ -653,10 +683,10 @@ export default function ParishionerDashboard() {
                                 </div>
                             </div>
 
-                            {/* ── Change Password Card ── */}
-                            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                                <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
-                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
+                            {/* Change Password */}
+                            <div className="bg-white border border-gray-200 shadow-sm overflow-hidden">
+                                <div className="px-6 md:px-8 py-5 border-b border-gray-100 flex items-center gap-3">
+                                    <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
                                         <MdLock className="text-[#ffe088] text-lg" />
                                     </div>
                                     <div>
@@ -664,9 +694,9 @@ export default function ParishionerDashboard() {
                                         <p className="text-gray-400 text-xs font-medium mt-0.5">Update your account password</p>
                                     </div>
                                 </div>
-                                <div className="p-8">
+                                <div className="p-6 md:p-8">
                                     {pwMsg && (
-                                        <div className={`mb-5 p-3 rounded-xl text-sm font-medium ${pwMsg.includes('✅') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
+                                        <div className={`mb-5 p-3 text-sm font-medium ${pwMsg.includes('✅') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
                                             {pwMsg}
                                         </div>
                                     )}
@@ -680,7 +710,7 @@ export default function ParishionerDashboard() {
                                                         value={pwForm[field]}
                                                         onChange={e => setPwForm(f => ({ ...f, [field]: e.target.value }))}
                                                         required
-                                                        className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
+                                                        className="w-full border border-gray-200 px-4 py-3 pr-12 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]/40"
                                                     />
                                                     <button
                                                         type="button"
@@ -695,7 +725,7 @@ export default function ParishionerDashboard() {
                                         <button
                                             type="submit"
                                             disabled={savingPw}
-                                            className="px-8 py-3 rounded-xl font-bold text-sm text-[#ffe088] flex items-center gap-2 transition-all shadow-md disabled:opacity-60 hover:-translate-y-0.5"
+                                            className="px-8 py-3 font-bold text-sm text-[#ffe088] flex items-center gap-2 transition-all shadow-md disabled:opacity-60 hover:-translate-y-0.5"
                                             style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}
                                         >
                                             {savingPw ? 'Updating…' : <><MdLock className="text-base" /> Update Password</>}
@@ -715,8 +745,9 @@ export default function ParishionerDashboard() {
 
                     {/* ══ OTHER TABS ══ */}
                     {!['dashboard', 'settings', 'profile'].includes(activeTab) && (
-                        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-                            <div className="w-24 h-24 rounded-3xl flex items-center justify-center mb-6 shadow-xl"
+                        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-fade-in-up">
+                            {/* Circular icon container */}
+                            <div className="w-24 h-24 rounded-full flex items-center justify-center mb-6 shadow-xl"
                                 style={{ background: 'linear-gradient(135deg, #570013, #800020)', border: '4px solid white' }}>
                                 {(() => {
                                     const item = sidebarItems.find(s => s.id === activeTab);
@@ -732,7 +763,7 @@ export default function ParishionerDashboard() {
                             </p>
                             <button
                                 onClick={() => setActiveTab('dashboard')}
-                                className="px-6 py-2.5 rounded-xl text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all"
+                                className="px-6 py-2.5 text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all"
                                 style={{ background: '#570013', color: '#ffe088' }}
                             >
                                 ← Back to Dashboard

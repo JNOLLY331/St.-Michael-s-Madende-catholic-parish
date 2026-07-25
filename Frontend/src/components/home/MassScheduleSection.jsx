@@ -1,4 +1,5 @@
-import { MdChurch, MdWatchLater, MdMenuBook, MdFavorite, MdStars } from 'react-icons/md';
+import { useRef, useEffect, useState } from 'react';
+import { MdChurch, MdWatchLater, MdMenuBook, MdFavorite, MdStars, MdAccessTime } from 'react-icons/md';
 
 const SUNDAY_MASSES = [
   { name: 'Morning Mass', time: '07:30 AM' },
@@ -7,97 +8,204 @@ const SUNDAY_MASSES = [
 ];
 
 const DAILY_DEVOTIONS = [
-  { label: 'Mon – Fri', time: '6:30 AM', icon: MdWatchLater },
-  { label: 'Saturday', time: '7:00 AM', icon: MdMenuBook },
-  { label: 'Confession', time: 'Sat 4 PM', icon: MdFavorite },
-  { label: 'Adoration', time: 'Fri 5 PM', icon: MdStars },
+  { label: 'Mon – Fri', time: '6:30 AM', icon: MdWatchLater, detail: 'Daily Mass' },
+  { label: 'Saturday', time: '7:00 AM', icon: MdMenuBook, detail: 'Morning Prayer' },
+  { label: 'Confession', time: 'Sat 4 PM', icon: MdFavorite, detail: 'Reconciliation' },
+  { label: 'Adoration', time: 'Fri 5 PM', icon: MdStars, detail: 'Eucharistic' },
 ];
+
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); io.disconnect(); } },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
 
 /** Quick-access cards for Sunday Mass times and daily devotions. */
 export default function MassScheduleSection() {
+  const [sectionRef, visible] = useInView(0.1);
+
   return (
-    <section className="py-24 md:py-32 bg-white relative border-y border-[#e0bfbf]">
-      {/* Decorative background subtle pattern */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none" />
+    <section
+      ref={sectionRef}
+      className="py-20 md:py-28 bg-white relative border-y border-[#e0bfbf] overflow-hidden"
+    >
+      {/* Pure CSS decorative background — no external textures */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(87,0,19,0.04) 1px, transparent 0)',
+          backgroundSize: '32px 32px'
+        }}
+      />
+      <div className="absolute top-0 left-0 w-72 h-72 rounded-full bg-[#570013]/5 -translate-x-1/2 -translate-y-1/2 pointer-events-none blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-[#ffe088]/10 translate-x-1/3 translate-y-1/3 pointer-events-none blur-3xl" />
 
       <div className="max-w-[1400px] mx-auto px-5 md:px-12 relative z-10">
-        <div className="text-center mb-16">
-          <span className="text-xs md:text-sm font-bold tracking-[0.3em] text-[#735c00] uppercase mb-4 block">Join Our Community</span>
-          <h2 className="text-4xl md:text-6xl text-[#570013] mb-4" style={{ fontFamily: 'EB Garamond, Georgia, serif', fontWeight: 700 }}>
+        {/* Section Header */}
+        <div
+          className="text-center mb-14 transition-all duration-700"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)' }}
+        >
+          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.3em] text-[#735c00] uppercase mb-4">
+            <span className="w-6 h-px bg-[#735c00]/50" />
+            Join Our Community
+            <span className="w-6 h-px bg-[#735c00]/50" />
+          </span>
+          <h2
+            className="text-4xl md:text-6xl text-[#570013] mb-4 leading-tight"
+            style={{ fontFamily: 'EB Garamond, Georgia, serif', fontWeight: 700 }}
+          >
             Mass Times &amp; Devotions
           </h2>
-          <div className="w-24 h-1 bg-[#570013] mx-auto mt-6" />
+          <p className="text-[#584141] text-base md:text-lg max-w-xl mx-auto font-light">
+            Come worship with us. All are welcome at the table of the Lord.
+          </p>
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <div className="w-8 h-px bg-[#e0bfbf]" />
+            <div className="w-2 h-2 rotate-45 bg-[#570013]" />
+            <div className="w-8 h-px bg-[#e0bfbf]" />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 border-x border-[#e0bfbf] shadow-2xl">
+        {/* Two-column grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-0 shadow-2xl border border-[#e0bfbf]">
 
-          {/* Sunday Mass Card */}
+          {/* ── Sunday Mass Card ── */}
           <div
-            data-reveal-left
-            className="lg:col-span-5 bg-[#fff8f5] p-10 md:p-14 border-b lg:border-b-0 lg:border-r border-[#e0bfbf] relative overflow-hidden group"
+            className="lg:col-span-5 bg-[#fff8f5] p-8 md:p-12 lg:border-r border-b lg:border-b-0 border-[#e0bfbf] relative overflow-hidden group transition-all duration-700"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateX(0)' : 'translateX(-50px)',
+              transitionDelay: '150ms'
+            }}
           >
-            <div className="absolute top-0 left-0 w-full h-1.5 bg-[#735c00]" />
-            <MdChurch className="absolute -top-10 -right-10 text-[180px] text-[#570013] opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-1000" />
+            {/* Top accent bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#570013] via-[#800020] to-[#570013]" />
+
+            {/* Decorative watermark icon */}
+            <MdChurch className="absolute -bottom-6 -right-6 text-[200px] text-[#570013] opacity-[0.035] group-hover:scale-105 group-hover:-rotate-3 transition-transform duration-1000 pointer-events-none" />
 
             <div className="relative z-10">
-              <div className="flex items-center gap-4 mb-10">
-                <div className="w-16 h-16 bg-[#570013] flex items-center justify-center shadow-md">
-                  <MdChurch className="text-white text-3xl" />
+              {/* Card header */}
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 bg-[#570013] flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <MdChurch className="text-[#ffe088] text-2xl" />
                 </div>
-                <h3 className="font-serif font-bold text-3xl md:text-4xl text-[#570013]">Sunday Mass</h3>
+                <div>
+                  <h3 className="font-serif font-bold text-2xl md:text-3xl text-[#570013]">Sunday Mass</h3>
+                  <p className="text-[#735c00] text-xs font-bold tracking-widest uppercase mt-0.5">Eucharistic Celebration</p>
+                </div>
               </div>
 
-              <div className="space-y-6">
+              {/* Mass rows */}
+              <div className="space-y-0 border border-[#e0bfbf]">
                 {SUNDAY_MASSES.map(({ name, time }, idx) => (
                   <div
                     key={name}
-                    className="flex justify-between items-center border-b border-[#e0bfbf]/60 pb-5 last:border-0"
+                    className="flex justify-between items-center p-4 md:p-5 border-b border-[#e0bfbf] last:border-b-0 hover:bg-[#570013]/5 transition-colors duration-200 group/row"
+                    style={{
+                      opacity: visible ? 1 : 0,
+                      transform: visible ? 'translateX(0)' : 'translateX(-20px)',
+                      transitionDelay: `${300 + idx * 100}ms`,
+                      transition: 'opacity 0.5s ease, transform 0.5s ease, background-color 0.2s ease'
+                    }}
                   >
-                    <span className="text-lg text-[#584141] font-medium tracking-wide">{name}</span>
-                    <span className="font-bold text-[#570013] bg-[#ffe088] px-4 py-1.5 text-sm md:text-base tracking-widest shadow-sm border border-[#735c00]/20">
-                      {time}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-[#570013] rotate-45 group-hover/row:rotate-90 transition-transform duration-300 flex-shrink-0" />
+                      <span className="text-[#584141] font-semibold text-sm md:text-base">{name}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-[#ffe088] px-3 py-1.5 border border-[#735c00]/20">
+                      <MdAccessTime className="text-[#570013] text-sm" />
+                      <span className="font-bold text-[#570013] text-sm md:text-base tracking-widest">{time}</span>
+                    </div>
                   </div>
                 ))}
               </div>
+
+              <p className="mt-5 text-[#8c7071] text-xs font-medium italic">
+                * Schedule may change on public holidays. Check the notice board.
+              </p>
             </div>
           </div>
 
-          {/* Daily Devotion Card */}
+          {/* ── Daily Devotion Card ── */}
           <div
-            data-reveal-right
-            className="lg:col-span-7 bg-[#570013] text-white p-10 md:p-14 relative overflow-hidden group"
+            className="lg:col-span-7 relative overflow-hidden group transition-all duration-700"
+            style={{
+              background: 'linear-gradient(135deg, #570013 0%, #3a000d 50%, #2b0009 100%)',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateX(0)' : 'translateX(50px)',
+              transitionDelay: '200ms'
+            }}
           >
-            {/* Dark premium gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#570013] to-[#2b0009]" />
-            <div className="absolute top-0 left-0 w-full h-1.5 bg-[#ffe088]" />
-            <MdChurch className="absolute -bottom-16 -right-16 text-[250px] text-white opacity-5 transform group-hover:scale-110 transition-transform duration-1000" />
+            {/* Animated gold top bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 z-10"
+              style={{
+                background: 'linear-gradient(90deg, transparent, #ffe088, #ffb347, #ffe088, transparent)',
+                backgroundSize: '300% 100%',
+                animation: 'glowBarSweep 3.5s linear infinite'
+              }}
+            />
 
-            <div className="relative z-10 h-full flex flex-col justify-between">
-              <div className="mb-12">
-                <h3 className="font-serif font-bold text-3xl md:text-4xl mb-4 text-[#ffe088]">Daily Devotion</h3>
-                <p className="text-lg text-white/80 max-w-xl italic font-light leading-relaxed border-l-2 border-[#ffe088] pl-4">
-                  "For where two or three are gathered in my name, there am I among them." <br />— Matthew 18:20
-                </p>
+            {/* Decorative rings */}
+            <div className="devotion-card__ring devotion-card__ring--1" />
+            <div className="devotion-card__ring devotion-card__ring--2" />
+
+            {/* Watermark */}
+            <MdChurch className="absolute -bottom-10 -right-10 text-[220px] text-white opacity-[0.04] group-hover:scale-110 transition-transform duration-1000 pointer-events-none" />
+
+            <div className="relative z-10 p-8 md:p-12 h-full flex flex-col">
+              {/* Header */}
+              <div className="mb-8">
+                <h3
+                  className="font-serif font-bold text-2xl md:text-4xl text-[#ffe088] mb-4"
+                  style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease', transitionDelay: '350ms' }}
+                >
+                  Daily Devotion
+                </h3>
+                <blockquote
+                  className="text-base text-white/75 italic font-light leading-relaxed border-l-2 border-[#ffe088] pl-4"
+                  style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease', transitionDelay: '450ms' }}
+                >
+                  "For where two or three are gathered in my name, there am I among them."
+                  <cite className="block text-[#ffe088]/70 text-xs mt-1 not-italic font-semibold tracking-wider">— Matthew 18:20</cite>
+                </blockquote>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {DAILY_DEVOTIONS.map(({ label, time, icon: Icon }, idx) => (
+              {/* Devotion tiles */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 gap-3 mt-auto">
+                {DAILY_DEVOTIONS.map(({ label, time, icon: Icon, detail }, idx) => (
                   <div
                     key={label}
-                    data-reveal-zoom
-                    data-delay={`${(idx + 1) * 100}`}
-                    className="bg-white/5 border border-[#ffe088]/20 p-5 hover:bg-[#ffe088]/10 transition-colors duration-300 cursor-default"
+                    className="devotion-time-tile bg-white/8 border border-[#ffe088]/20 p-4 cursor-default group/tile"
+                    style={{
+                      background: 'rgba(255,255,255,0.06)',
+                      opacity: visible ? 1 : 0,
+                      transform: visible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.9)',
+                      transition: 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1)',
+                      transitionDelay: `${500 + idx * 100}ms`
+                    }}
                   >
-                    <Icon className="text-[#ffe088] text-2xl mb-3" />
-                    <p className="text-xs text-white/60 font-bold uppercase tracking-widest mb-1">{label}</p>
-                    <p className="font-serif font-bold text-xl md:text-2xl text-white tracking-wide">{time}</p>
+                    <div className="w-9 h-9 rounded-full bg-[#ffe088]/15 flex items-center justify-center mb-3 group-hover/tile:bg-[#ffe088]/30 transition-colors duration-300">
+                      <Icon className="text-[#ffe088] text-lg" />
+                    </div>
+                    <p className="text-[10px] text-white/50 font-bold uppercase tracking-widest mb-0.5">{label}</p>
+                    <p className="text-[10px] text-[#ffe088]/60 font-medium mb-1">{detail}</p>
+                    <p className="font-serif font-bold text-lg md:text-xl text-white tracking-wide">{time}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

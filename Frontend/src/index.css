@@ -567,18 +567,75 @@ body {
 /* ═══════════════════════════════════════════════════════
    GLOBAL BUTTON — NO BORDER RADIUS (Brand standard)
 ═══════════════════════════════════════════════════════ */
-/* Remove border-radius from ALL buttons and link-buttons sitewide.
-   The .theme-toggle pill is explicitly excluded with !important inline. */
-button,
-a[class*="rounded"],
-[role="button"] {
+/* Remove border-radius from buttons — EXCEPT circular/pill elements */
+button:not(.rounded-full):not([class*="rounded-full"]):not(.theme-toggle) {
   border-radius: 0 !important;
 }
 
-/* Re-allow the theme toggle pill to stay circular */
+a[class*="rounded"]:not(.rounded-full):not([class*="rounded-full"]) {
+  border-radius: 0 !important;
+}
+
+/* Re-allow circular elements */
+.rounded-full,
+[class*="rounded-full"],
 .theme-toggle,
 .theme-toggle::before {
   border-radius: 9999px !important;
+}
+
+/* ── Skeleton loading animation ── */
+@keyframes skeletonPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeletonSlide 1.5s linear infinite;
+}
+
+@keyframes skeletonSlide {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Event card entrance ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Skeleton pulse for Tailwind animate-pulse override ── */
+.animate-pulse {
+  animation: skeletonPulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ── Dashboard responsive circular avatar fixes ── */
+.dashboard-avatar,
+.sidebar-icon-wrap {
+  border-radius: 9999px !important;
+  overflow: hidden;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1848,17 +1905,53 @@ header[class*="fixed"] {
   overflow: hidden;
 }
 
-/* ── Dashboard responsive sidebar auto-collapse ── */
-@media (max-width: 640px) {
+/* ── Dashboard mobile sidebar (new responsive system) ── */
+/* The sidebar uses translate-x for mobile slide-in, handled in JSX.
+   These are safety-net CSS rules for fringe cases. */
+@media (max-width: 1023px) {
 
-  /* Force icon-only on very small screens: handled in JSX but CSS safety net */
-  aside.w-64 {
-    width: 72px;
+  /* Mobile: sidebar is overlay, not in flow */
+  .dashboard-sidebar-fixed {
+    position: fixed !important;
+    height: 100vh !important;
+    z-index: 50 !important;
   }
 
-  aside.w-64 span,
-  aside.w-64 p.font-black,
-  aside.w-64 p.text-\[10px\] {
-    display: none;
+  /* Main content always fills the full width on mobile since sidebar is overlay */
+  .dashboard-main-area {
+    margin-left: 0 !important;
+    width: 100% !important;
   }
+}
+
+/* ── Ensure circular icons never lose their shape ── */
+.icon-circle {
+  border-radius: 9999px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* ── Events page card animation ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Smooth content appearance (no blank flashes) ── */
+[data-reveal-left],
+[data-reveal-right],
+[data-reveal-zoom],
+[data-reveal],
+[data-reveal-flip],
+[data-reveal-bounce],
+[data-reveal-spin] {
+  /* Ensure content is always at least partially visible before JS kicks in.
+     We override to reduce initial blank white/empty sections on scroll. */
+  contain: layout style;
 }

@@ -106,7 +106,7 @@ export default function Gallery() {
                                 onClick={() => setLightbox(photo)}
                                 style={{
                                     opacity: 0,
-                                    animation: `particleBlow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) ${i * 120}ms forwards`
+                                    animation: `particleBlow 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.2) ${i * 150}ms forwards`
                                 }}
                             >
                                 <img

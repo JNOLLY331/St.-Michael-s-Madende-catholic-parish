@@ -97,10 +97,9 @@ function EventCard({ event, idx, rsvp, onRsvp }) {
                 {/* Category badge — circular pill */}
                 {event.category && (
                     <div
-                        className="absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 tracking-wider uppercase"
-                        style={{ background: catColor.bg, color: catColor.text }}
+                        className="absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 tracking-wider uppercase bg-white/95 text-[#570013] shadow-md border border-[#e0bfbf]"
                     >
-                        {event.category}
+                        {(CATEGORY_MAP[event.category] || event.category).replace('_', ' ')}
                     </div>
                 )}
 
@@ -155,14 +154,14 @@ function EventCard({ event, idx, rsvp, onRsvp }) {
                     onClick={() => onRsvp(event.id)}
                     disabled={rsvp === 'loading' || rsvp === 'done'}
                     className={`w-full py-2.5 text-[13px] font-bold tracking-wider uppercase transition-all duration-300 border-2 ${rsvp === 'done'
-                            ? 'bg-emerald-600 border-emerald-600 text-white cursor-default'
-                            : rsvp === 'error'
-                                ? 'border-red-500 text-red-600 hover:bg-red-600 hover:text-white'
-                                : rsvp === 'loading'
-                                    ? 'border-[#570013]/40 text-[#570013]/60 cursor-wait'
-                                    : event.isRegistrationRequired
-                                        ? 'border-[#570013] text-[#570013] hover:bg-[#570013] hover:text-[#ffe088]'
-                                        : 'border-[#735c00] text-[#735c00] hover:bg-[#735c00] hover:text-[#ffe088]'
+                        ? 'bg-emerald-600 border-emerald-600 text-white cursor-default'
+                        : rsvp === 'error'
+                            ? 'border-red-500 text-red-600 hover:bg-red-600 hover:text-white'
+                            : rsvp === 'loading'
+                                ? 'border-[#570013]/40 text-[#570013]/60 cursor-wait'
+                                : event.isRegistrationRequired
+                                    ? 'border-[#570013] text-[#570013] hover:bg-[#570013] hover:text-[#ffe088]'
+                                    : 'border-[#735c00] text-[#735c00] hover:bg-[#735c00] hover:text-[#ffe088]'
                         }`}
                 >
                     {rsvp === 'loading' ? 'Registering…'
@@ -176,13 +175,34 @@ function EventCard({ event, idx, rsvp, onRsvp }) {
     );
 }
 
+const CATEGORY_MAP = {
+    HOLY_MASS: 'Holy Mass',
+    SUNDAY_MASS: 'Sunday Mass',
+    FEAST_DAY: 'Feast Day',
+    RETREAT: 'Retreat',
+    SEMINAR: 'Seminar',
+    WORKSHOP: 'Workshop',
+    YOUTH: 'Youth',
+    CHOIR: 'Choir',
+    MINISTRY: 'Ministry',
+    CATECHISM: 'Catechism',
+    BAPTISM: 'Baptism',
+    CONFIRMATION: 'Confirmation',
+    MARRIAGE: 'Marriage',
+    FUNERAL: 'Funeral',
+    CHARITY: 'Charity',
+    GENERAL: 'General',
+};
+
 export default function Events() {
     const { events, loading, error } = useEventsData({ is_published: true });
     const { isAuthenticated } = useAuth();
     const [rsvpState, setRsvpState] = useState({});
     const [activeFilter, setActiveFilter] = useState('ALL');
 
-    const CATEGORIES = ['ALL', 'LITURGY', 'COMMUNITY', 'YOUTH', 'CHARITY', 'FORMATION'];
+    // Extract unique categories from actual events
+    const availableCategories = [...new Set(events.map(e => e.category))].filter(Boolean);
+    const CATEGORIES = ['ALL', ...availableCategories];
 
     const handleRsvp = async (eventId) => {
         if (!isAuthenticated) {
@@ -275,12 +295,12 @@ export default function Events() {
                             <button
                                 key={cat}
                                 onClick={() => setActiveFilter(cat)}
-                                className={`px-4 py-1.5 text-[11px] font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-200 flex-shrink-0 ${activeFilter === cat
-                                        ? 'bg-[#570013] text-[#ffe088]'
-                                        : 'bg-gray-100 text-[#584141] hover:bg-[#570013]/10'
+                                className={`px-4 py-1.5 text-[11px] font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-200 flex-shrink-0 rounded-full border border-transparent ${activeFilter === cat
+                                    ? 'bg-[#ffe088] text-[#570013] border-[#ffe088] shadow-sm'
+                                    : 'bg-gray-100 text-[#584141] hover:bg-gray-200'
                                     }`}
                             >
-                                {cat}
+                                {cat === 'ALL' ? 'All' : (CATEGORY_MAP[cat] || cat)}
                             </button>
                         ))}
                         <span className="ml-auto text-[#8c7071] text-xs font-medium whitespace-nowrap flex-shrink-0">

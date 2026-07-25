@@ -1955,3 +1955,43 @@ header[class*="fixed"] {
      We override to reduce initial blank white/empty sections on scroll. */
   contain: layout style;
 }
+@keyframes particleBlow {
+    0% {
+        opacity: 0;
+        transform: translate3d(-80vw, -80vh, 0) scale(0.1) rotate(-45deg);
+        transform-origin: center;
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate3d(5vw, 5vh, 0) scale(1.1) rotate(5deg);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+        filter: blur(0);
+    }
+}
+
+.animate-particle-blow {
+    opacity: 0;
+    animation: particleBlow 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes particleBlow {
+  0% {
+    opacity: 0;
+    transform: translate(-60vw, -60vh) scale(0.05) rotate(-20deg);
+    filter: blur(10px);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translate(2vw, 2vh) scale(1.05) rotate(5deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+}

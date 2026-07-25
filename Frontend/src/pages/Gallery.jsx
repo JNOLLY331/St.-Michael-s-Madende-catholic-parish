@@ -104,6 +104,10 @@ export default function Gallery() {
                                 data-delay={i * 80}
                                 className="break-inside-avoid relative overflow-hidden cursor-pointer group shadow-sm border border-[#e0bfbf] bg-[#222]"
                                 onClick={() => setLightbox(photo)}
+                                style={{
+                                    opacity: 0,
+                                    animation: `particleBlow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) ${i * 120}ms forwards`
+                                }}
                             >
                                 <img
                                     src={photo.src}
@@ -111,8 +115,8 @@ export default function Gallery() {
                                     className="w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 group-hover:opacity-75"
                                     loading="lazy"
                                     onError={(e) => {
-                                        // Hide broken images gracefully
-                                        e.target.closest('[class*="break-inside"]').style.display = 'none';
+                                        e.target.onerror = null;
+                                        e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23570013' width='400' height='300'/%3E%3Ctext fill='%23ffe088' font-family='Georgia,serif' font-size='24' font-weight='bold' x='50%25' y='50%25' text-anchor='middle' dy='0.35em'%3EParish Memory%3C/text%3E%3C/svg%3E";
                                     }}
                                 />
 

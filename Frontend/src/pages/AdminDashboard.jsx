@@ -196,7 +196,7 @@ export default function AdminDashboard() {
     const { user, isAuthenticated, logout } = useAuth();
 
     const [activeTab, setActiveTab] = useState('dashboard');
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
     const [started, setStarted] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [parishionersData, setParishionersData] = useState([]);
@@ -340,8 +340,15 @@ export default function AdminDashboard() {
     return (
         /* ─── Layout Wrapper ─── */
         <div className="flex bg-gray-50 text-gray-800 font-sans min-h-screen relative w-full">
+            {/* Mobile overlay backdrop */}
+            {sidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/40 z-40 md:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
             {/* Sidebar */}
-            <aside className={`${sidebarOpen ? 'w-[260px]' : 'w-[80px]'} bg-white border-r border-gray-100 flex flex-col transition-all duration-300 z-50 shadow-sm shrink-0 fixed top-0 left-0 h-screen pointer-events-auto`}>
+            <aside className={`${sidebarOpen ? 'translate-x-0 w-[260px]' : '-translate-x-full md:translate-x-0 w-[260px] md:w-[80px]'} bg-white border-r border-gray-100 flex flex-col transition-all duration-300 z-50 shadow-sm shrink-0 fixed top-0 left-0 h-screen pointer-events-auto`}>
                 <div className={`flex items-center gap-3 px-4 py-5 border-b border-gray-100 ${sidebarOpen ? '' : 'justify-center'}`}>
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm"
                         style={{ background: 'linear-gradient(135deg, #570013, #800020)' }}>
@@ -416,7 +423,7 @@ export default function AdminDashboard() {
             </aside>
 
             {/* ══════════ MAIN CONTENT ══════════ */}
-            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${sidebarOpen ? 'ml-[260px]' : 'ml-[80px]'}`}>
+            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 md:${sidebarOpen ? 'ml-[260px]' : 'ml-[80px]'} ml-0`}>
 
                 {/* Top Bar */}
                 <header className="flex items-center justify-between px-6 md:px-8 py-5 flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200 z-40 sticky top-0">

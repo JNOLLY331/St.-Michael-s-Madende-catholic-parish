@@ -181,63 +181,71 @@ body {
   font-family: 'Dancing Script', cursive;
 }
 
-/* Text styles */
+/* Text styles — fluid responsive sizing with clamp() */
 .text-display-lg {
   font-family: var(--font-serif);
-  font-size: 48px;
+  font-size: clamp(28px, 5vw, 48px);
   font-weight: 600;
-  line-height: 56px;
+  line-height: 1.15;
   letter-spacing: -0.01em;
 }
 
 .text-headline-lg {
   font-family: var(--font-serif);
-  font-size: 32px;
+  font-size: clamp(22px, 3.5vw, 32px);
   font-weight: 600;
-  line-height: 40px;
+  line-height: 1.25;
 }
 
 .text-headline-lg-mobile {
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: clamp(20px, 3vw, 28px);
   font-weight: 600;
-  line-height: 36px;
+  line-height: 1.3;
 }
 
 .text-headline-md {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: clamp(18px, 2.5vw, 24px);
   font-weight: 500;
-  line-height: 32px;
+  line-height: 1.35;
 }
 
 .text-body-lg {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: clamp(15px, 2vw, 18px);
   font-weight: 400;
-  line-height: 28px;
+  line-height: 1.65;
 }
 
 .text-body-md {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: clamp(14px, 1.8vw, 16px);
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.6;
 }
 
 .text-label-md {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: clamp(12px, 1.5vw, 14px);
   font-weight: 600;
-  line-height: 20px;
+  line-height: 1.45;
   letter-spacing: 0.05em;
 }
 
 .text-caption {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: clamp(11px, 1.2vw, 12px);
   font-weight: 400;
-  line-height: 16px;
+  line-height: 1.5;
+}
+
+/* Responsive padding utility overrides */
+@media (max-width: 640px) {
+  .section-pad {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 /* ─── Decorative divider ─── */
@@ -557,11 +565,29 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════
+   GLOBAL BUTTON — NO BORDER RADIUS (Brand standard)
+═══════════════════════════════════════════════════════ */
+/* Remove border-radius from ALL buttons and link-buttons sitewide.
+   The .theme-toggle pill is explicitly excluded with !important inline. */
+button,
+a[class*="rounded"],
+[role="button"] {
+  border-radius: 0 !important;
+}
+
+/* Re-allow the theme toggle pill to stay circular */
+.theme-toggle,
+.theme-toggle::before {
+  border-radius: 9999px !important;
+}
+
+/* ═══════════════════════════════════════════════════════
    BUTTON SYSTEM
 ═══════════════════════════════════════════════════════ */
 .btn-primary {
   position: relative;
   overflow: hidden;
+  border-radius: 0 !important;
   transition: all 0.3s ease;
 }
 

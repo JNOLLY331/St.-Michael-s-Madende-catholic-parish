@@ -51,6 +51,8 @@ export function useGalleryData() {
                             caption: m.caption || m.title || '',
                             albumId: m.album,
                             type: m.media_type || 'IMAGE',
+                            createdAt: m.created_at,
+                            uploadedBy: m.uploaded_by || '',
                         }))
                     );
                 }

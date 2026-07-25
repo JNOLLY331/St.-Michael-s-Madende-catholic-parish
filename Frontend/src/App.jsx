@@ -121,6 +121,7 @@ export default function App() {
                             <Route path="/reset-password/:uidb64/:token" element={<PortalLayout><ResetPassword /></PortalLayout>} />
                             <Route path="/verify-email/:uidb64/:token" element={<PortalLayout><VerifyEmail /></PortalLayout>} />
                             <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/dashboards" element={<Dashboard />} />
                         </Routes>
                     </Suspense>
                 </AuthProvider>

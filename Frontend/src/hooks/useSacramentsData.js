@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { sacramentsApi } from '../api';
+import { sacramentsApi, resolveMediaUrl } from '../api';
 
 export function useSacramentsData() {
     const [sacraments, setSacraments] = useState([]);
@@ -18,13 +18,17 @@ export function useSacramentsData() {
                     const items = Array.isArray(data) ? data : (data?.results ?? []);
                     setSacraments(items.map(s => ({
                         id: s.id,
-                        name: s.name,
-                        description: s.description,
-                        category: s.category || '', // e.g. "INITIATION"
-                        image: s.image,
+                        name: s.name || s.sacrament_type_display || s.sacrament_type,
+                        description: s.description || s.short_description || '',
+                        category: s.category || s.sacrament_type || '',
+                        // banner is served directly as an absolute Cloudinary URL from the serializer
+                        // Fall back to resolveMediaUrl in case a relative path is returned
+                        image: s.banner ? (s.banner.startsWith('http') ? s.banner : resolveMediaUrl(s.banner)) : null,
                         scheduleInfo: s.schedule_info || '',
                         contactInfo: s.contact_info || '',
-                        slug: s.slug || s.name.toLowerCase().replace(/\s+/g, '-'),
+                        slug: s.slug || (s.name || '').toLowerCase().replace(/\s+/g, '-'),
+                        displayOrder: s.display_order || 0,
+                        isActive: s.is_active !== false,
                     })));
                 }
             } catch (err) {

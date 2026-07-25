@@ -54,10 +54,27 @@ export const MODULE_CONFIGS = {
         columns: ['name', 'category', 'is_active'],
         fields: [
             { name: 'name', label: 'Ministry Name', type: 'text', required: true },
-            { name: 'description', label: 'Description', type: 'textarea' },
-            { name: 'category', label: 'Category', type: 'select', options: ['LITURGICAL', 'SOCIAL', 'YOUTH', 'WOMEN', 'MEN', 'EDUCATION', 'OTHER'] },
-            { name: 'is_active', label: 'Active', type: 'checkbox' },
+            { name: 'slug', label: 'Slug (auto-generated if blank)', type: 'text' },
+            { name: 'description', label: 'Description', type: 'textarea', required: true },
+            { name: 'mission', label: 'Mission Statement', type: 'textarea' },
+            { name: 'patron_saint', label: 'Patron Saint', type: 'text' },
+            {
+                name: 'category', label: 'Category', type: 'select', required: true, options: [
+                    'GENERAL', 'LITURGICAL', 'CHOIR', 'YOUTH', 'CHILDREN',
+                    'MEN', 'WOMEN', 'FAMILY', 'CHARITY', 'SMALL_COMMUNITIES',
+                    'EVANGELIZATION', 'JUSTICE_AND_PEACE', 'HEALTH', 'EDUCATION', 'OTHER'
+                ]
+            },
+            { name: 'meeting_day', label: 'Meeting Day', type: 'text', required: true, placeholder: 'e.g. Sunday' },
+            { name: 'meeting_time', label: 'Meeting Time (HH:MM)', type: 'text', required: true, placeholder: 'e.g. 10:00' },
+            { name: 'meeting_location', label: 'Meeting Location', type: 'text', required: true },
+            { name: 'email', label: 'Contact Email', type: 'text' },
+            { name: 'phone', label: 'Contact Phone', type: 'text' },
+            { name: 'banner', label: 'Banner Image (Cloudinary)', type: 'image' },
+            { name: 'is_featured', label: 'Featured Ministry', type: 'checkbox' },
         ],
+        useFormData: true,
+        imageFields: ['banner'],
     },
     mass: {
         label: 'Mass Schedule',
@@ -87,8 +104,11 @@ export const MODULE_CONFIGS = {
         fields: [
             { name: 'title', label: 'Album Title', type: 'text', required: true },
             { name: 'description', label: 'Description', type: 'textarea' },
+            { name: 'cover_image', label: 'Cover Image (Cloudinary)', type: 'image' },
             { name: 'is_published', label: 'Published', type: 'checkbox' },
         ],
+        useFormData: true,
+        imageFields: ['cover_image'],
     },
     sacraments: {
         label: 'Sacrament Applications',
@@ -170,12 +190,13 @@ function CellValue({ value }) {
 }
 
 /* ─── Record edit/create modal ─── */
-function RecordModal({ title, fields, record, onSave, onClose }) {
+function RecordModal({ title, fields, record, onSave, onClose, useFormData, imageFields }) {
     const [form, setForm] = useState(() => {
         const init = {};
-        fields.forEach(f => { init[f.name] = record?.[f.name] ?? (f.type === 'checkbox' ? false : ''); });
+        fields.forEach(f => { init[f.name] = record?.[f.name] ?? (f.type === 'checkbox' ? false : f.type === 'image' ? null : ''); });
         return init;
     });
+    const [fileInputs, setFileInputs] = useState({});
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
 
@@ -184,7 +205,26 @@ function RecordModal({ title, fields, record, onSave, onClose }) {
         setSaving(true);
         setError('');
         try {
-            await onSave(form);
+            // If this module uses FormData (for image uploads), build it
+            const hasFileUploads = useFormData && Object.keys(fileInputs).length > 0;
+            if (hasFileUploads) {
+                const fd = new FormData();
+                Object.entries(form).forEach(([key, val]) => {
+                    if (val !== null && val !== undefined && val !== '' && !imageFields?.includes(key)) {
+                        fd.append(key, typeof val === 'boolean' ? (val ? 'true' : 'false') : val);
+                    }
+                });
+                // Attach file uploads
+                Object.entries(fileInputs).forEach(([key, file]) => {
+                    if (file) fd.append(key, file);
+                });
+                await onSave(fd);
+            } else {
+                // Filter out image fields if no file selected
+                const payload = { ...form };
+                imageFields?.forEach(k => delete payload[k]);
+                await onSave(payload);
+            }
             onClose();
         } catch (err) {
             setError(err?.message || 'Failed to save. Check your data and try again.');
@@ -242,12 +282,44 @@ function RecordModal({ title, fields, record, onSave, onClose }) {
                                     />
                                     <span className="text-sm text-gray-600">{field.label}</span>
                                 </label>
+                            ) : field.type === 'image' ? (
+                                <div>
+                                    <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 cursor-pointer hover:border-[#570013] hover:bg-[#570013]/5 transition-colors">
+                                        <MdImage className="text-gray-400 text-lg" />
+                                        <span className="text-sm text-gray-500">
+                                            {fileInputs[field.name]?.name || 'Choose image file…'}
+                                        </span>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            className="sr-only"
+                                            onChange={e => {
+                                                const file = e.target.files?.[0];
+                                                if (file) setFileInputs(fi => ({ ...fi, [field.name]: file }));
+                                            }}
+                                        />
+                                    </label>
+                                    {/* Show current image if editing and no new file chosen */}
+                                    {record?.[field.name] && !fileInputs[field.name] && (
+                                        <div className="mt-2 flex items-center gap-2">
+                                            <img
+                                                src={record[field.name]}
+                                                alt="Current"
+                                                className="h-12 w-20 object-cover border border-gray-200"
+                                                onError={e => e.target.style.display = 'none'}
+                                            />
+                                            <span className="text-xs text-gray-400">Current image</span>
+                                        </div>
+                                    )}
+                                    <p className="text-[10px] text-gray-400 mt-1">Uploaded to Cloudinary. Recommended: 1200×400px.</p>
+                                </div>
                             ) : (
                                 <input
                                     type={field.type || 'text'}
                                     value={form[field.name] || ''}
                                     onChange={e => setForm(f => ({ ...f, [field.name]: e.target.value }))}
                                     required={field.required}
+                                    placeholder={field.placeholder || ''}
                                     className="w-full border border-gray-200 px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#570013]/20 focus:border-[#570013]"
                                 />
                             )}
@@ -502,6 +574,8 @@ export default function ModuleManager({ moduleKey }) {
                     record={modal}
                     onSave={handleSave}
                     onClose={() => setModal(null)}
+                    useFormData={config.useFormData}
+                    imageFields={config.imageFields}
                 />
             )}
             {modal === 'create' && config.fields.length > 0 && (
@@ -511,6 +585,8 @@ export default function ModuleManager({ moduleKey }) {
                     record={null}
                     onSave={handleSave}
                     onClose={() => setModal(null)}
+                    useFormData={config.useFormData}
+                    imageFields={config.imageFields}
                 />
             )}
 

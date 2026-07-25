@@ -155,9 +155,15 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
           from { opacity: 0; transform: translateY(30px) skewY(1deg); }
           to   { opacity: 1; transform: translateY(0) skewY(0deg); }
         }
-        @keyframes readingCardIn {
-          from { opacity: 0; transform: translateX(40px) rotateY(-8deg); }
-          to   { opacity: 1; transform: translateX(0) rotateY(0deg); }
+        @keyframes bookOpenIn {
+          from { 
+            opacity: 0; 
+            transform: perspective(1200px) rotateY(-90deg); 
+          }
+          to { 
+            opacity: 1; 
+            transform: perspective(1200px) rotateY(0deg); 
+          }
         }
         @keyframes scrollBounce {
           0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -370,7 +376,11 @@ export default function HeroSection({ hero, loading, gospel, onNavigate, onOpenG
         </div>
 
         {/* Right side reading card... */}
-        <div className="hidden lg:block w-full max-w-[420px] shrink-0 -mt-10" style={{ animation: 'readingCardIn 0.9s cubic-bezier(0.22,1,0.36,1) both', animationDelay: '0.3s' }}>
+        <div className="hidden lg:block w-full max-w-[420px] shrink-0 -mt-10" style={{
+          transformOrigin: 'left center',
+          animation: 'bookOpenIn 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both',
+          animationDelay: '0.3s'
+        }}>
           <div
             className="relative rounded-[2rem] text-center text-white overflow-hidden"
             style={{

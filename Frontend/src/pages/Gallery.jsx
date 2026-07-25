@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { MdClose, MdZoomIn, MdPhotoLibrary } from 'react-icons/md';
-// ── Integration: useGalleryData fetches from GET /api/gallery/ ───────────────
+import { MdClose, MdZoomIn, MdPhotoLibrary, MdCalendarToday, MdPerson } from 'react-icons/md';
 import { useGalleryData } from '../hooks/useGalleryData';
 import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
 
-// ── Static fallback photos shown when the API returns nothing ─────────────────
 const FALLBACK_PHOTOS = [
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDYm5Urp1fukVfl-u-D8canOcBRVcAlSeb7oraAW8r5BClZ5VPjdsA1VAJlJfbpDomXbbgz8N3kEFx6oPLnsBmncGG-VCwiUm2FTQQBYiHNPQoObCPsTSUBPDN6zeH_SEURa0AgremE_nlpV_5yaNKiVk5fCABQZyF1Q1VFjK2przqEC2B1LGZ4EWboXOBA0dARClO6eJAwXJNu5_rYOpvNubv11o8GrMqtCd5Vo0ouBcshQbiBcGjYeJBqKaxvNPTcPyRZ3mmWEE',
     'https://lh3.googleusercontent.com/aida-public/AB6AXuCqwoNCZ5B9gnFNMxeJ61wBSO3gAJf1zYeAHckAx7XAC05N7VyIVaJt4D_p5wVUcTLDtxRdpQMlQ2MqHoZ3KqKfL28FQmlGa7feOLIYgvfsiu8hMPEkoieNpJEyBaHCBBZWRnxJ7levB5Nr6LJ-uuO21wyTMXBxa1skep9rPCcl6-uiSqjFQlQ28bdAUkJYXrhdMsnKHWIvO3tKdsaEe41CRMPmLzz40JsMRmw55BjluxTqHxXuhC_n5tZ6nJgcPkszScOYcS29n8F-',
@@ -22,38 +20,72 @@ const REVEAL_ATTRS = [
     'data-reveal-flip', 'data-reveal-bounce', 'data-reveal-spin',
 ];
 
+// Utility to format date strings nicely
+const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+    try {
+        return new Date(dateStr).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+    } catch {
+        return dateStr;
+    }
+};
+
 export default function Gallery() {
     const [lightbox, setLightbox] = useState(null);
 
-    // ── Integration: fetch real gallery media from the backend ────────────────
+    // Fetch real gallery media from the backend
     const { media, loading } = useGalleryData();
 
-    // Derive the display list — use API media if available, else fallback photos
+    // Derive the display list
     const displayPhotos = media.length > 0
-        ? media.map((m) => ({ src: m.src, caption: m.caption }))
+        ? media.map((m) => ({
+            src: m.src,
+            caption: m.caption,
+            uploadedBy: m.uploadedBy,
+            createdAt: m.createdAt,
+            type: m.type,
+            albumId: m.albumId,
+        }))
         : FALLBACK_PHOTOS.map((src) => ({ src, caption: '' }));
 
     return (
         <>
-            <section className="py-4 md:py-16 text-center max-w-[1200px] mx-auto px-5 md:px-16">
-                <div>
-                    <h1 className="text-display-lg mb-4" style={{ color: 'var(--accent-maroon)' }}>
+            {/* Hero Section */}
+            <section className="relative flex items-center justify-center overflow-hidden mb-12 md:mb-20 max-w-[1200px] mx-auto px-4 md:px-5"
+                style={{ height: 'clamp(250px, 40vw, 400px)', marginTop: '1rem' }}>
+                <div className="absolute inset-0 z-0 border border-[#e0bfbf]">
+                    <div
+                        className="w-full h-full bg-cover bg-center"
+                        style={{
+                            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiFp6Nv9HQK8JMgy_cvZMl2YmkcrusObqEl0T-0Utz_8oSVTZgma-xfB9PGr1FWpfaTejdgrUWgC6QW705s7_ae16dBqGOeyXxxudijlIxfTgKKEdjMN7n1q7wXcwYhE3GBLfbao78by3SA2E7qK8l0Os4bRnLhApjJs3zsFfCvdWQFPvhWFevFJk71K9Av7e2wUoCBNvzHP7OijaaGAayhXwJ5S_WmSZrm2-RtCSB8snf17X2ut1Ikphu8MN0dauMOrFWJdCDiWTb')`,
+                            filter: 'brightness(0.6)',
+                        }}
+                    />
+                    {/* Brand gradient overlay */}
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(87,0,19,0.7), transparent 70%)' }} />
+                </div>
+                <div className="relative z-10 text-center px-4">
+                    <span className="inline-block text-[#ffe088] text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-3">
+                        Sacred Memories
+                    </span>
+                    <h1 className="text-white mb-4" style={{ fontFamily: 'EB Garamond, Georgia, serif', fontSize: 'clamp(32px, 6vw, 56px)', fontWeight: 600, lineHeight: 1.15 }}>
                         Parish Gallery
                     </h1>
-                    <p className="text-body-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                    <p className="text-white/90 max-w-xl mx-auto italic" style={{ fontFamily: 'Source Sans 3, system-ui, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)' }}>
                         Glimpses of grace across our beautiful sanctuary and vibrant community life.
                     </p>
-                    <div className="w-16 h-1 bg-[#735c00] mx-auto mt-4 rounded-full" />
                 </div>
             </section>
 
-            <section className="max-w-[1200px] mx-auto px-5 md:px-16 mb-20">
-                {/* ── Integration: loading skeleton ──────────────────────────────── */}
+            <section className="max-w-[1200px] mx-auto px-4 md:px-5 mb-20">
+                {/* ── Loading Skeleton ── */}
                 {loading && (
                     <Spinner message="Loading the beauty of our parish..." />
                 )}
 
-                {/* ── Integration: empty state (backend returned nothing) ─────────── */}
+                {/* ── Empty State ── */}
                 {!loading && displayPhotos.length === 0 && (
                     <EmptyState
                         title="Gallery Coming Soon"
@@ -62,35 +94,63 @@ export default function Gallery() {
                     />
                 )}
 
-                {/* ── Integration: masonry grid with real media URLs ─────────────── */}
+                {/* ── Masonry Grid ── */}
                 {!loading && displayPhotos.length > 0 && (
-                    <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-                        {displayPhotos.map(({ src, caption }, i) => (
+                    <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
+                        {displayPhotos.map((photo, i) => (
                             <div
                                 key={i}
                                 {...{ [REVEAL_ATTRS[i % REVEAL_ATTRS.length]]: '' }}
                                 data-delay={i * 80}
-                                className="break-inside-avoid rounded-2xl overflow-hidden cursor-pointer group shadow-sm card-hover border"
-                                style={{ borderColor: 'var(--border-color)' }}
-                                onClick={() => setLightbox({ src, caption })}
+                                className="break-inside-avoid relative overflow-hidden cursor-pointer group shadow-sm border border-[#e0bfbf] bg-[#222]"
+                                onClick={() => setLightbox(photo)}
                             >
-                                <div className="relative overflow-hidden">
-                                    <img
-                                        src={src}
-                                        alt={caption || `Parish gallery ${i + 1}`}
-                                        className="w-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                        loading="lazy"
-                                        onError={(e) => {
-                                            // Hide broken images gracefully
-                                            e.target.closest('[class*="break-inside"]').style.display = 'none';
-                                        }}
-                                    />
-                                    {/* hover overlay */}
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-400"
-                                        style={{ background: 'rgba(87,0,19,0.45)', backdropFilter: 'blur(2px)' }}>
-                                        <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-400">
-                                            <MdZoomIn className="text-4xl" />
-                                            <p className="font-oswald text-sm tracking-widest uppercase mt-1">View</p>
+                                <img
+                                    src={photo.src}
+                                    alt={photo.caption || `Parish gallery ${i + 1}`}
+                                    className="w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 group-hover:opacity-75"
+                                    loading="lazy"
+                                    onError={(e) => {
+                                        // Hide broken images gracefully
+                                        e.target.closest('[class*="break-inside"]').style.display = 'none';
+                                    }}
+                                />
+
+                                {/* ── Rich Hover Overlay ── */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#570013]/90 via-[#570013]/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5">
+                                    <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                                        <div className="flex items-center justify-between mb-2">
+                                            {/* Type Badge */}
+                                            {photo.type && (
+                                                <span className="text-[10px] font-bold text-white bg-black/40 px-2 py-0.5 border border-white/20 whitespace-nowrap">
+                                                    {photo.type}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <h3 className="text-xl font-serif font-bold text-white mb-2 line-clamp-2 leading-tight">
+                                            {photo.caption || 'Parish Moment'}
+                                        </h3>
+
+                                        {/* Metadata Row */}
+                                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/80">
+                                            {photo.createdAt && (
+                                                <div className="flex items-center gap-1.5">
+                                                    <MdCalendarToday className="text-white/60" />
+                                                    <span>{formatDate(photo.createdAt)}</span>
+                                                </div>
+                                            )}
+                                            {photo.uploadedBy && (
+                                                <div className="flex items-center gap-1.5">
+                                                    <MdPerson className="text-white/60" />
+                                                    <span>{photo.uploadedBy}</span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="mt-4 flex items-center gap-2 text-[#ffe088] text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                            <MdZoomIn className="text-xl" />
+                                            <span className="uppercase tracking-widest text-[10px]">Expand</span>
                                         </div>
                                     </div>
                                 </div>
@@ -100,24 +160,50 @@ export default function Gallery() {
                 )}
             </section>
 
-            {/* Lightbox — shows caption from the API if available */}
+            {/* ── Lightbox ── */}
             {lightbox && (
                 <div
-                    className="fixed inset-0 z-[9999] flex items-center justify-center"
-                    style={{ background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)' }}
+                    className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+                    style={{ background: 'rgba(20, 10, 15, 0.95)', backdropFilter: 'blur(8px)' }}
                     onClick={() => setLightbox(null)}
                 >
-                    <div className="relative max-w-5xl w-full mx-4 animate-fade-in-up">
-                        <img src={lightbox.src} alt={lightbox.caption || 'Gallery photo'}
-                            className="w-full rounded-2xl shadow-2xl max-h-[85vh] object-contain" />
-                        {lightbox.caption && (
-                            <p className="text-white/80 text-center text-sm mt-3 font-serif">{lightbox.caption}</p>
-                        )}
+                    <div className="relative max-w-5xl w-full mx-auto flex flex-col items-center animate-fade-in-up" onClick={e => e.stopPropagation()}>
+                        <div className="relative w-full border border-white/10 shadow-2xl bg-black">
+                            <img
+                                src={lightbox.src}
+                                alt={lightbox.caption || 'Gallery photo'}
+                                className="w-full max-h-[75vh] object-contain"
+                            />
+
+                            {/* Inner Info Bar */}
+                            <div className="bg-[#111] border-t border-white/10 p-5 w-full">
+                                <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                                    {lightbox.caption || 'Parish Moment'}
+                                </h3>
+                                <div className="flex items-center gap-4 text-sm text-gray-400">
+                                    {lightbox.createdAt && (
+                                        <div className="flex items-center gap-1.5">
+                                            <MdCalendarToday />
+                                            <span>{formatDate(lightbox.createdAt)}</span>
+                                        </div>
+                                    )}
+                                    {lightbox.uploadedBy && (
+                                        <div className="flex items-center gap-1.5">
+                                            <MdPerson />
+                                            <span>{lightbox.uploadedBy}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
                         <button
-                            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white hover:bg-white/40 transition-colors flex items-center justify-center"
+                            className="absolute -top-12 right-0 md:-right-12 w-10 h-10 border border-white/20 bg-black/50 text-white hover:bg-white hover:text-black transition-all flex items-center justify-center"
+                            style={{ borderRadius: 0 }}
                             onClick={() => setLightbox(null)}
+                            title="Close"
                         >
-                            <MdClose />
+                            <MdClose className="text-2xl" />
                         </button>
                     </div>
                 </div>

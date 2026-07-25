@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdArrowForward, MdCheckCircle, MdChurch, MdDiamond, MdLock, MdMail, MdPerson, MdPersonAdd, MdPhone, MdWarning } from 'react-icons/md';
 import DynamicIcon from '../components/DynamicIcon';
 import toast from 'react-hot-toast';
@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 
 
 export default function Register() {
+    const navigate = useNavigate();
 
     // ── Integration: destructure register helper and shared auth state ────────
     const { register, authLoading, authError, clearAuthError } = useAuth();
@@ -74,11 +75,13 @@ export default function Register() {
         const result = await register(payload);
 
         if (result.success) {
-            // Registration triggers email verification — don't auto-login.
-            // Instead show a confirmation message and let the user check their inbox.
-            const msg = result.message || 'Registration successful! Please check your email to verify your account.';
+            // Registration successful! Redirect to login after a brief delay
+            const msg = result.message || 'Registration successful! Redirecting to login...';
             setSuccessMessage(msg);
-            toast.success(`Account created! Check your inbox to verify your email.`, { id: toastId, duration: 6000 });
+            toast.success(`Account created! Redirecting to login...`, { id: toastId, duration: 3000 });
+            setTimeout(() => {
+                navigate('/login');
+            }, 3000);
         } else {
             toast.error(`${result.message || 'Registration failed. Please try again.'}`, { id: toastId, duration: 5000 });
         }
